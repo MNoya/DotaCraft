@@ -14871,6 +14871,27 @@
 		}
 	}
 	
+	"item_undead_shade_sacrifice"
+	{
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName"			"item_undead_shade_sacrifice"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityCastPoint"				"0"
+	
+		"ItemDroppable" 				"0"
+		"ItemPurchasable" 				"0"
+		"ItemSellable"					"0"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"units/undead/acolyte.lua"
+				"Function"		"CancelSacrifice"
+			}
+		}
+	}
+	
 	// -------------------------
 	// Research
 	

@@ -1618,8 +1618,8 @@
 			{
 				"ApplyModifier"
 				{
-					"ModifierName"		"modifier_invisible"
-					"Target"			"CASTER"
+					"ModifierName"	"modifier_invisible"
+					"Target"		"CASTER"
 				}
 			    "ApplyModifier"
 			    {
@@ -2211,10 +2211,63 @@
 //=================================================================================
 // Ability: Sacrifice
 // Description: "Target an Acolyte to sacrifice it and turn it into a Shade. Shades are invisible spirits that can see invisible units. |nShades cannot attack."
-// Code Reference: Asac
-// NOTE: This is FOR THE BUILDING SACRIFICIAL PIT.
 //=================================================================================
-"undead_sacrifice_pit"
+"undead_train_shade"
+{
+	"BaseClass"					"ability_datadriven"
+	"AbilityTextureName"		"undead_sacrifice"
+	"MaxLevel"					"1"
+		
+	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC"
+		
+	"AbilityCastRange"			"0"
+	"AbilityCastPoint"			"0"
+	"AbilityCooldown"			"0"
+	"AbilityManaCost"			"0"
+	"AbilityChannelTime"		"15"
+	
+	"OnSpellStart"
+	{
+		"RunScript"
+		{
+			"ScriptFile"	"units/undead/acolyte.lua"
+			"Function"		"Sacrifice"
+		}
+	}
+
+	"OnChannelSucceeded"
+	{
+	    "RunScript"
+	    {
+	        "ScriptFile"    "units/undead/acolyte.lua"
+	        "Function"      "CreateShade"
+	    }
+	}
+	
+	"Modifiers"
+	{
+		"modifier_sacrificing"
+		{
+			"IsHidden"		"1"			
+			"OnOrder"
+			{
+				"RunScript"
+				{
+					"ScriptFile"	"units/undead/acolyte.lua"
+					"Function"		"StopSacrifice"
+				}
+			}
+		}	
+	}
+}
+
+//=================================================================================
+// Ability: Sacrifice
+// Description: "Target a Sacrificial Pit to sacrifice the Acolyte and turn it into a Shade. Shades are invisible spirits that can see invisible units. |nShades cannot attack."
+//=================================================================================
+"undead_sacrifice_acolyte"
 {
 	"BaseClass"					"ability_datadriven"
 	"AbilityTextureName"		"undead_sacrifice"
@@ -2229,68 +2282,7 @@
 	"AbilityCooldown"			"0"
 	"AbilityManaCost"			"0"
 		
-	// This activates "Sacrifice" of the targeted unit.
-	// Cast range is GLOBAL.
-	
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/undead/acolyte.lua"
-			"Function"		"sacrifice"
-			"Target"		"TARGET"
-		}
-	}
-	
-	"Modifiers"
-	{
-		"modifier_sacrificing"
-		{
-			"IsHidden"		"1"
-			
-			"Properties"
-			{
-				"MODIFIER_PROPERTY_DISABLE_AUTOATTACK" "1"	
-			}
-			
-			"OnOrder"
-			{
-				"RunScript"
-				{
-					"ScriptFile"	"units/undead/acolyte.lua"
-					"Function"		"stop_sacrifice"
-					"Target"		"CASTER"
-				}
-			}
-		}	
-	}
-	
-}
-
-//=================================================================================
-// Ability: Sacrifice
-// Description: "Target a Sacrificial Pit to sacrifice the Acolyte and turn it into a Shade. Shades are invisible spirits that can see invisible units. |nShades cannot attack."
-// Code Reference: Alam
-// NOTE: This is FOR THE UNIT ACOLYTE. Not implemented due to lack of space, instead we just rely on rightclick or the building ability targeting
-//=================================================================================
-"undead_sacrifice_acolyte"
-{
-	"BaseClass"					"ability_datadriven"
-	"AbilityTextureName"		"undead_sacrifice"
-	"MaxLevel"					"1"
-		
-	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BUILDING"
-		
-	"AbilityCastRange"			"0"
-	"AbilityCastPoint"			"0"
-	"AbilityCooldown"			"0"
-	"AbilityManaCost"			"0"
-		
 	// The unit will walk towards the targeted Sacrificial Pit and the Shade creation begins.
-	// Cast range is GLOBAL.
-
 }
 
 

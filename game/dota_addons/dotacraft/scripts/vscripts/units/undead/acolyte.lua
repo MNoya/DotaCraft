@@ -1,60 +1,119 @@
 function unsummon(keys)
-	local caster = keys.caster
-	local target = keys.target
+    local caster = keys.caster
+    local target = keys.target
     if caster:GetPlayerOwnerID() == target:GetPlayerOwnerID() then
-	   Unsummon(target, function() print("Finished unsummon") end)
+       Unsummon(target, function() print("Finished unsummon") end)
     end
 end
 
-function sacrifice ( keys )
-	local target = keys.target
-	local caster = keys.caster
-	
-	if caster:GetPlayerOwnerID() == target:GetPlayerOwnerID() and target:GetUnitName() == "undead_acolyte" then
-	
-		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_sacrificing", nil) 
-		target:MoveToPosition(caster:GetAbsOrigin())
-		
-		keys.ability.sacrifice = Timers:CreateTimer(function()
-			if not IsValidEntity(target) or not IsValidEntity(caster) then
-				return
-			end
-		
-			local distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
-			
-			
-			if distance < 300 then
-				print("in range")
-				target:Stop()
-				create_shade(keys)
-			end
-			
-			return 1
-		end)
-		
-	end
+------------------------------------------------------------------------------
+
+function Sacrifice(event)
+    local target = event.target
+    local caster = event.caster
+    local ability = event.ability
+    local playerID = caster:GetPlayerOwnerID()
+    local buildingOrigin = caster:GetAbsOrigin()
+
+    if ability.acolyte then
+        SendErrorMessage(playerID, "error_already_sacrificing")
+        return
+    else
+        caster:Stop()
+    end
+    
+    if playerID == target:GetPlayerOwnerID() and target:GetUnitName() == "undead_acolyte" then
+        ability:ApplyDataDrivenModifier(caster, target, "modifier_sacrificing", {}) 
+        target:MoveToPosition(caster:GetAbsOrigin())
+        
+        target.sacrifice_MoveTimer = Timers:CreateTimer(0.03, function()
+            if not IsValidAlive(target) or not IsValidAlive(caster) then return end
+            if ability.acolyte then -- another targeted acolyte entered the pit earlier
+                target:Stop()
+                return
+            end
+        
+            local distance = (target:GetAbsOrigin() - buildingOrigin):Length2D()            
+            
+            if distance < 300 then
+                target:Stop()
+
+                -- Start sacrifice
+                ability.acolyte = target
+                ability.acolyte_entrance = target:GetAbsOrigin()
+                ability:SetChanneling(true)
+                target:AddNoDraw()
+                target:RemoveModifierByName("modifier_sacrificing")
+                target:AddNewModifier(caster,ability,"modifier_builder_hidden",{})
+                target:SetAbsOrigin(buildingOrigin)
+                ability.queue_item = caster:AddItem(CreateItem("item_undead_shade_sacrifice",caster,caster))
+
+                -- Sacrifice wasn't cancelled
+                Timers:CreateTimer(ability:GetChannelTime(), function()
+                    if IsValidAlive(caster) and IsValidEntity(ability.queue_item) then
+                        ability:EndChannel(false)
+                    end
+                end)
+                return
+            end
+            
+            return 1
+        end)
+        
+    end
 end
 
-function create_shade(keys)
-	local caster = keys.caster
-	local target = keys.target
-	local playerID = caster:GetPlayerOwnerID()
-	local player = PlayerResource:GetPlayer(playerID)
-	
-	local shade = CreateUnitByName("undead_shade", target:GetAbsOrigin(), true, player:GetAssignedHero(),  player:GetAssignedHero(), caster:GetTeamNumber())
-	shade:SetControllableByPlayer(playerID, true)
-	
-	target.no_corpse = true
-	target:RemoveSelf()
+-- Cancel an ongoing sacrifice, via item queue cancel
+function CancelSacrifice(event)
+    local caster = event.caster
+    local item = event.ability
+    local ability = caster:FindAbilityByName("undead_train_shade")
+    ability:EndChannel(true)
+
+    local acolyte = ability.acolyte
+    acolyte:SetAbsOrigin(ability.acolyte_entrance)
+    acolyte:RemoveModifierByName("modifier_builder_hidden")
+    acolyte:RemoveNoDraw()
+    ability.acolyte = nil
+
+    UTIL_Remove(item)
 end
 
-function stop_sacrifice ( keys )
-	local caster = keys.caster
-
-	caster:RemoveModifierByName("modifier_sacrificing")	
-	
-	Timers:RemoveTimer(keys.ability.sacrifice)
+-- Stop moving an acolyte to sacrifice
+function StopSacrifice(event)
+    local caster = event.target
+    target:RemoveModifierByName("modifier_sacrificing") 
+    Timers:RemoveTimer(target.sacrifice_MoveTimer)
 end
+
+function CreateShade(event)
+    local caster = event.caster
+    local ability = event.ability
+    local playerID = caster:GetPlayerOwnerID()
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    -- Remove the acolyte
+    local acolyte = ability.acolyte
+    acolyte:ForceKill(true)
+    acolyte:AddNoDraw()
+    ability.acolyte = nil
+    UTIL_Remove(ability.queue_item)
+    ability.queue_item = nil
+
+    local shade = CreateUnitByName("undead_shade", caster:GetAbsOrigin(), true, hero,  hero, caster:GetTeamNumber())
+    shade:SetControllableByPlayer(playerID, true)
+    shade:AddNewModifier(caster, nil, "modifier_phased", { duration = 0.03 })
+    shade:SetOwner(hero)
+    shade:SetControllableByPlayer(playerID, true)
+    shade:SetNoCorpse()
+    
+    dotacraft:ResolveRallyPointOrder(shade, caster)
+
+    Players:ModifyFoodUsed(playerID, 1)
+    Players:AddUnit(playerID, shade)
+end
+
+------------------------------------------------------------------------------
 
 function HauntGoldMine( event )
     local ability = event.ability
@@ -132,13 +191,13 @@ function HauntGoldMine( event )
 
     event:OnConstructionCompleted(function(unit)
 
-    	-- Show the gold counter and initialize the mine builders list
+        -- Show the gold counter and initialize the mine builders list
         local mine_pos = unit.mine:GetAbsOrigin()
-		unit.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, unit)
-		ParticleManager:SetParticleControl(unit.counter_particle, 0, Vector(mine_pos.x,mine_pos.y,mine_pos.z+200))
-		unit.builders = {} -- The builders list on the haunted gold mine
+        unit.counter_particle = ParticleManager:CreateParticle("particles/custom/gold_mine_counter.vpcf", PATTACH_CUSTOMORIGIN, unit)
+        ParticleManager:SetParticleControl(unit.counter_particle, 0, Vector(mine_pos.x,mine_pos.y,mine_pos.z+200))
+        unit.builders = {} -- The builders list on the haunted gold mine
 
-		-- Let the building cast abilities
+        -- Let the building cast abilities
         unit:RemoveModifierByName("modifier_construction")
 
         -- Remove item_building_cancel and reorder
@@ -151,50 +210,50 @@ end
 
 -- Makes the mine unselectable and adds props
 function HideGoldMine( event )
-	if not event.caster.state then return end --Exit out on building dummy
+    if not event.caster.state then return end --Exit out on building dummy
 
-	Timers:CreateTimer(0.05, function() 
-		local building = event.caster
-		local mine = building.mine -- This is set when the building is built on top of the mine
+    Timers:CreateTimer(0.05, function() 
+        local building = event.caster
+        local mine = building.mine -- This is set when the building is built on top of the mine
 
-		--building:SetForwardVector(mine:GetForwardVector())
-		ApplyModifier(mine, "modifier_unselectable")
+        --building:SetForwardVector(mine:GetForwardVector())
+        ApplyModifier(mine, "modifier_unselectable")
 
-		local pos = mine:GetAbsOrigin()
+        local pos = mine:GetAbsOrigin()
         local modelName = "models/props_magic/bad_sigil_ancient001.vmdl"
-		building.sigil = SpawnEntityFromTableSynchronous("prop_dynamic", {model = modelName, DefaultAnim = 'bad_sigil_ancient001_rotate'})
-		building.sigil:SetAbsOrigin(Vector(pos.x, pos.y, pos.z-60))
-		building.sigil:SetModelScale(building:GetModelScale())
+        building.sigil = SpawnEntityFromTableSynchronous("prop_dynamic", {model = modelName, DefaultAnim = 'bad_sigil_ancient001_rotate'})
+        building.sigil:SetAbsOrigin(Vector(pos.x, pos.y, pos.z-60))
+        building.sigil:SetModelScale(building:GetModelScale())
 
-		print("Hide Gold Mine")
-	end)
+        print("Hide Gold Mine")
+    end)
 end
 
 -- Show the mine (when killed either through unsummoning or attackers)
 function ShowGoldMine( event )
-	local building = event.caster
-	local ability = event.ability
-	local mine = building.mine
-	local city_center = building.city_center
+    local building = event.caster
+    local ability = event.ability
+    local mine = building.mine
+    local city_center = building.city_center
 
-	print("Removing Haunted Gold Mine")
+    print("Removing Haunted Gold Mine")
     mine:RemoveNoDraw()
-	mine:RemoveModifierByName("modifier_unselectable")
+    mine:RemoveModifierByName("modifier_unselectable")
 
-	-- Stop all builders
-	local acolytes = mine:GetGatherers()
-	for _,acolyte in pairs(acolytes) do
+    -- Stop all builders
+    local acolytes = mine:GetGatherers()
+    for _,acolyte in pairs(acolytes) do
         acolyte:CancelGather()
     end
 
-	if building.counter_particle then
-		ParticleManager:DestroyParticle(building.counter_particle, true)
-	end
+    if building.counter_particle then
+        ParticleManager:DestroyParticle(building.counter_particle, true)
+    end
 
     -- Set the area back to GoldMine squares
     BuildingHelper:BlockGridSquares(8, 0, building:GetAbsOrigin(), "GoldMine")
     building:AddNoDraw()
-	mine.building_on_top = nil
+    mine.building_on_top = nil
 
-	print("Removed Haunted Gold Mine successfully")
+    print("Removed Haunted Gold Mine successfully")
 end
