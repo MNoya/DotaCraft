@@ -48,6 +48,9 @@ function Replenish( event )
 
         ParticleManager:CreateParticle("particles/items3_fx/mango_active.vpcf", PATTACH_ABSORIGIN_FOLLOW, moon_well)
         target:EmitSound("DOTA_Item.Mango.Activate")
+        if target:IsMoving() then
+            target:Stop()
+        end
     end
 end
 

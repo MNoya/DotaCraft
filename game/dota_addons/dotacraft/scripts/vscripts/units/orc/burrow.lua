@@ -44,7 +44,6 @@ end
 function BurrowPeon( event )
 	local caster = event.caster
 	local unit = event.target
-	caster:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
 
 	if unit:GetUnitName() ~= "orc_peon" then
 		print("Not an Orc Peon")
@@ -53,35 +52,38 @@ function BurrowPeon( event )
 
 	local ability = caster:FindAbilityByName("orc_battle_stations")
 	local building_pos = caster:GetAbsOrigin()
-	local collision_size = caster:GetHullRadius()*2 + 64
+	local collision_size = caster:GetFollowRange(unit)
 
 	-- Should keep track of what they were doing, to send them back to work
 	-------
 
 	unit.target_building = caster
 
-	if unit.moving_timer then
-		Timers:RemoveTimer(unit.moving_timer)
+	if unit.burrowingTimer then
+		Timers:RemoveTimer(unit.burrowingTimer)
 	end
 
-	ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_STOP, Queue = false}) 
+	ExecuteOrderFromTable({UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_STOP, Queue = false}) 
 	unit:Interrupt()
 	ability:ApplyDataDrivenModifier(unit, unit, "modifier_on_order_cancel_battle_stations", {})
 
 	-- Start moving towards the building
-	unit.moving_timer = Timers:CreateTimer(function()
-
-		if not IsValidAlive(unit) or not IsValidAlive(unit.target_building) then
+	unit:MoveToPosition(building_pos)
+	unit.burrowingTimer = Timers:CreateTimer(function()
+		if not IsValidAlive(unit) then
+			return
+		elseif not IsValidAlive(unit.target_building) then
+			ExecuteOrderFromTable({UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_STOP, Queue = false})
 			return
 		elseif unit:HasModifier("modifier_on_order_cancel_battle_stations") then
-			local distance = (building_pos - unit:GetAbsOrigin()):Length()
-			local collision = distance <= collision_size
+			local distance = (building_pos - unit:GetAbsOrigin()):Length2D()
 			
-			if not collision then
+			if distance > collision_size then
 				unit:MoveToPosition(building_pos)
 				return 0.1
 			else
 				-- Reached the burrow
+				caster:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
 
 				-- Add the units to the burrow's table
 				if not caster.peons_inside then
@@ -93,6 +95,7 @@ function BurrowPeon( event )
 				print(counter, "Peons inside")
 				if counter >= 4 then
 					print(" Burrow full")
+					ExecuteOrderFromTable({UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_STOP, Queue = false})
 					return
 				end
 
@@ -148,8 +151,8 @@ function CancelBattleStations( event )
 	local peon = event.caster
 	local ability = event.ability
 
-	if peon.moving_timer then
-		Timers:RemoveTimer(peon.moving_timer)
+	if peon.burrowingTimer then
+		Timers:RemoveTimer(peon.burrowingTimer)
 	end
 	peon.state = "idle"
 end
@@ -199,9 +202,7 @@ function BackToWork( event )
 		first_peon:RemoveNoDraw()
 		first_peon:RemoveModifierByName("modifier_builder_burrowed")
 		first_peon.state = "idle"
-
 	end
-
 end
 
 function Eject( event )

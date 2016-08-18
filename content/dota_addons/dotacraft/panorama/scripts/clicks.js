@@ -1,7 +1,7 @@
 "use strict"
 
-var attackTable = CustomNetTables.GetAllTableValues( "attacks_enabled" )
-var right_click_repair = CustomNetTables.GetTableValue( "building_settings", "right_click_repair").value;
+var attackTable = CustomNetTables.GetAllTableValues("attacks_enabled")
+var right_click_repair = CustomNetTables.GetTableValue("building_settings", "right_click_repair").value;
 
 function GetMouseTarget()
 {
@@ -38,7 +38,7 @@ function OnRightButtonPressed()
     var bMessageShown = false
 
     // Enemy right click
-    if ( targetIndex && Entities.GetTeamNumber( targetIndex ) !== Entities.GetTeamNumber( mainSelected ) )
+    if (targetIndex && Entities.IsEnemy(targetIndex))
     {
         // If it can't be attacked by a unit on the selected group, send them to attack move and show an error (only once)
         
@@ -57,7 +57,7 @@ function OnRightButtonPressed()
                 Game.PrepareUnitOrders( order )
                 if (!bMessageShown)
                 {
-                    GameUI.CustomUIConfig().ErrorMessage({text : "#error_cant_target_air", style : {color:'#E62020'}, duration : 2})
+                    GameUI.CreateErrorMessage({text : "#error_cant_target_air", style : {color:'#E62020'}, duration : 2})
                     bMessageShown = true
                 }
             }
@@ -68,55 +68,60 @@ function OnRightButtonPressed()
         }
     }
 
-    if (Entities.HasModifier(mainSelected, "modifier_attack_trees"))
+    // Unit rightclick
+    if (targetIndex)
+    {
+        var targetName = Entities.GetUnitName(targetIndex)
+        var bOwnTarget = Entities.IsControllableByPlayer(targetIndex, iPlayerID)
+
+        // on moonwell
+        if (targetName == "nightelf_moon_well" && Entities.IsControllableByPlayer(mainSelected, iPlayerID) && !IsCustomBuilding(mainSelected) && !IsMechanical(mainSelected) && Entities.GetHealthPercent(mainSelected) < 100)
+        {
+            $.Msg("Unit "+mainSelectedName+" clicked on moon well to replenish")
+            GameEvents.SendCustomGameEventToServer("moonwell_order", {well: targetIndex, targetIndex: mainSelected})
+            return Entities.GetRangeToUnit(mainSelected, targetIndex) <= 500 //Move to target if not in range
+        }
+    }
+    // Tree click
+    else if (Entities.HasModifier(mainSelected, "modifier_attack_trees"))
     {
         GameEvents.SendCustomGameEventToServer("right_click_order", {position: Game.ScreenXYToWorld(cursor[0], cursor[1])})
     }
 
     // Builder Right Click
-    if ( IsBuilder( mainSelected ) )
+    if (IsBuilder(mainSelected))
     {
         // Cancel BH
         if (!pressedShift) SendCancelCommand()
 
-        // If it's mousing over entities
         if (targetIndex)
-        {
-            var entityName = Entities.GetUnitName(targetIndex)
-            
-            // Repair rightclick
-            if (right_click_repair && (IsCustomBuilding(targetIndex) || IsMechanical(targetIndex)) && Entities.GetHealthPercent(targetIndex) < 100 && IsAlliedUnit(targetIndex, mainSelected)) {
-                GameEvents.SendCustomGameEventToServer( "building_helper_repair_command", {targetIndex: targetIndex, queue: pressedShift})
+        {            
+            // on a gold mine
+            if (targetName == "gold_mine"){
+                GameEvents.SendCustomGameEventToServer("gold_gather_order", {mainSelected: mainSelected, targetIndex: targetIndex, queue: pressedShift})
                 return true
             }
-
-            // Gold mine rightclick
-            else if (entityName == "gold_mine"){
-                $.Msg("Player "+iPlayerID+" Clicked on a gold mine")
-                GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: targetIndex, queue: pressedShift})
+            // wisp on a entangled gold mine
+            else if (mainSelectedName == "nightelf_wisp" && targetName == "nightelf_entangled_gold_mine" && bOwnTarget){
+                GameEvents.SendCustomGameEventToServer("gold_gather_order", {mainSelected: mainSelected, targetIndex: targetIndex, queue: pressedShift})
                 return true
             }
-            // Entangled gold mine rightclick
-            else if (mainSelectedName == "nightelf_wisp" && entityName == "nightelf_entangled_gold_mine" && Entities.IsControllableByPlayer( targetIndex, iPlayerID )){
-                $.Msg("Player "+iPlayerID+" Clicked on a entangled gold mine")
-                GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: targetIndex, queue: pressedShift })
+            // acolyte on a haunted gold mine
+            else if (mainSelectedName == "undead_acolyte" && targetName == "undead_haunted_gold_mine" && bOwnTarget){
+                GameEvents.SendCustomGameEventToServer("gold_gather_order", {mainSelected: mainSelected, targetIndex: targetIndex, queue: pressedShift})
                 return true
             }
-            // Haunted gold mine rightclick
-            else if (mainSelectedName == "undead_acolyte" && entityName == "undead_haunted_gold_mine" && Entities.IsControllableByPlayer( targetIndex, iPlayerID )){
-                $.Msg("Player "+iPlayerID+" Clicked on a haunted gold mine")
-                GameEvents.SendCustomGameEventToServer( "gold_gather_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: targetIndex, queue: pressedShift })
-                return true
-            }
-            else if (IsCustomBuilding(targetIndex) && mainSelectedName == "orc_peon" && Entities.GetUnitName( targetIndex ) == "orc_burrow"){
+            // peon on a burrow
+            else if (mainSelectedName == "orc_peon" && targetName == "orc_burrow" && bOwnTarget){
                 $.Msg(" Targeted orc burrow")
-                GameEvents.SendCustomGameEventToServer( "burrow_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: targetIndex })
+                GameEvents.SendCustomGameEventToServer("burrow_order", {mainSelected: mainSelected, targetIndex: targetIndex})
+                return true
             }
-            else if (IsBuilder(targetIndex) && Entities.IsControllableByPlayer(targetIndex, iPlayerID))
-            {
-                GameEvents.SendCustomGameEventToServer("right_click_order", {position: Game.ScreenXYToWorld(cursor[0], cursor[1])})
+            // on a building or mechanical unit with health missing
+            else if (right_click_repair && (IsCustomBuilding(targetIndex) || IsMechanical(targetIndex)) && Entities.GetHealthPercent(targetIndex) < 100 && IsAlliedUnit(targetIndex)) {
+                GameEvents.SendCustomGameEventToServer("building_helper_repair_command", {targetIndex: targetIndex, queue: pressedShift})
+                return true
             }
-            return false
         }
     }
 
@@ -124,52 +129,45 @@ function OnRightButtonPressed()
     else if (IsCustomBuilding(mainSelected))
     {
         $.Msg("Building Right Click")
-
-        // Click on a target entity
         if (targetIndex)
         {
-            var entityName = Entities.GetUnitName(targetIndex)
-            if ( entityName == "gold_mine" || ( Entities.IsControllableByPlayer( targetIndex, iPlayerID ) && (entityName == "nightelf_entangled_gold_mine" || entityName == "undead_haunted_gold_mine")))
+            // on a gold mine, entangled or haunted
+            if (targetName == "gold_mine" || (bOwnTarget && (targetName == "nightelf_entangled_gold_mine" || targetName == "undead_haunted_gold_mine")))
             {
-                $.Msg(" Targeted gold mine")
-                GameEvents.SendCustomGameEventToServer( "building_rally_order", { pID: iPlayerID, mainSelected: mainSelected, rally_type: "mine", targetIndex: targetIndex })
+                $.Msg(" Targeted gold mine (rally)")
+                GameEvents.SendCustomGameEventToServer("building_rally_order", {mainSelected: mainSelected, rally_type: "mine", targetIndex: targetIndex})
             }
-            else if ( IsShop( mainSelected ) && Entities.IsControllableByPlayer( targetIndex, iPlayerID )  && ( Entities.IsHero( targetIndex ) || Entities.IsInventoryEnabled( targetIndex )) && Entities.GetRangeToUnit( mainSelected, targetIndex) <= 900)
+            // shop on a unit with inventory
+            else if (IsShop( mainSelected ) && bOwnTarget  && (Entities.IsHero( targetIndex ) || Entities.IsInventoryEnabled( targetIndex )) && Entities.GetRangeToUnit(mainSelected, targetIndex) <= 900)
             {
-                $.Msg(" Targeted unit to shop")
-                GameEvents.SendCustomGameEventToServer( "shop_active_order", { shop: mainSelected, unit: targetIndex, targeted: true})
+                $.Msg(" Shop targeted unit with inventory")
+                GameEvents.SendCustomGameEventToServer("shop_active_order", {shop: mainSelected, unit: targetIndex, targeted: true})
             }
-            else
+            // moonwell on a unit
+            else if (mainSelectedName == "nightelf_moon_well" && bOwnTarget && !IsCustomBuilding(targetIndex) && !IsMechanical(targetIndex) && Entities.GetHealthPercent(targetIndex) < 100)
             {
-                $.Msg(" Targeted some entity to rally point")
-                GameEvents.SendCustomGameEventToServer( "building_rally_order", { pID: iPlayerID, mainSelected: mainSelected, rally_type: "target", targetIndex: targetIndex })
+                $.Msg(" Moon Well targeted a unit to replenish")
+                GameEvents.SendCustomGameEventToServer("moonwell_order", {well: mainSelected, targetIndex: targetIndex})
+            }
+            // on an allied unit
+            else if (IsAlliedUnit(targetIndex))
+            {
+                $.Msg(" Targeted some entity (rally)")
+                GameEvents.SendCustomGameEventToServer("building_rally_order", {mainSelected: mainSelected, rally_type: "target", targetIndex: targetIndex})
+            }
+            else if (!Entities.HasAttackCapability(DOTAUnitAttackCapability_t.DOTA_UNIT_CAP_NO_ATTACK))
+            {
+                return false // Keep the attack order
             }
             return true
         }
-        // Click on a position
+        // on a position
         else
         {
-            $.Msg(" Targeted position")
+            $.Msg(" Targeted position (rally)")
             var GamePos = Game.ScreenXYToWorld(cursor[0], cursor[1])
-            GameEvents.SendCustomGameEventToServer( "building_rally_order", { pID: iPlayerID, mainSelected: mainSelected, rally_type: "position", position: GamePos})
+            GameEvents.SendCustomGameEventToServer("building_rally_order", {mainSelected: mainSelected, rally_type: "position", position: GamePos})
             return true
-        }
-    }
-
-    // Unit rightclick
-    if (targetIndex)
-    {
-        // Moonwell rightclick
-        if (IsCustomBuilding(targetIndex) && Entities.GetUnitName(targetIndex) == "nightelf_moon_well" && Entities.IsControllableByPlayer( targetIndex, iPlayerID ) )
-        {
-            $.Msg("Player "+iPlayerID+" Clicked on moon well to replenish")
-            GameEvents.SendCustomGameEventToServer( "moonwell_order", { pID: iPlayerID, mainSelected: mainSelected, targetIndex: targetIndex })
-            return false //Keep the unit order
-        }
-
-        else
-        {
-            GameEvents.SendCustomGameEventToServer( "right_click_order", {position: Game.ScreenXYToWorld(cursor[0], cursor[1])})
         }
     }
 
@@ -187,7 +185,7 @@ function OnLeftButtonPressed() {
 
     if (targetIndex)
     {
-        if ((IsShop(targetIndex) && IsAlliedUnit(mainSelected,targetIndex)) || IsTavern(targetIndex) || IsGlobalShop(targetIndex))
+        if ((IsShop(targetIndex) && IsAlliedUnit(targetIndex)) || IsTavern(targetIndex) || IsGlobalShop(targetIndex))
         {
             $.Msg("Player "+iPlayerID+" Clicked on a Shop")
             ShowShop(targetIndex)
@@ -195,7 +193,7 @@ function OnLeftButtonPressed() {
             // Hero or unit with inventory
             if (UnitCanPurchase(mainSelected))
             {
-                GameEvents.SendCustomGameEventToServer( "shop_active_order", { shop: targetIndex, unit: mainSelected, targeted: true})
+                GameEvents.SendCustomGameEventToServer("shop_active_order", { shop: targetIndex, unit: mainSelected, targeted: true})
                 return true
             }
         }
@@ -205,7 +203,7 @@ function OnLeftButtonPressed() {
 }
 
 function OnAttacksEnabledChanged (args) {
-    attackTable = CustomNetTables.GetAllTableValues( "attacks_enabled" )
+    attackTable = CustomNetTables.GetAllTableValues("attacks_enabled")
 }
 
 function UnitCanAttackTarget (unit, target) {
@@ -216,16 +214,16 @@ function UnitCanAttackTarget (unit, target) {
 }
 
 function GetMovementCapability (entIndex) {
-    return Entities.HasFlyMovementCapability( entIndex ) ? "air" : "ground"
+    return Entities.HasFlyMovementCapability(entIndex ) ? "air" : "ground"
 }
 
 function GetAttacksEnabled (unit) {
-    var indexEntry = CustomNetTables.GetTableValue( "attacks_enabled", unit)
+    var indexEntry = CustomNetTables.GetTableValue("attacks_enabled", unit)
     if (indexEntry) return indexEntry.enabled
     else
     {
         var unitName = Entities.GetUnitName(unit)
-        var attackTypes = CustomNetTables.GetTableValue( "attacks_enabled", unitName)
+        var attackTypes = CustomNetTables.GetTableValue("attacks_enabled", unitName)
         return attackTypes ? attackTypes.enabled : "ground"
     }
 }
@@ -239,7 +237,7 @@ function UnitCanPurchase(entIndex) {
 }
 
 function IsBuilder(entIndex) {
-    var tableValue = CustomNetTables.GetTableValue( "builders", entIndex.toString())
+    var tableValue = CustomNetTables.GetTableValue("builders", entIndex.toString())
     return (tableValue !== undefined) && (tableValue.IsBuilder == 1)
 }
 
@@ -252,20 +250,20 @@ function IsMechanical(entIndex) {
 }
 
 function IsShop(entIndex) {
-    return (IsCustomBuilding(entIndex) && Entities.GetAbilityByName( entIndex, "ability_shop") != -1)
+    return (IsCustomBuilding(entIndex) && Entities.GetAbilityByName(entIndex, "ability_shop") != -1)
 }
 
 function IsTavern(entIndex) {
-    return (Entities.GetUnitLabel( entIndex ) == "tavern")
+    return (Entities.GetUnitLabel(entIndex ) == "tavern")
 }
 
 function IsGlobalShop(entIndex) {
-	var entityName = Entities.GetUnitLabel( entIndex );
-    return ( entityName == "goblin_merchant" || entityName == "goblin_lab" || entityName == "mercenary" )
+	var entityName = Entities.GetUnitLabel(entIndex);
+    return (entityName == "goblin_merchant" || entityName == "goblin_lab" || entityName == "mercenary")
 }
 
-function IsAlliedUnit(entIndex, targetIndex) {
-    return (Entities.GetTeamNumber(entIndex) == Entities.GetTeamNumber(targetIndex))
+function IsAlliedUnit(targetIndex) {
+    return !Entities.IsEnemy(targetIndex)
 }
 
 function IsNeutralUnit(entIndex) {
@@ -277,13 +275,13 @@ function OnCameraReposition(args) {
 }
 
 function OnMapOverview (args) {
-    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, false );
-    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, false );
-    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PANEL, false );
-    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_MENU_BUTTONS, false );
-    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_BACKGROUND, false );
-    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );
-    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, false );
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, false);
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, false);
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PANEL, false);
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_MENU_BUTTONS, false);
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_BAR_BACKGROUND, false);
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false);
+    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, false);
     GameUI.SetRenderTopInsetOverride( 0 )
     GameUI.SetCameraPitchMax( 90 )
 
@@ -296,9 +294,9 @@ function OnMapOverview (args) {
 }
 
 (function () {
-    CustomNetTables.SubscribeNetTableListener( "attacks_enabled", OnAttacksEnabledChanged );
-    GameEvents.Subscribe( "camera_reposition", OnCameraReposition );
-    GameEvents.Subscribe( "map_overview", OnMapOverview );
+    CustomNetTables.SubscribeNetTableListener("attacks_enabled", OnAttacksEnabledChanged);
+    GameEvents.Subscribe("camera_reposition", OnCameraReposition);
+    GameEvents.Subscribe("map_overview", OnMapOverview);
 
     GameUI.Keybinds.OnRotateLeft = function() { OnRotateLeft() }
     GameUI.Keybinds.OnRotateRight = function() { OnRotateRight() }
@@ -335,7 +333,7 @@ function OnReleaseRotateLeft() {
 function RotateTimerLeft() {
     if (rotatingLeft) {
         angle-=1
-        GameUI.SetCameraYaw( angle );
+        GameUI.SetCameraYaw( angle);
         $.Schedule(1/60, RotateTimerLeft)
     }
 }
@@ -353,13 +351,13 @@ function OnReleaseRotateRight() {
 function RotateTimerRight() {
     if (rotatingRight) {
         angle+=1
-        GameUI.SetCameraYaw( angle );
+        GameUI.SetCameraYaw( angle);
         $.Schedule(1/60, RotateTimerRight)
     }
 }
 
 // Main mouse event callback
-GameUI.SetMouseCallback( function( eventName, arg ) {
+GameUI.SetMouseCallback( function(eventName, arg ) {
     var CONSUME_EVENT = true
     var CONTINUE_PROCESSING_EVENT = false
     var LEFT_CLICK = (arg === 0)
@@ -370,7 +368,7 @@ GameUI.SetMouseCallback( function( eventName, arg ) {
 
     var mainSelected = Players.GetLocalPlayerPortraitUnit()
 
-    if ( eventName === "pressed" || eventName === "doublepressed")
+    if (eventName === "pressed" || eventName === "doublepressed")
     {
         // Builder Clicks
         if (IsBuilder(mainSelected))
