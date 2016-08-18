@@ -52,9 +52,6 @@ end
 
 -- Aggro a target
 function Attack( unit, target )
-    -- if siege unit is attacking, let OnSiegeAttackStart control the behavior
-    if unit:GetKeyValue("MinimumRange") then return end
-
     unit:CheckSecondaryAttackAgainst(target)
     unit:AlertNearbyUnits(target, nil)
     unit:MoveToTargetToAttack(target)

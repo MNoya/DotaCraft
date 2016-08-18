@@ -1,21 +1,24 @@
 --[[
-Author: Steve Yoo(Dun1007)
-If target is too close, find another eligible target. If no such target exists, flee 200 unit 
+    Author: Steve Yoo(Dun1007), Martin Noya
+    If target is too close, find another eligible target. If no such target exists, flee from the original target
 
-HOW TO USE: Add "minimum_range" ability to unit.
-Change "MinimumRange" value on respective unit to control different range each unit.
+    Instructions:
+        Add "minimum_range" ability to unit.
+        Add "MinimumRange" keyvalue on unit definition to control different range of each unit.
 ]]
 function OnSiegeAttackStart(keys)
     local unit = keys.caster
     local target = keys.target
     local minRange = unit:GetKeyValue("MinimumRange")
+    
     if unit:GetRangeToUnit(target) < minRange then
-        -- find new target that is closest.
-        local targets = FindUnitsInRadius(unit:GetTeam(), unit:GetAbsOrigin(), nil, unit:GetAttackRange(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
-        for k,v in pairs(targets) do
-            -- new eligible target is not primary target, not within 250 range, and not a neutral unit
-            if v ~= target and unit:GetRangeToUnit(v) > minRange and not IsNeutralUnit(v) then
-                unit:MoveToTargetToAttack(v)
+        -- find new target in range
+        local targets = FindUnitsInRadius(unit:GetTeam(), unit:GetAbsOrigin(), nil, unit:GetAttackRange()+unit:GetHullRadius(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+        for _,enemy in pairs(targets) do
+
+            -- new eligible target must be over the min range and meet standard attack rules
+            if enemy ~= target and unit:GetRangeToUnit(enemy) >= minRange and UnitCanAttackTarget(unit, enemy) and ShouldAggroNeutral(unit, enemy) then
+                unit:MoveToTargetToAttack(enemy)
                 return
             end
         end
@@ -23,6 +26,7 @@ function OnSiegeAttackStart(keys)
         -- no eligible target, run!
         unit:Stop()
         Flee(unit, target)
-        SendErrorMessageForSelectedUnit( unit:GetPlayerOwnerID(), "error_minimum_range", unit )
+
+        SendErrorMessageForSelectedUnit(unit:GetPlayerOwnerID(), "error_minimum_range", unit)
     end
 end
