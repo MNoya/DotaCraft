@@ -63,6 +63,18 @@ Entities.HasModifier = function(entIndex, modifierName){
 	return false
 };
 
+function CreateErrorMessage(msg){
+    var reason = msg.reason || 80;
+    if (msg.message){
+        GameEvents.SendEventClientSide("dota_hud_error_message", {"splitscreenplayer":0,"reason":reason ,"message":msg.message} );
+    }
+    else{
+        GameEvents.SendEventClientSide("dota_hud_error_message", {"splitscreenplayer":0,"reason":reason} );
+    }
+}
+
+
 (function () {
+	GameEvents.Subscribe("dotacraft_error_message", CreateErrorMessage)
 	$.Msg("Expanding CustomGameUI functionality");
 })();

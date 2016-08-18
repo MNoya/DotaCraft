@@ -13,13 +13,6 @@ function BottomNotification(msg) {
   AddNotification(msg, $('#BottomNotifications'));
 }
 
-function BottomNotificationPortraitUnit(msg) {
-  if (msg.unit == Players.GetLocalPlayerPortraitUnit())
-  {
-    AddNotification(msg, $('#BottomNotifications'));
-  }
-}
-
 function TopRemoveNotification(msg){
   RemoveNotification(msg, $('#TopNotifications'));
 }
@@ -126,7 +119,6 @@ function AddNotification(msg, panel) {
 (function () {
   GameEvents.Subscribe( "top_notification", TopNotification );
   GameEvents.Subscribe( "bottom_notification", BottomNotification );
-  GameEvents.Subscribe( "bottom_notification_portrait_unit", BottomNotificationPortraitUnit );
   GameEvents.Subscribe( "top_remove_notification", TopRemoveNotification );
   GameEvents.Subscribe( "bottom_remove_notification", BottomRemoveNotification );
 })();

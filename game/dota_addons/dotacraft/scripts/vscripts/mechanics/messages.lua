@@ -1,13 +1,13 @@
-function SendErrorMessage( pID, string )
-    Notifications:ClearBottom(pID)
-    Notifications:Bottom(pID, {text=string, style={color='#E62020'}, duration=2})
-    EmitSoundOnClient("General.Cancel", PlayerResource:GetPlayer(pID))
+function SendErrorMessage(playerID, string)
+   CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "dotacraft_error_message", {message=string}) 
 end
 
 -- Similar to SendErrorMessage to the bottom, except it checks whether the source of error is currently selected unit/hero.
-function SendErrorMessageForSelectedUnit( pID, string, unit )
-    Notifications:ClearBottom(pID)
-    CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(pID), "bottom_notification_portrait_unit", {text=string, duration=2, style={color='#E62020'}, unit=unit:entindex()} )
+function SendErrorMessageForSelectedUnit(playerID, string, unit)
+    local selected = PlayerResource:GetSelectedEntities(playerID)
+    if selected and selected["0"] == unit:GetEntityIndex() then
+        CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "dotacraft_error_message", {message=string})
+    end
 end
 
 function dotacraft:PrintDefeateMessageForTeam( teamID )
