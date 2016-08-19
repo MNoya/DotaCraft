@@ -567,6 +567,9 @@ function BuildingHelper:OrderFilter(order)
 
     -- Stop and Hold
     elseif order_type == DOTA_UNIT_ORDER_STOP or order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
+        if unit and IsBuilder(unit) then --Hold Stops instead
+            order.order_type = DOTA_UNIT_ORDER_STOP
+        end
         for n, unit_index in pairs(units) do 
             local unit = EntIndexToHScript(unit_index)
             if IsBuilder(unit) then
