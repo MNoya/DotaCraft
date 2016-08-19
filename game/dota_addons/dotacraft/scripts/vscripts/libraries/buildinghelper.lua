@@ -695,8 +695,7 @@ function BuildingHelper:AddBuilding(keys)
     event.modelOffset = GetUnitKV(unitName, "ModelOffset") or 0
 
     -- npc_dota_creature doesn't render cosmetics on the particle ghost, use hero names instead
-    local overrideGhost = buildingTable:GetVal("OverrideBuildingGhost", "string")
-    unitName = overrideGhost or unitName
+    unitName = GetUnitKV(unitName, "OverrideBuildingGhost") or unitName
 
     -- Get a model dummy to pass it to panorama
     local mgd = BuildingHelper:GetOrCreateDummy(unitName)
