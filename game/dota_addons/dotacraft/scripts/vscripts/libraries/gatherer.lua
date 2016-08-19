@@ -780,7 +780,9 @@ function Gatherer:Init(unit)
 
             local mine_index = gold_mine:GetEntityIndex()
             Gatherer:print("Gathering From Nearest Gold Mine: "..mine_index)
-            Gatherer:CreateSelectionParticle(unit, gold_mine, 220)
+            if PlayerResource:IsUnitSelected(unit:GetPlayerOwnerID(), unit) then
+                Gatherer:CreateSelectionParticle(unit, gold_mine, 220)
+            end
             ExecuteOrderFromTable({UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = mine_index, AbilityIndex = gather_ability:GetEntityIndex(), Queue = queue})
         
         else -- Return

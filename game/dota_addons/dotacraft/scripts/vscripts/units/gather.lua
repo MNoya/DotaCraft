@@ -133,7 +133,6 @@ function Gather( event )
             
             -- 5 positions = 72 degrees
             local free_pos = mine:AddGatherer(caster)
-            print(free_pos)
             if not free_pos then
                 print(" Mine full")
                 return
@@ -163,7 +162,15 @@ function Gather( event )
                     caster:SetForwardVector( (mine_origin - caster:GetAbsOrigin()):Normalized() )
                 end)
             elseif race == "nightelf" then
-                PlayerResource:RemoveFromSelection(playerID, caster)
+                -- If its the last selected unit, select the mine
+                local playerID = caster:GetPlayerOwnerID()
+                local selectedEntities = PlayerResource:GetSelectedEntities(playerID)
+                if TableCount(selectedEntities) == 1 and PlayerResource:IsUnitSelected(playerID, caster) then
+                    local building = mine.building_on_top or mine
+                    PlayerResource:NewSelection(playerID, building)
+                else
+                    PlayerResource:RemoveFromSelection(playerID, caster)
+                end
             end
 
             -- Particle Counter on overhead
