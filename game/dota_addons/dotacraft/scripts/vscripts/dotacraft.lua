@@ -89,10 +89,13 @@ function dotacraft:InitGameMode()
 
     -- Panorama listeners
     CustomGameEventManager:RegisterListener( "selection_update", Dynamic_Wrap(dotacraft, 'OnPlayerSelectedEntities'))
-    CustomGameEventManager:RegisterListener( "moonwell_order", Dynamic_Wrap(dotacraft, "MoonWellOrder")) --Right click through panorama
-    CustomGameEventManager:RegisterListener( "burrow_order", Dynamic_Wrap(dotacraft, "BurrowOrder")) --Right click through panorama 
-    CustomGameEventManager:RegisterListener( "shop_active_order", Dynamic_Wrap(dotacraft, "ShopActiveOrder")) --Right click through panorama 
-    CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder")) --Right click through panorama
+    CustomGameEventManager:RegisterListener( "moonwell_order", Dynamic_Wrap(dotacraft, "MoonWellOrder"))
+    CustomGameEventManager:RegisterListener( "burrow_order", Dynamic_Wrap(dotacraft, "BurrowOrder")) 
+    CustomGameEventManager:RegisterListener( "hippogryph_ride_order", Dynamic_Wrap(dotacraft, "HippogryphRiderOrder")) 
+    CustomGameEventManager:RegisterListener( "sacrifice_order", Dynamic_Wrap(dotacraft, "SacrificeOrder"))
+    CustomGameEventManager:RegisterListener( "entangle_order", Dynamic_Wrap(dotacraft, "EntangleOrder"))
+    CustomGameEventManager:RegisterListener( "shop_active_order", Dynamic_Wrap(dotacraft, "ShopActiveOrder")) 
+    CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder"))
     
     -- Lua Modifiers
     LinkLuaModifier("modifier_hex_frog", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)

@@ -48,6 +48,12 @@ function PickUpArcher(event)
                     caster:MoveToPosition(archer_pos)
                     return 0.1
                 else
+                    -- Remove any shadow meld components
+                    archer:RemoveModifierByName("modifier_shadow_meld_active")
+                    archer:RemoveModifierByName("modifier_shadow_meld")
+                    archer:RemoveModifierByName("modifier_invisibility")
+                    ExecuteOrderFromTable({ UnitIndex = archer:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_STOP, Queue = false})
+
                     ability:StartCooldown(ability:GetCooldown(1))
                     ability:ApplyDataDrivenModifier(caster, archer, "modifier_mounted_archer", {})
 
@@ -62,12 +68,6 @@ function PickUpArcher(event)
                         dismount_ability:StartCooldown(dismount_ability:GetCooldown(1))
                     end
 
-                    -- Remove any shadow meld components
-                    archer:RemoveModifierByName("modifier_shadow_meld_active")
-                    archer:RemoveModifierByName("modifier_shadow_meld")
-                    archer:RemoveModifierByName("modifier_invisibility")
-                    ExecuteOrderFromTable({ UnitIndex = archer:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_STOP, Queue = false})
-
                     Timers:CreateTimer(0.2, function()
                         local attach = new_hippo:ScriptLookupAttachment("attach_hitloc") --Hippogryph mount
                         local origin = new_hippo:GetAttachmentOrigin(attach)
@@ -79,7 +79,7 @@ function PickUpArcher(event)
                         archer:SetAngles(90,30,0)
                     end)
 
-                    if PlayerResource:IsUnitSelected(playerID, archer) then
+                    if PlayerResource:IsUnitSelected(playerID, archer) or PlayerResource:IsUnitSelected(playerID, caster) then
                         PlayerResource:AddToSelection(playerID, new_hippo)
                         PlayerResource:RemoveFromSelection(playerID, archer)
                     end

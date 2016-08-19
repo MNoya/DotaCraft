@@ -81,9 +81,11 @@ end
 
 -- Stop moving an acolyte to sacrifice
 function StopSacrifice(event)
-    local caster = event.target
+    local target = event.unit
     target:RemoveModifierByName("modifier_sacrificing") 
-    Timers:RemoveTimer(target.sacrifice_MoveTimer)
+    if target.sacrifice_MoveTimer then
+        Timers:RemoveTimer(target.sacrifice_MoveTimer)
+    end
 end
 
 function CreateShade(event)

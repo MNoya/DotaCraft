@@ -73,13 +73,26 @@ function OnRightButtonPressed()
     {
         var targetName = Entities.GetUnitName(targetIndex)
         var bOwnTarget = Entities.IsControllableByPlayer(targetIndex, iPlayerID)
+        var bOrganicSelected = !IsCustomBuilding(mainSelected) && !IsMechanical(mainSelected) && !IsWard(mainSelected)
 
         // on moonwell
-        if (targetName == "nightelf_moon_well" && Entities.IsControllableByPlayer(mainSelected, iPlayerID) && !IsCustomBuilding(mainSelected) && !IsMechanical(mainSelected) && Entities.GetHealthPercent(mainSelected) < 100)
+        if (targetName == "nightelf_moon_well" && bOrganicSelected && bOwnTarget && Entities.GetHealthPercent(mainSelected) < 100)
         {
             $.Msg("Unit "+mainSelectedName+" clicked on moon well to replenish")
             GameEvents.SendCustomGameEventToServer("moonwell_order", {well: targetIndex, targetIndex: mainSelected})
             return Entities.GetRangeToUnit(mainSelected, targetIndex) <= 500 //Move to target if not in range
+        }
+        // archer on hippogryph
+        else if (mainSelectedName == "nightelf_archer" && targetName == "nightelf_hippogryph" && bOwnTarget)
+        {
+            $.Msg("Archer clicked on a hippogryph")
+            GameEvents.SendCustomGameEventToServer("hippogryph_ride_order", {archer: mainSelected, hippo: targetIndex})
+        }
+        // hippogryph on archer
+        else if (mainSelectedName == "nightelf_hippogryph" && targetName == "nightelf_archer" && bOwnTarget)
+        {
+            $.Msg("Hippogryph clicked on an archer")
+            GameEvents.SendCustomGameEventToServer("hippogryph_ride_order", {archer: targetIndex, hippo: mainSelected})
         }
     }
     // Tree click
@@ -95,10 +108,16 @@ function OnRightButtonPressed()
         if (!pressedShift) SendCancelCommand()
 
         if (targetIndex)
-        {            
+        {
             // on a gold mine
             if (targetName == "gold_mine"){
-                GameEvents.SendCustomGameEventToServer("gold_gather_order", {mainSelected: mainSelected, targetIndex: targetIndex, queue: pressedShift})
+
+                // uprooted night elf tree
+                if (mainSelectedName.indexOf("nightelf_tree_of_") != -1 && Entities.HasModifier(mainSelected, "modifier_uprooted") && !Abilities.IsHidden(Entities.GetAbilityByName(mainSelected, "nightelf_entangle_gold_mine")))
+                    GameEvents.SendCustomGameEventToServer("entangle_order", {tree: mainSelected, targetIndex: targetIndex, queue: pressedShift})
+                else
+                    GameEvents.SendCustomGameEventToServer("gold_gather_order", {mainSelected: mainSelected, targetIndex: targetIndex, queue: pressedShift})
+                    
                 return true
             }
             // wisp on a entangled gold mine
@@ -116,6 +135,11 @@ function OnRightButtonPressed()
                 $.Msg(" Targeted orc burrow")
                 GameEvents.SendCustomGameEventToServer("burrow_order", {mainSelected: mainSelected, targetIndex: targetIndex})
                 return true
+            }
+            // acolyte on a sacrificial pit that isn't channeling
+            else if (mainSelectedName == "undead_acolyte" && targetName == "undead_sacrificial_pit" && bOwnTarget && Abilities.GetChannelStartTime(Entities.GetAbilityByName(targetIndex, "undead_train_shade")) == 0) {
+                $.Msg(" Targeted sacrificial pit")
+                GameEvents.SendCustomGameEventToServer("sacrifice_order", {pit: targetIndex, targetIndex: mainSelected})
             }
             // on a building or mechanical unit with health missing
             else if (right_click_repair && (IsCustomBuilding(targetIndex) || IsMechanical(targetIndex)) && Entities.GetHealthPercent(targetIndex) < 100 && IsAlliedUnit(targetIndex)) {
@@ -143,11 +167,31 @@ function OnRightButtonPressed()
                 $.Msg(" Shop targeted unit with inventory")
                 GameEvents.SendCustomGameEventToServer("shop_active_order", {shop: mainSelected, unit: targetIndex, targeted: true})
             }
+            // gold mine on a wisp
+            else if (mainSelectedName == "nightelf_entangled_gold_mine" && targetName == "nightelf_wisp" && bOwnTarget)
+            {
+                $.Msg(" Entangled gold mine loading wisp")
+                GameEvents.SendCustomGameEventToServer("gold_gather_order", {mainSelected: targetIndex, targetIndex: mainSelected, queue: pressedShift})
+                return false
+            }
             // moonwell on a unit
             else if (mainSelectedName == "nightelf_moon_well" && bOwnTarget && !IsCustomBuilding(targetIndex) && !IsMechanical(targetIndex) && Entities.GetHealthPercent(targetIndex) < 100)
             {
                 $.Msg(" Moon Well targeted a unit to replenish")
                 GameEvents.SendCustomGameEventToServer("moonwell_order", {well: mainSelected, targetIndex: targetIndex})
+            }
+            // sacrificial pit on an acolyte 
+            else if (mainSelectedName == "undead_sacrificial_pit" && targetName == "undead_acolyte" && bOwnTarget){
+                $.Msg(" Sacrificial Pit targeted acolyte to sacrifice")
+                //Avoid action if currently channeling, as it would stop the process
+                var channeling = Abilities.GetChannelStartTime(Entities.GetAbilityByName(mainSelected, "undead_train_shade")) > 0
+                if (!channeling)
+                {
+                    GameEvents.SendCustomGameEventToServer("sacrifice_order", {pit: mainSelected, targetIndex: targetIndex})
+                    return false
+                }
+                else
+                    CreateErrorMessage({message:"error_already_sacrificing"})
             }
             // on an allied unit
             else if (IsAlliedUnit(targetIndex))
@@ -242,11 +286,15 @@ function IsBuilder(entIndex) {
 }
 
 function IsCustomBuilding(entIndex) {
-    return HasModifier(entIndex, "modifier_building")
+    return Entities.HasModifier(entIndex, "modifier_building")
 }
 
 function IsMechanical(entIndex) {
     return (Entities.GetUnitLabel(entIndex).indexOf("mechanical") != -1)
+}
+
+function IsWard(entIndex) {
+    return (Entities.GetUnitLabel(entIndex).indexOf("ward") != -1)
 }
 
 function IsShop(entIndex) {

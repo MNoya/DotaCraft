@@ -345,7 +345,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     if order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION and numBuildings > 0 then
         if unit and IsCustomBuilding(unit) and not IsUprooted(unit) then
 
-            local event = {playerID = issuer, mainSelected = unit:GetEntityIndex(), rally_type = "position", pos_x = x, pos_y = y, pos_z = z}
+            local event = {PlayerID = issuer, mainSelected = unit:GetEntityIndex(), rally_type = "position", pos_x = x, pos_y = y, pos_z = z}
             dotacraft:OnBuildingRallyOrder( event )
         end
     end
@@ -402,7 +402,7 @@ function dotacraft:MoonWellOrder( event )
 end
 
 ------------------------------------------------
---                Burrow Right-Click          --
+--               Burrow Right-Click           --
 ------------------------------------------------
 function dotacraft:BurrowOrder( event )
     local playerID = event.PlayerID
@@ -439,6 +439,59 @@ function dotacraft:BurrowOrder( event )
     else
         BuildingHelper:RepairCommand({PlayerID = playerID, targetIndex = burrowIndex})
     end
+end
+
+------------------------------------------------
+--        Hippogryph-Archer Right-Click       --
+------------------------------------------------
+function dotacraft:HippogryphRiderOrder(event)
+    local playerID = event.PlayerID
+    if Players:HasResearch(playerID, "nightelf_research_hippogryph_taming") then
+        Timers:CreateTimer(0.03, function()
+            local archerIndex = event.archer
+            local hippoIndex = event.hippo
+            local archer = EntIndexToHScript(archerIndex)
+            local hippogryph = EntIndexToHScript(hippoIndex)
+
+            local pickup = hippogryph:FindAbilityByName("nightelf_pick_up_archer")
+            if pickup:IsFullyCastable() then
+                pickup.archer = archer
+                ExecuteOrderFromTable({UnitIndex = hippoIndex, OrderType = DOTA_UNIT_ORDER_CAST_NO_TARGET, AbilityIndex = pickup:GetEntityIndex(), Queue = false})
+            end
+        end)
+    end
+end
+
+------------------------------------------------
+--      Acolyte-Sacrifice Pit Right-Click     --
+------------------------------------------------
+function dotacraft:SacrificeOrder(event)
+    local pitIndex = event.pit
+    local targetIndex = event.targetIndex
+    local pit = EntIndexToHScript(pitIndex)
+
+    Timers:CreateTimer(0.03, function()
+        local sacrifice = pit:FindAbilityByName("undead_train_shade")
+        ExecuteOrderFromTable({UnitIndex = pitIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = sacrifice:GetEntityIndex(), Queue = false})
+    end)
+end
+
+------------------------------------------------
+--           Tree-GoldMine Right-Click        --
+------------------------------------------------
+function dotacraft:EntangleOrder(event)
+    local playerID = event.PlayerID
+    Timers:CreateTimer(0.03, function()
+        local treeIndex = event.tree
+        local targetIndex = event.targetIndex
+        local tree = EntIndexToHScript(treeIndex)
+        local mine = EntIndexToHScript(targetIndex)
+
+        local entangle = tree:FindAbilityByName("nightelf_entangle_gold_mine")
+        if entangle:IsFullyCastable() and not mine.building_on_top then
+            ExecuteOrderFromTable({UnitIndex = treeIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = entangle:GetEntityIndex(), Queue = false})
+        end
+    end)
 end
 
 ------------------------------------------------
