@@ -52,6 +52,16 @@ function dotacraft:FilterExecuteOrder( filterTable )
     -- Don't need this.
     if order_type == DOTA_UNIT_ORDER_RADAR then return end
 
+    -- Redirect move-to-target to move-to-position in flying units, to prevent clumping issues
+    if order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET and unit and unit:HasFlyMovementCapability() then
+        order_type = DOTA_UNIT_ORDER_MOVE_TO_POSITION
+        point = EntIndexToHScript(targetIndex):GetAbsOrigin()
+        filterTable["order_type"] = DOTA_UNIT_ORDER_MOVE_TO_POSITION
+        filterTable["position_x"] = point.x
+        filterTable["position_y"] = point.y
+        filterTable["position_z"] = point.z
+    end
+
     -- Remove moving timers
     ForAllSelectedUnits(issuer, function(v)
         if v.moving_timer then

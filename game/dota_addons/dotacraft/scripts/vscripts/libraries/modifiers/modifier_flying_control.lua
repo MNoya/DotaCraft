@@ -10,10 +10,25 @@ fly_offsets = { ["undead_destroyer"]=120,
 
 function modifier_flying_control:OnCreated()
     if IsServer() then
-        local offset = fly_offsets[self:GetParent():GetUnitName()] or 200
-        self.baseGround = GetGroundPosition(self:GetParent():GetAbsOrigin(), self:GetParent()).z + offset
+        local unit = self:GetParent()
+        local offset = fly_offsets[unit:GetUnitName()] or 200
+        self.baseGround = GetGroundPosition(unit:GetAbsOrigin(), unit).z + offset
         self:StartIntervalThink(0.03)
         self.treeHeight = 0
+
+        -- Unstuck from other flying units
+        Physics:Unit(unit)
+        unit:RemoveCollider()
+        unit:SetNavCollisionType(PHYSICS_NAV_NOTHING)
+        unit:SetVelocityClamp(10)
+
+        local collider = unit:AddColliderFromProfile("repel")
+        collider.radius = 100
+        collider.force = 1000
+        collider.linear = false
+        collider.test = function(self, colliderUnit, collidedUnit)
+            return IsPhysicsUnit(collidedUnit) and collidedUnit:HasFlyMovementCapability()
+        end
     end
 end
 
