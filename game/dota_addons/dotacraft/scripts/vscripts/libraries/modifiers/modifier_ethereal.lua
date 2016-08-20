@@ -24,7 +24,7 @@ function modifier_ethereal:GetEffectName()
     return "particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
 end
 
-function modifier_ethereal:GetStatusEffectName()
+function modifier_ethereal:StatusEffectName()
     return "particles/status_fx/status_effect_keeper_spirit_form.vpcf"
 end
 

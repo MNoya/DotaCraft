@@ -1,4 +1,4 @@
-BH_VERSION = "1.2.8"
+BH_VERSION = "1.2.9"
 
 --[[
     For installation, usage and implementation examples check the wiki:

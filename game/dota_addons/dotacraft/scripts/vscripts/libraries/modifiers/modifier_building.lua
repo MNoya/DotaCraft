@@ -28,18 +28,10 @@ function modifier_building:DeclareFunctions()
            MODIFIER_PROPERTY_MOVESPEED_LIMIT, }
 end
 
-function modifier_building:GetAttributes()
-    return MODIFIER_ATTRIBUTE_PERMANENT
-end
-
 function modifier_building:GetModifierMoveSpeed_Limit()
     return 0
 end
 
-function modifier_building:IsHidden()
-    return true
-end
-
-function modifier_building:IsPurgable()
-    return false
-end
+function modifier_building:IsHidden() return true end
+function modifier_building:IsPurgable() return false end
+function modifier_building:RemoveOnDeath() return false end

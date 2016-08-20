@@ -1087,6 +1087,7 @@ function Gatherer:DamageMine(unit, mine, value)
     if mine:GetHealth()-value <= 0 then
         unit.GatherAbility.callbacks.OnGoldMineDepleted(mine)
         unit.target_mine = nil
+        return gold_gain
     else
         mine:SetHealth(mine:GetHealth() - value)
     end
