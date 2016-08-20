@@ -2,7 +2,10 @@ function unsummon(keys)
     local caster = keys.caster
     local target = keys.target
     if caster:GetPlayerOwnerID() == target:GetPlayerOwnerID() then
-       Unsummon(target, function() print("Finished unsummon") end)
+        local failed = Unsummon(target, function() print("Finished unsummon") end)
+        if not failed then
+            caster:StartGesture(ACT_DOTA_CAST_ABILITY_2)
+        end
     end
 end
 

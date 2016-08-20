@@ -295,9 +295,10 @@ function Build( event )
     -- These callbacks will only fire when the state between below half health/above half health changes.
     -- i.e. it won't fire multiple times unnecessarily.
     event:OnBelowHalfHealth(function(unit)
-        BuildingHelper:print(unit:GetUnitName() .. " is below half health.")
-                
-        ApplyModifier(unit, "modifier_onfire")
+        if not IsUnsummoning(unit) then
+            BuildingHelper:print(unit:GetUnitName() .. " is below half health.")
+            ApplyModifier(unit, "modifier_onfire")
+        end
     end)
 
     event:OnAboveHalfHealth(function(unit)

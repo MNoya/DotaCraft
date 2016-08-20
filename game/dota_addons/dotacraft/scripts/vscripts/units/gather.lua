@@ -205,7 +205,8 @@ function Gather( event )
         end
 
         local building_on_top = mine.building_on_top
-        if building_on_top then
+        if IsValidEntity(building_on_top) then
+            building_on_top:SetMana(0)
             if building_on_top:GetUnitName() == "undead_haunted_gold_mine" then
                 -- Unsummon, then destroy the gold mine with it
                 Unsummon(building_on_top, function()

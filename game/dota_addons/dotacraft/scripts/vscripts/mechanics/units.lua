@@ -270,6 +270,10 @@ function IsUprooted(unit)
     return unit:HasModifier("modifier_uprooted")
 end
 
+function IsUnsummoning(unit)
+    return unit:HasModifier("modifier_unsummoning")
+end
+
 function IsNightElfAncient(unit)
     return unit:HasAbility("nightelf_eat_tree")
 end
@@ -707,13 +711,26 @@ end
 
 function Unsummon(target, callback)
     local playerID = target:GetPlayerOwnerID()
-    if target.unsummoning or not IsCustomBuilding(target) or target:IsUnderConstruction() then
+    if IsUnsummoning(target) or not IsCustomBuilding(target) or target:IsUnderConstruction() then
         SendErrorMessage(playerID, "#error_invalid_unsummon_target")
-        return
+        return true
     end
 
-    -- set flag
-    target.unsummoning = true
+    target:AddNewModifier(target,nil,"modifier_unsummoning",{})
+
+    -- remove abilities, refund items, stop channels
+    for i=0,5 do
+        local item = target:GetItemInSlot(i)
+        if item then
+            target:CastAbilityImmediately(item, playerID)
+        end
+    end
+    for i=0,15 do
+        local ability = target:GetAbilityByIndex(i)
+        if ability and not ability:IsHidden() then
+            ability:SetHidden(true)
+        end
+    end
     
     -- 50% refund
     local goldCost = (0.5 * GetGoldCost(target))
@@ -726,15 +743,13 @@ function Unsummon(target, callback)
     
     Timers:CreateTimer(function()
         if not IsValidEntity(target) then return end
-        
-        ParticleManager:CreateParticle("particles/base_destruction_fx/gbm_lvl3_glow.vpcf", 0, target)
-        
+              
         Players:ModifyGold(playerID, goldGain)
         Players:ModifyLumber(playerID, lumberGain)
         if target:GetHealth() <= 50 then -- refund resource + kill unit
-            target:AddNoDraw()
             target:ForceKill(true)
             callback()
+            return
         else -- refund resource + apply damage
             target:SetHealth(target:GetHealth() - 50)
         end

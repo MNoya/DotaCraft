@@ -55120,7 +55120,7 @@
 	// Ability: Unsummon Building
 	// Description: "Unsummons your building to regain <Auns,DataA1,%>% of the spent resources."
 	// Code Reference: Auns
-	// NOTE: The ability works like this, the Acolyte casts it on a building and that building gets its health reduced slowly over time (10% per second maybe?) until it's destroyed and the resources are received.
+	// The Acolyte casts it on a building and that building gets its health reduced slowly over time until it's destroyed and the resources are received.
 	//=================================================================================
 	"undead_unsummon_building"
 	{
@@ -55131,24 +55131,24 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_ALL"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
 			
 		"AbilityCastPoint"			"0"
 		"AbilityCooldown"			"0"
 		"AbilityManaCost"			"0"
+		"AbilityCastRange"			"300"
 			
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"accumulation_step"			"50"
+				"var_type"			"FIELD_FLOAT"
+				"accumulation_step"	"50"
 			}
 			// The amount of resources you're supposed to regain has to be equal to or larger than 50 in order for you to regain it.
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"salvage_cost_ratio"			"0.5"
+				"var_type"			"FIELD_INTEGER"
+				"salvage_cost_ratio" "0.5"
 			}
 		}
 	
@@ -55161,9 +55161,8 @@
 		{
 			"RunScript"
 			{
-				"Target"	"TARGET"
-				"ScriptFile" "units/undead/acolyte.lua"
-				"Function"	"unsummon"	
+				"ScriptFile" 	"units/undead/acolyte.lua"
+				"Function"		"unsummon"	
 			}
 		}
 	}
