@@ -1,8 +1,6 @@
 //=================================================================================
 // Ability: Cannibalize
 // Description: "Consumes a nearby corpse to heal <Acan,DataA1> hit points per second."
-// Code Reference: Acan
-// NOTE: I ain't judgin', ya know, stress builds up when you have to scratch trees with your own fingers all day.
 //=================================================================================
 "undead_cannibalize"
 {
@@ -136,7 +134,6 @@
 //=================================================================================
 // Ability: Web
 // Description: "Binds a target enemy air unit in webbing, forcing it to the ground. Webbed units can be hit as though they were land units. |nLasts <Aweb,Dur1> seconds."
-// Code Reference: Aweb
 //=================================================================================
 "undead_web"
 {
@@ -270,7 +267,6 @@
 //=================================================================================
 // Ability: Burrow
 // Description: "The Crypt Fiend digs into the ground, becomes invisible, and gains a regeneration rate of <ucrm,regenHP> hit points per second. |nThe Crypt Fiend cannot attack while burrowed."
-// Code Reference: Abur
 //=================================================================================
 "undead_burrow"
 {
@@ -360,7 +356,6 @@
 //=================================================================================
 // Ability: Stone Form
 // Description: "Transforms the Gargoyle into a statue that is immune to spells, gains additional armor and has a regeneration rate of <Astn,DataE1> hit points per second. |nThe Gargoyle cannot attack in this form."
-// Code Reference: Astn
 //=================================================================================
 "undead_stone_form"
 {
@@ -494,7 +489,6 @@
 //=================================================================================
 // Ability: Disease Cloud
 // Description: "Infects nearby enemy living units with Disease Cloud. Disease Cloud deals <Aap1,DataB1> damage per second. |nLasts <Aap1,DataA1> seconds."
-// Code Reference: Aapl
 //=================================================================================
 "undead_disease_cloud"
 {
@@ -531,7 +525,6 @@
 //=================================================================================
 // Ability: Disease Cloud
 // Description: "Infects nearby enemy living units with Disease Cloud. Disease Cloud deals <Aap1,DataB1> damage per second. |nLasts <Aap1,DataA1> seconds."
-// Code Reference: Aapl
 //=================================================================================
 "undead_meat_wagon_disease_cloud"
 {
@@ -575,7 +568,6 @@
 //=================================================================================
 // Ability: Get Corpse
 // Description: "Picks up a nearby corpse for later use."
-// Code Reference: Amel
 //=================================================================================
 "undead_get_corpse"
 {
@@ -653,7 +645,6 @@
 //=================================================================================
 // Ability: Drop Corpse
 // Description: "Drops all corpses for immediate use."
-// Code Reference: Amed
 //=================================================================================
 "undead_drop_corpse"
 {
@@ -738,7 +729,6 @@
 //=================================================================================
 // Ability: Raise Dead
 // Description: "Raises <Arai,DataA1> skeletons from a corpse."
-// Code Reference: Arai
 //=================================================================================
 "undead_raise_dead"
 {
@@ -816,7 +806,6 @@
 //=================================================================================
 // Ability: Unholy Frenzy
 // Description: "Increases the attack rate of a target unit by <Suhf,DataA1,%>%, but drains <Suhf,DataB1> hit points per second. |nLasts <Suhf,Dur1> seconds."
-// Code Reference: Auhf
 //=================================================================================
 "undead_unholy_frenzy"
 {
@@ -908,7 +897,6 @@
 //=================================================================================
 // Ability: Cripple
 // Description: "Reduces movement speed by <Acri,DataA1,%>%, attack rate by <Acri,DataB1,%>%, and damage by <Acri,DataC1,%>% of a target enemy unit. |nLasts <Acri,Dur1> seconds."
-// Code Reference: Acri
 //=================================================================================
 "undead_cripple"
 {
@@ -1074,7 +1062,6 @@
 //=================================================================================
 // Ability: Curse
 // Description: "Curses a target enemy unit, causing it to have a <Acrs,DataA1,%>% chance to miss on an attack. |nLasts <Acrs,Dur1> seconds."
-// Code Reference: Acrs
 //=================================================================================
 "undead_curse"
 {
@@ -1192,7 +1179,6 @@
 //=================================================================================
 // Ability: Anti-magic Shell
 // Description: "Creates a barrier that stops <Aam2,DataC1> points of spell damage from affecting a target unit. |nLasts <Aam2,Dur1> seconds."
-// Code Reference: Aam2
 //=================================================================================
 "undead_anti_magic_shell"
 {
@@ -1265,7 +1251,6 @@
 //=================================================================================
 // Ability: Possession
 // Description: "Stuns a target unit and the Banshee for <Aps2,Dur1> seconds, during which the Banshee takes extra damage from attacks. She then displaces the soul of the enemy, giving you permanent control of it, but destroying the caster's body. |nPossession cannot be used on flying units, Heroes, or creeps above level <Aps2,DataA1>."
-// Code Reference: Aps2
 //=================================================================================
 "undead_possession"
 {
@@ -1386,7 +1371,6 @@
 //=================================================================================
 // Ability: Freezing Breath
 // Description: "When used on a building, temporarily stops all building activities. |nLasts <Afrz,Dur1> seconds."
-// Code Reference: Afrz
 //=================================================================================
 "undead_freezing_breath"
 {
@@ -1576,7 +1560,6 @@
 //=================================================================================
 // Ability: True Sight
 // Description: "Reveals nearby invisible units."
-// Code Reference: Atru
 //=================================================================================
 "undead_true_sight"
 {
@@ -1634,7 +1617,6 @@
 //=================================================================================
 // Ability: Frost Attack
 // Description: "Adds a cold effect to this unit's attacks that slows enemy units' movement speed."
-// Code Reference: Afra
 //=================================================================================
 "undead_frost_attack"
 {
@@ -1717,7 +1699,6 @@
 //=================================================================================
 // Ability: Essence of Blight
 // Description: "Restores <Arpl,DataA1> hit points to nearby friendly units."
-// Code Reference: Arpl
 //=================================================================================
 "undead_essence_of_blight"
 {
@@ -1792,7 +1773,6 @@
 //=================================================================================
 // Ability: Spirit Touch
 // Description: "Restores <Arpm,DataB1> mana to nearby friendly units."
-// Code Reference: Arpm
 //=================================================================================
 "undead_spirit_touch"
 {
@@ -1873,7 +1853,6 @@
 
 //=================================================================================
 // Ability: Destroyer Form
-// Code Reference: Aave
 //=================================================================================
 "undead_destroyer_form"
 {
@@ -1937,7 +1916,6 @@
 //=================================================================================
 // Ability: Absorb Mana
 // Description: "Takes all mana from one of your units and gives it to the Destroyer."
-// Code Reference: Aabs
 //=================================================================================
 "undead_absorb_mana"
 {
@@ -1985,7 +1963,6 @@
 //=================================================================================
 // Ability: Devour Magic
 // Description: "Consumes all magical buffs from units in an area. Each unit that is devoured of magic gives the Destroyer <Advm,DataA1> hit points and <Advm,DataB1> mana. |n|cffffcc00Deals <Advm,DataE1> damage to summoned units.|r"
-// Code Reference: Advm
 //=================================================================================
 "undead_devour_magic"
 {
@@ -2059,7 +2036,6 @@
 //=================================================================================
 // Ability: Orb of Annihilation
 // Description: "Adds <Afak,DataA1> bonus damage to the Destroyer's attack and causes his attacks to do area of effect damage."
-// Code Reference: Afak
 //=================================================================================
 "undead_orb_of_annihilation"
 {
@@ -2158,7 +2134,6 @@
 //=================================================================================
 // Ability: Unsummon Building
 // Description: "Unsummons your building to regain <Auns,DataA1,%>% of the spent resources."
-// Code Reference: Auns
 // The Acolyte casts it on a building and that building gets its health reduced slowly over time until it's destroyed and the resources are received.
 //=================================================================================
 "undead_unsummon_building"

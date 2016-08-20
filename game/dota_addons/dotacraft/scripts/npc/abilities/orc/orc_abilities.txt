@@ -1,7 +1,6 @@
 //=================================================================================
 // Ability: Pillage
 // Description: "Each attack that does damage to an enemy building also gains resources."
-// Code Reference: Asal
 //=================================================================================
 "orc_pillage"
 {
@@ -54,7 +53,6 @@
 //=================================================================================
 // Ability: Berserk
 // Description: "Causes this unit to attack <Absk,DataB1,%>% faster, but take <Absk,DataC1,%>% more damage."
-// Code Reference: Absk
 //=================================================================================
 "orc_berserk"
 {
@@ -137,7 +135,6 @@
 //=================================================================================
 // Ability: Burning Oil
 // Description: "Drenches the Demolisher ammo in burning oil, causing them to light the ground on fire and burn enemy units."
-// Code Reference: Abof
 //=================================================================================
 "orc_burning_oil"
 {
@@ -223,7 +220,6 @@
 // Description: "Removes all buffs from a target unit, and slows its movement speed by a factor
 // of <Aprg,DataA1>. Purged units will slowly regain their movement speed over <Aprg,Dur1> seconds.
 // |n|cffffcc00Deals <Aprg,DataC1> damage to summoned units.|r"
-// Code Reference: Aprg
 //=================================================================================
 "orc_purge"
 {
@@ -342,7 +338,6 @@
 //=================================================================================
 // Ability: Lightning Shield
 // Description: "Forms a shield of electricity around a target unit, dealing <Alsh,DataA1> damage per second to units around it. |nLasts <Alsh,Dur1> seconds."
-// Code Reference: Alsh
 //=================================================================================
 "orc_lightning_shield"
 {
@@ -424,7 +419,6 @@
 //=================================================================================
 // Ability: Bloodlust
 // Description: "Increases a friendly unit's attack rate and movement speed."
-// Code Reference: Ablo
 //=================================================================================
 "orc_bloodlust"
 {
@@ -556,8 +550,6 @@
 // Description: "Summons an invisible and immovable ward that provides vision in an area.
 // Can see invisible units.
 // Lasts <Aeye,Dur1> seconds."
-// Code Reference: Aeye
-// NOTE: Back in my days, Sentry Ward wasn't Sentry Ward.
 //=================================================================================
 "orc_sentry_ward"
 {
@@ -605,7 +597,6 @@
 // Description: "Summons an invisible and immovable ward that stuns enemy land units around it.
 // The trap activates when an enemy land unit approaches and destroys all other stasis wards in its area of effect.
 // The trap lasts <Asta,Dur1> seconds. |nThe stun lasts <Asta,DataD1> seconds."
-// Code Reference: Asta
 //=================================================================================
 "orc_stasis_trap"
 {
@@ -718,8 +709,6 @@
 // Ability: Healing Ward
 // Description: "Summons an immovable ward that heals <Aoar,DataA1,%>% of a nearby friendly non-mechanical unit's hit points per second.
 // Lasts <Ahwd,Dur1> seconds."
-// Code Reference: Ahwd
-// NOTE: Goes with the Healing Ward Aura.
 //=================================================================================
 "orc_healing_ward"
 {
@@ -779,7 +768,6 @@
 //=================================================================================
 // Ability: Spirit Link
 // Description: "Links <Aspl,DataB1> units together in a chain. All units with Spirit Link on them will live longer, by distributing <Aspl,DataA1,%>% of the damage they take across other Spirit Linked units. |nLasts <Aspl,Dur1> seconds."
-// Code Reference: Aspl
 //=================================================================================
 "orc_spirit_link"
 {
@@ -891,7 +879,6 @@
 //=================================================================================
 // Ability: Disenchant
 // Description: "Removes all buffs from units in a target area. |n|cffffcc00Deals <Adcn,DataB1> damage to hostile summoned units.|r"
-// Code Reference: Adis
 //=================================================================================
 "orc_disenchant"
 {
@@ -953,7 +940,6 @@
 //=================================================================================
 // Ability: Ancestral Spirit
 // Description: "Raises a fallen non-Hero Tauren from the dead. The Tauren is revived with <Aast,DataA1,%>% of its hit points restored."
-// Code Reference: Aast
 //=================================================================================
 "orc_ancestral_spirit"
 {
@@ -1016,7 +1002,6 @@
 //=================================================================================
 // Ability: Ethereal Form
 // Description: "Turns the Spirit Walker ethereal, making him immune to physical damage but unable to attack. He can cast spells and will take extra damage from Magic attacks and spells."
-// Code Reference: Aetf
 //=================================================================================
 "orc_ethereal_form"
 {
@@ -1132,7 +1117,6 @@
 //=================================================================================
 // Ability: Corporeal Form
 // Description: "Removes ethereal form"
-// Code Reference: Acpf
 //=================================================================================
 "orc_corporeal_form"
 {
@@ -1194,7 +1178,6 @@
 //=================================================================================
 // Ability: Ensnare
 // Description: "Causes a target enemy unit to be bound to the ground so that it cannot move for <Aens,Dur1> seconds. Air units that are ensnared can be attacked as though they were land units."
-// Code Reference: Aens
 //=================================================================================
 "orc_ensnare"
 {
@@ -1335,7 +1318,6 @@
 //=================================================================================
 // Ability: Devour
 // Description: "Consumes an enemy land unit, slowly digesting it and dealing <Advc,DataC1> damage per second to it. If the Kodo Beast is killed while the consumed unit is still digesting, the unit that was devoured will be released."
-// Code Reference: Adev and Advc
 //=================================================================================
 "orc_devour"
 {
@@ -1456,7 +1438,6 @@
 //=================================================================================
 // Ability: War Drums
 // Description: "Adds a damage increase to the attacks of nearby friendly units."
-// Code Reference: Aakb
 //=================================================================================
 "orc_war_drums"
 {
@@ -1517,7 +1498,6 @@
 //=================================================================================
 // Ability: Envenomed Spears
 // Description: "Deals <Aven,DataA1> poison damage per second. |nLasts <Aven,Dur1> seconds."
-// Code Reference: Aven
 //=================================================================================
 "orc_envenomed_spears"
 {
@@ -1608,7 +1588,6 @@
 //=================================================================================
 // Ability: Unstable Concoction
 // Description: "Causes a powerful explosion that deals <Auco,DataB1> damage to a target air unit, and <Auco,DataD1> damage to nearby enemy air units."
-// Code Reference: Auco
 //=================================================================================
 "orc_unstable_concoction"
 {
@@ -1704,8 +1683,6 @@
 //=================================================================================
 // Ability: Liquid Fire
 // Description: "Flings a volatile liquid that causes buildings to take damage over time. Buildings that are currently taking damage from Liquid Fire cannot be repaired, and have their attack rate reduced by <Aliq,DataC1,%>%."
-// Code Reference: Aliq
-// NOTE: Remember the "cannot be repaired" part.
 //=================================================================================
 "orc_liquid_fire"
 {
@@ -1795,7 +1772,6 @@
 //=================================================================================
 // Ability: Pulverize
 // Description: "Gives a <Awar,DataA1>% chance that an attack will deal <Awar,DataB1> damage to nearby units."
-// Code Reference: Awar
 //=================================================================================
 "orc_pulverize"
 {
@@ -1952,7 +1928,6 @@
 //=================================================================================
 // Ability: Battle Stations
 // Description: "Causes nearby Peons to run into the Burrow so that they can defend their base."
-// Code Reference: Abtl
 //=================================================================================
 "orc_battle_stations"
 {
@@ -2106,7 +2081,6 @@
 //=================================================================================
 // Ability: Stand Down
 // Description: "Causes Peons within the Burrow to return to work."
-// Code Reference: Astd
 //=================================================================================
 "orc_stand_down"
 {

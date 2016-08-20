@@ -8852,7 +8852,7 @@
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
 	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 	    "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
-	    "AbilityTextureName"            "pandaren_storm_dispel_magic"
+	    "AbilityTextureName"            "human_dispel_magic"
 	    "MaxLevel"                      "1"
 	
 	    "AbilityCastRange"              "500"
@@ -12685,7 +12685,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"			"pandaren_storm_dispel_magic"
+		"AbilityTextureName"			"human_dispel_magic"
 		"MaxLevel"						"1"
 	
 		"AbilityCastRange"				"500"
@@ -30118,7 +30118,6 @@
 	//=================================================================================
 	// Ability: Detonate
 	// Description: "Destroys the Wisp, dispelling all magical buffs and draining <Adtn,DataA1> mana from each unit in an area around the Wisp. |n|cffffcc00Deals <Adtn,DataB1> damage to summoned units.|r"
-	// Code Reference: Adtn
 	//=================================================================================
 	"nightelf_detonate"
 	{
@@ -30177,7 +30176,6 @@
 	//=================================================================================
 	// Ability: Shadow Meld
 	// Description: "Stops the unit from auto-acquiring enemies, allowing it to Shadowmeld and remain unseen at night."
-	// Code Reference: Ashm
 	//=================================================================================
 	"nightelf_shadow_meld"
 	{
@@ -30361,7 +30359,6 @@
 	//=================================================================================
 	// Ability: Elunes Grace
 	// Description: "Reduces the damage taken from Piercing attacks to <Aegr,DataA1,%>%, and spells and Magic attacks to <Aegr,DataE1,%>%."
-	// Code Reference: Aegr
 	//=================================================================================
 	"nightelf_elunes_grace"
 	{
@@ -30405,7 +30402,6 @@
 	//=================================================================================
 	// Ability: Sentinel
 	// Description: "Send an owl to a nearby tree to reveal the area around it. |nCan see invisible units."
-	// Code Reference: Aesn
 	//=================================================================================
 	"nightelf_sentinel"
 	{
@@ -30642,7 +30638,6 @@
 	//=================================================================================
 	// Ability: Slow Poison
 	// Description: "A poison attack that deals <Aspo,DataA1> damage per second, and slows the target enemy's movement by <Aspo,DataB1,%>% and attack by <Aspo,DataC1,%>% for <Aspo,Dur1> seconds."
-	// Code Reference: Aspo
 	//=================================================================================
 	"nightelf_slow_poison"
 	{
@@ -30759,7 +30754,6 @@
 	//=================================================================================
 	// Ability: Abolish Magic
 	// Description: "Dispels positive buffs from enemy units, and negative buffs from friendly units. |n|cffffcc00Deals <Aadm,DataB1> damage to summoned units.|r"
-	// Code Reference: Aadm
 	//=================================================================================
 	"nightelf_abolish_magic"
 	{
@@ -30843,7 +30837,6 @@
 	//=================================================================================
 	// Ability: Spell Immunity
 	// Description: "Renders this unit immune to all spells."
-	// Code Reference: Amim
 	//=================================================================================
 	"nightelf_spell_immunity"
 	{
@@ -30857,7 +30850,6 @@
 	//=================================================================================
 	// Ability: Roar
 	// Description: "Gives friendly nearby units a <Ara2,DataA1,%>% bonus to damage. |nLasts <Ara2,Dur1> seconds."
-	// Code Reference: Aroa
 	//=================================================================================
 	"nightelf_roar"
 	{
@@ -30968,7 +30960,6 @@
 	//=================================================================================
 	// Ability: Rejuvenation
 	// Description: "Heals a target friendly unit for <Arej,DataA1> hit points over <Arej,Dur1> seconds."
-	// Code Reference: Arej
 	//=================================================================================
 	"nightelf_rejuvenation"
 	{
@@ -31055,7 +31046,6 @@
 	//=================================================================================
 	// Ability: Bear Form
 	// Description: "Transforms the Druid into a bear, slowing mana regeneration, but making him an excellent warrior."
-	// Code Reference: Abrf
 	//=================================================================================
 	"nightelf_bear_form"
 	{
@@ -31291,7 +31281,6 @@
 	//=================================================================================
 	// Ability: Taunt
 	// Description: "The closest <Atau,DataA1> enemies are forced to attack this unit."
-	// Code Reference: Atau
 	//=================================================================================
 	"nightelf_taunt"
 	{
@@ -31348,7 +31337,6 @@
 	//=================================================================================
 	// Ability: War Club
 	// Description: "Picks up a tree to give the Mountain Giant Siege damage, and increased attack range. |nLasts for <Agra,DataE1> strikes."
-	// Code Reference: Agra
 	//=================================================================================
 	"nightelf_war_club"
 	{
@@ -31451,7 +31439,6 @@
 	//=================================================================================
 	// Ability: Hardened Skin
 	// Description: "Reduces all attacks on the Mountain Giant by <Assk,DataC1> damage."
-	// Code Reference: Assk
 	//=================================================================================
 	"nightelf_hardened_skin"
 	{
@@ -31488,7 +31475,6 @@
 	//=================================================================================
 	// Ability: Resistant Skin
 	// Description: "Reduces the duration of negative spells and renders the Mountain Giant immune to certain spells."
-	// Code Reference: Arsk
 	//=================================================================================
 	"nightelf_resistant_skin"
 	{
@@ -31509,7 +31495,6 @@
 	//=================================================================================
 	// Ability: Pick up Archer
 	// Description: "Picks up an Archer so that the Archer can attack from the air. |n|n|cffffcc00Attacks land and air units.|r"
-	// Code Reference: Aco3
 	//=================================================================================
 	"nightelf_pick_up_archer"
 	{
@@ -31599,7 +31584,6 @@
 	//=================================================================================
 	// Ability: Mount Hippogryph
 	// Description: "Mounts a Hippogryph so that the Archer can attack from the air. |n|n|cffffcc00Attacks land and air units.|r"
-	// Code Reference: Aco2
 	//=================================================================================
 	"nightelf_mount_hippogryph"
 	{
@@ -31635,7 +31619,6 @@
 	//=================================================================================
 	// Ability: Dismount
 	// Description: "Dismounts the Archer from the Hippogryph."
-	// Code Reference: Adec
 	//=================================================================================
 	"nightelf_dismount"
 	{
@@ -31700,7 +31683,6 @@
 	//=================================================================================
 	// Ability: Faerie Fire
 	// Description: "Reduces a target enemy unit's armor by <Afae,DataA1> and gives vision of that unit. |nLasts <Afae,Dur1> seconds."
-	// Code Reference: Afae
 	//=================================================================================
 	"nightelf_faerie_fire"
 	{
@@ -31805,7 +31787,6 @@
 	//=================================================================================
 	// Ability: Storm Crow Form
 	// Description: "Transforms the Druid into a storm crow, giving him the ability to fly."
-	// Code Reference: Arav
 	//=================================================================================
 	"nightelf_storm_crow_form"
 	{
@@ -32016,7 +31997,6 @@
 	//=================================================================================
 	// Ability: Cyclone
 	// Description: "Tosses a target non-mechanical enemy unit into the air, rendering it unable to move, attack or cast spells, and stopping others from attacking or casting on it. |nLasts <Acyc,Dur1> seconds."
-	// Code Reference: Acyc
 	//=================================================================================
 	"nightelf_cyclone"
 	{
@@ -32087,7 +32067,6 @@
 	//=================================================================================
 	// Ability: Phase Shift
 	// Description: "Causes this unit to shift out of existence whenever it takes damage, temporarily avoiding any further damage. |nLasts <Apsh,Dur1> second."
-	// Code Reference: Apsh
 	//=================================================================================
 	"nightelf_phase_shift"
 	{
@@ -32206,7 +32185,6 @@
 	//=================================================================================
 	// Ability: Mana Flare
 	// Description: "Causes the Faerie Dragon to channel negative magical energies that damage nearby enemies when they cast spells. Also increases the Faerie Dragon's armor by <Amfl,DataE1>. |nLasts <Amfl,Dur1> seconds."
-	// Code Reference: Amfl
 	//=================================================================================
 	"nightelf_mana_flare"
 	{
@@ -32329,7 +32307,6 @@
 	//=================================================================================
 	// Ability: Corrosive Breath
 	// Description: "Hurls a ball of corrosive bile that is effective against buildings."
-	// Code Reference: Acor
 	//=================================================================================
 	"nightelf_corrosive_breath"
 	{
@@ -32451,7 +32428,6 @@
 	// Ability: Root
 	// Description: "Burrows the Ancient's roots into the ground, rendering it immobile, but allowing it to build units. 
 	// For the Ancient Protector, this allows it to hurl enormous rocks through the air to damage enemy units. Also gives the Ancient Fortified armor."
-	// Code Reference: Aroo
 	//=================================================================================
 	"nightelf_root"
 	{
@@ -32768,7 +32744,6 @@
 	//=================================================================================
 	// Ability: Eat Tree
 	// Description: "Consume a tree to restore <Aeat,DataC1> hit points over <Aeat,Dur1> seconds."
-	// Code Reference: Aeat
 	//=================================================================================
 	"nightelf_eat_tree"
 	{
@@ -38187,7 +38162,7 @@
 		}
 	}
 	
-	// // • Ancient of Lore
+	// • Ancient of Lore
 	"nightelf_research_abolish_magic"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -41768,7 +41743,6 @@
 	//=================================================================================
 	// Ability: Pillage
 	// Description: "Each attack that does damage to an enemy building also gains resources."
-	// Code Reference: Asal
 	//=================================================================================
 	"orc_pillage"
 	{
@@ -41821,7 +41795,6 @@
 	//=================================================================================
 	// Ability: Berserk
 	// Description: "Causes this unit to attack <Absk,DataB1,%>% faster, but take <Absk,DataC1,%>% more damage."
-	// Code Reference: Absk
 	//=================================================================================
 	"orc_berserk"
 	{
@@ -41904,7 +41877,6 @@
 	//=================================================================================
 	// Ability: Burning Oil
 	// Description: "Drenches the Demolisher ammo in burning oil, causing them to light the ground on fire and burn enemy units."
-	// Code Reference: Abof
 	//=================================================================================
 	"orc_burning_oil"
 	{
@@ -41990,7 +41962,6 @@
 	// Description: "Removes all buffs from a target unit, and slows its movement speed by a factor
 	// of <Aprg,DataA1>. Purged units will slowly regain their movement speed over <Aprg,Dur1> seconds.
 	// |n|cffffcc00Deals <Aprg,DataC1> damage to summoned units.|r"
-	// Code Reference: Aprg
 	//=================================================================================
 	"orc_purge"
 	{
@@ -42109,7 +42080,6 @@
 	//=================================================================================
 	// Ability: Lightning Shield
 	// Description: "Forms a shield of electricity around a target unit, dealing <Alsh,DataA1> damage per second to units around it. |nLasts <Alsh,Dur1> seconds."
-	// Code Reference: Alsh
 	//=================================================================================
 	"orc_lightning_shield"
 	{
@@ -42191,7 +42161,6 @@
 	//=================================================================================
 	// Ability: Bloodlust
 	// Description: "Increases a friendly unit's attack rate and movement speed."
-	// Code Reference: Ablo
 	//=================================================================================
 	"orc_bloodlust"
 	{
@@ -42323,8 +42292,6 @@
 	// Description: "Summons an invisible and immovable ward that provides vision in an area.
 	// Can see invisible units.
 	// Lasts <Aeye,Dur1> seconds."
-	// Code Reference: Aeye
-	// NOTE: Back in my days, Sentry Ward wasn't Sentry Ward.
 	//=================================================================================
 	"orc_sentry_ward"
 	{
@@ -42372,7 +42339,6 @@
 	// Description: "Summons an invisible and immovable ward that stuns enemy land units around it.
 	// The trap activates when an enemy land unit approaches and destroys all other stasis wards in its area of effect.
 	// The trap lasts <Asta,Dur1> seconds. |nThe stun lasts <Asta,DataD1> seconds."
-	// Code Reference: Asta
 	//=================================================================================
 	"orc_stasis_trap"
 	{
@@ -42485,8 +42451,6 @@
 	// Ability: Healing Ward
 	// Description: "Summons an immovable ward that heals <Aoar,DataA1,%>% of a nearby friendly non-mechanical unit's hit points per second.
 	// Lasts <Ahwd,Dur1> seconds."
-	// Code Reference: Ahwd
-	// NOTE: Goes with the Healing Ward Aura.
 	//=================================================================================
 	"orc_healing_ward"
 	{
@@ -42546,7 +42510,6 @@
 	//=================================================================================
 	// Ability: Spirit Link
 	// Description: "Links <Aspl,DataB1> units together in a chain. All units with Spirit Link on them will live longer, by distributing <Aspl,DataA1,%>% of the damage they take across other Spirit Linked units. |nLasts <Aspl,Dur1> seconds."
-	// Code Reference: Aspl
 	//=================================================================================
 	"orc_spirit_link"
 	{
@@ -42658,7 +42621,6 @@
 	//=================================================================================
 	// Ability: Disenchant
 	// Description: "Removes all buffs from units in a target area. |n|cffffcc00Deals <Adcn,DataB1> damage to hostile summoned units.|r"
-	// Code Reference: Adis
 	//=================================================================================
 	"orc_disenchant"
 	{
@@ -42720,7 +42682,6 @@
 	//=================================================================================
 	// Ability: Ancestral Spirit
 	// Description: "Raises a fallen non-Hero Tauren from the dead. The Tauren is revived with <Aast,DataA1,%>% of its hit points restored."
-	// Code Reference: Aast
 	//=================================================================================
 	"orc_ancestral_spirit"
 	{
@@ -42783,7 +42744,6 @@
 	//=================================================================================
 	// Ability: Ethereal Form
 	// Description: "Turns the Spirit Walker ethereal, making him immune to physical damage but unable to attack. He can cast spells and will take extra damage from Magic attacks and spells."
-	// Code Reference: Aetf
 	//=================================================================================
 	"orc_ethereal_form"
 	{
@@ -42899,7 +42859,6 @@
 	//=================================================================================
 	// Ability: Corporeal Form
 	// Description: "Removes ethereal form"
-	// Code Reference: Acpf
 	//=================================================================================
 	"orc_corporeal_form"
 	{
@@ -42961,7 +42920,6 @@
 	//=================================================================================
 	// Ability: Ensnare
 	// Description: "Causes a target enemy unit to be bound to the ground so that it cannot move for <Aens,Dur1> seconds. Air units that are ensnared can be attacked as though they were land units."
-	// Code Reference: Aens
 	//=================================================================================
 	"orc_ensnare"
 	{
@@ -43102,7 +43060,6 @@
 	//=================================================================================
 	// Ability: Devour
 	// Description: "Consumes an enemy land unit, slowly digesting it and dealing <Advc,DataC1> damage per second to it. If the Kodo Beast is killed while the consumed unit is still digesting, the unit that was devoured will be released."
-	// Code Reference: Adev and Advc
 	//=================================================================================
 	"orc_devour"
 	{
@@ -43223,7 +43180,6 @@
 	//=================================================================================
 	// Ability: War Drums
 	// Description: "Adds a damage increase to the attacks of nearby friendly units."
-	// Code Reference: Aakb
 	//=================================================================================
 	"orc_war_drums"
 	{
@@ -43284,7 +43240,6 @@
 	//=================================================================================
 	// Ability: Envenomed Spears
 	// Description: "Deals <Aven,DataA1> poison damage per second. |nLasts <Aven,Dur1> seconds."
-	// Code Reference: Aven
 	//=================================================================================
 	"orc_envenomed_spears"
 	{
@@ -43375,7 +43330,6 @@
 	//=================================================================================
 	// Ability: Unstable Concoction
 	// Description: "Causes a powerful explosion that deals <Auco,DataB1> damage to a target air unit, and <Auco,DataD1> damage to nearby enemy air units."
-	// Code Reference: Auco
 	//=================================================================================
 	"orc_unstable_concoction"
 	{
@@ -43471,8 +43425,6 @@
 	//=================================================================================
 	// Ability: Liquid Fire
 	// Description: "Flings a volatile liquid that causes buildings to take damage over time. Buildings that are currently taking damage from Liquid Fire cannot be repaired, and have their attack rate reduced by <Aliq,DataC1,%>%."
-	// Code Reference: Aliq
-	// NOTE: Remember the "cannot be repaired" part.
 	//=================================================================================
 	"orc_liquid_fire"
 	{
@@ -43562,7 +43514,6 @@
 	//=================================================================================
 	// Ability: Pulverize
 	// Description: "Gives a <Awar,DataA1>% chance that an attack will deal <Awar,DataB1> damage to nearby units."
-	// Code Reference: Awar
 	//=================================================================================
 	"orc_pulverize"
 	{
@@ -43719,7 +43670,6 @@
 	//=================================================================================
 	// Ability: Battle Stations
 	// Description: "Causes nearby Peons to run into the Burrow so that they can defend their base."
-	// Code Reference: Abtl
 	//=================================================================================
 	"orc_battle_stations"
 	{
@@ -43873,7 +43823,6 @@
 	//=================================================================================
 	// Ability: Stand Down
 	// Description: "Causes Peons within the Burrow to return to work."
-	// Code Reference: Astd
 	//=================================================================================
 	"orc_stand_down"
 	{
@@ -52962,8 +52911,6 @@
 	//=================================================================================
 	// Ability: Cannibalize
 	// Description: "Consumes a nearby corpse to heal <Acan,DataA1> hit points per second."
-	// Code Reference: Acan
-	// NOTE: I ain't judgin', ya know, stress builds up when you have to scratch trees with your own fingers all day.
 	//=================================================================================
 	"undead_cannibalize"
 	{
@@ -53097,7 +53044,6 @@
 	//=================================================================================
 	// Ability: Web
 	// Description: "Binds a target enemy air unit in webbing, forcing it to the ground. Webbed units can be hit as though they were land units. |nLasts <Aweb,Dur1> seconds."
-	// Code Reference: Aweb
 	//=================================================================================
 	"undead_web"
 	{
@@ -53231,7 +53177,6 @@
 	//=================================================================================
 	// Ability: Burrow
 	// Description: "The Crypt Fiend digs into the ground, becomes invisible, and gains a regeneration rate of <ucrm,regenHP> hit points per second. |nThe Crypt Fiend cannot attack while burrowed."
-	// Code Reference: Abur
 	//=================================================================================
 	"undead_burrow"
 	{
@@ -53321,7 +53266,6 @@
 	//=================================================================================
 	// Ability: Stone Form
 	// Description: "Transforms the Gargoyle into a statue that is immune to spells, gains additional armor and has a regeneration rate of <Astn,DataE1> hit points per second. |nThe Gargoyle cannot attack in this form."
-	// Code Reference: Astn
 	//=================================================================================
 	"undead_stone_form"
 	{
@@ -53455,7 +53399,6 @@
 	//=================================================================================
 	// Ability: Disease Cloud
 	// Description: "Infects nearby enemy living units with Disease Cloud. Disease Cloud deals <Aap1,DataB1> damage per second. |nLasts <Aap1,DataA1> seconds."
-	// Code Reference: Aapl
 	//=================================================================================
 	"undead_disease_cloud"
 	{
@@ -53492,7 +53435,6 @@
 	//=================================================================================
 	// Ability: Disease Cloud
 	// Description: "Infects nearby enemy living units with Disease Cloud. Disease Cloud deals <Aap1,DataB1> damage per second. |nLasts <Aap1,DataA1> seconds."
-	// Code Reference: Aapl
 	//=================================================================================
 	"undead_meat_wagon_disease_cloud"
 	{
@@ -53536,7 +53478,6 @@
 	//=================================================================================
 	// Ability: Get Corpse
 	// Description: "Picks up a nearby corpse for later use."
-	// Code Reference: Amel
 	//=================================================================================
 	"undead_get_corpse"
 	{
@@ -53614,7 +53555,6 @@
 	//=================================================================================
 	// Ability: Drop Corpse
 	// Description: "Drops all corpses for immediate use."
-	// Code Reference: Amed
 	//=================================================================================
 	"undead_drop_corpse"
 	{
@@ -53699,7 +53639,6 @@
 	//=================================================================================
 	// Ability: Raise Dead
 	// Description: "Raises <Arai,DataA1> skeletons from a corpse."
-	// Code Reference: Arai
 	//=================================================================================
 	"undead_raise_dead"
 	{
@@ -53777,7 +53716,6 @@
 	//=================================================================================
 	// Ability: Unholy Frenzy
 	// Description: "Increases the attack rate of a target unit by <Suhf,DataA1,%>%, but drains <Suhf,DataB1> hit points per second. |nLasts <Suhf,Dur1> seconds."
-	// Code Reference: Auhf
 	//=================================================================================
 	"undead_unholy_frenzy"
 	{
@@ -53869,7 +53807,6 @@
 	//=================================================================================
 	// Ability: Cripple
 	// Description: "Reduces movement speed by <Acri,DataA1,%>%, attack rate by <Acri,DataB1,%>%, and damage by <Acri,DataC1,%>% of a target enemy unit. |nLasts <Acri,Dur1> seconds."
-	// Code Reference: Acri
 	//=================================================================================
 	"undead_cripple"
 	{
@@ -54035,7 +53972,6 @@
 	//=================================================================================
 	// Ability: Curse
 	// Description: "Curses a target enemy unit, causing it to have a <Acrs,DataA1,%>% chance to miss on an attack. |nLasts <Acrs,Dur1> seconds."
-	// Code Reference: Acrs
 	//=================================================================================
 	"undead_curse"
 	{
@@ -54153,7 +54089,6 @@
 	//=================================================================================
 	// Ability: Anti-magic Shell
 	// Description: "Creates a barrier that stops <Aam2,DataC1> points of spell damage from affecting a target unit. |nLasts <Aam2,Dur1> seconds."
-	// Code Reference: Aam2
 	//=================================================================================
 	"undead_anti_magic_shell"
 	{
@@ -54226,7 +54161,6 @@
 	//=================================================================================
 	// Ability: Possession
 	// Description: "Stuns a target unit and the Banshee for <Aps2,Dur1> seconds, during which the Banshee takes extra damage from attacks. She then displaces the soul of the enemy, giving you permanent control of it, but destroying the caster's body. |nPossession cannot be used on flying units, Heroes, or creeps above level <Aps2,DataA1>."
-	// Code Reference: Aps2
 	//=================================================================================
 	"undead_possession"
 	{
@@ -54347,7 +54281,6 @@
 	//=================================================================================
 	// Ability: Freezing Breath
 	// Description: "When used on a building, temporarily stops all building activities. |nLasts <Afrz,Dur1> seconds."
-	// Code Reference: Afrz
 	//=================================================================================
 	"undead_freezing_breath"
 	{
@@ -54537,7 +54470,6 @@
 	//=================================================================================
 	// Ability: True Sight
 	// Description: "Reveals nearby invisible units."
-	// Code Reference: Atru
 	//=================================================================================
 	"undead_true_sight"
 	{
@@ -54595,7 +54527,6 @@
 	//=================================================================================
 	// Ability: Frost Attack
 	// Description: "Adds a cold effect to this unit's attacks that slows enemy units' movement speed."
-	// Code Reference: Afra
 	//=================================================================================
 	"undead_frost_attack"
 	{
@@ -54678,7 +54609,6 @@
 	//=================================================================================
 	// Ability: Essence of Blight
 	// Description: "Restores <Arpl,DataA1> hit points to nearby friendly units."
-	// Code Reference: Arpl
 	//=================================================================================
 	"undead_essence_of_blight"
 	{
@@ -54753,7 +54683,6 @@
 	//=================================================================================
 	// Ability: Spirit Touch
 	// Description: "Restores <Arpm,DataB1> mana to nearby friendly units."
-	// Code Reference: Arpm
 	//=================================================================================
 	"undead_spirit_touch"
 	{
@@ -54834,7 +54763,6 @@
 	
 	//=================================================================================
 	// Ability: Destroyer Form
-	// Code Reference: Aave
 	//=================================================================================
 	"undead_destroyer_form"
 	{
@@ -54898,7 +54826,6 @@
 	//=================================================================================
 	// Ability: Absorb Mana
 	// Description: "Takes all mana from one of your units and gives it to the Destroyer."
-	// Code Reference: Aabs
 	//=================================================================================
 	"undead_absorb_mana"
 	{
@@ -54946,7 +54873,6 @@
 	//=================================================================================
 	// Ability: Devour Magic
 	// Description: "Consumes all magical buffs from units in an area. Each unit that is devoured of magic gives the Destroyer <Advm,DataA1> hit points and <Advm,DataB1> mana. |n|cffffcc00Deals <Advm,DataE1> damage to summoned units.|r"
-	// Code Reference: Advm
 	//=================================================================================
 	"undead_devour_magic"
 	{
@@ -55020,7 +54946,6 @@
 	//=================================================================================
 	// Ability: Orb of Annihilation
 	// Description: "Adds <Afak,DataA1> bonus damage to the Destroyer's attack and causes his attacks to do area of effect damage."
-	// Code Reference: Afak
 	//=================================================================================
 	"undead_orb_of_annihilation"
 	{
@@ -55119,7 +55044,6 @@
 	//=================================================================================
 	// Ability: Unsummon Building
 	// Description: "Unsummons your building to regain <Auns,DataA1,%>% of the spent resources."
-	// Code Reference: Auns
 	// The Acolyte casts it on a building and that building gets its health reduced slowly over time until it's destroyed and the resources are received.
 	//=================================================================================
 	"undead_unsummon_building"

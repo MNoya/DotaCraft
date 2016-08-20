@@ -1,7 +1,6 @@
 //=================================================================================
 // Ability: Detonate
 // Description: "Destroys the Wisp, dispelling all magical buffs and draining <Adtn,DataA1> mana from each unit in an area around the Wisp. |n|cffffcc00Deals <Adtn,DataB1> damage to summoned units.|r"
-// Code Reference: Adtn
 //=================================================================================
 "nightelf_detonate"
 {
@@ -60,7 +59,6 @@
 //=================================================================================
 // Ability: Shadow Meld
 // Description: "Stops the unit from auto-acquiring enemies, allowing it to Shadowmeld and remain unseen at night."
-// Code Reference: Ashm
 //=================================================================================
 "nightelf_shadow_meld"
 {
@@ -244,7 +242,6 @@
 //=================================================================================
 // Ability: Elunes Grace
 // Description: "Reduces the damage taken from Piercing attacks to <Aegr,DataA1,%>%, and spells and Magic attacks to <Aegr,DataE1,%>%."
-// Code Reference: Aegr
 //=================================================================================
 "nightelf_elunes_grace"
 {
@@ -288,7 +285,6 @@
 //=================================================================================
 // Ability: Sentinel
 // Description: "Send an owl to a nearby tree to reveal the area around it. |nCan see invisible units."
-// Code Reference: Aesn
 //=================================================================================
 "nightelf_sentinel"
 {
@@ -525,7 +521,6 @@
 //=================================================================================
 // Ability: Slow Poison
 // Description: "A poison attack that deals <Aspo,DataA1> damage per second, and slows the target enemy's movement by <Aspo,DataB1,%>% and attack by <Aspo,DataC1,%>% for <Aspo,Dur1> seconds."
-// Code Reference: Aspo
 //=================================================================================
 "nightelf_slow_poison"
 {
@@ -642,7 +637,6 @@
 //=================================================================================
 // Ability: Abolish Magic
 // Description: "Dispels positive buffs from enemy units, and negative buffs from friendly units. |n|cffffcc00Deals <Aadm,DataB1> damage to summoned units.|r"
-// Code Reference: Aadm
 //=================================================================================
 "nightelf_abolish_magic"
 {
@@ -726,7 +720,6 @@
 //=================================================================================
 // Ability: Spell Immunity
 // Description: "Renders this unit immune to all spells."
-// Code Reference: Amim
 //=================================================================================
 "nightelf_spell_immunity"
 {
@@ -740,7 +733,6 @@
 //=================================================================================
 // Ability: Roar
 // Description: "Gives friendly nearby units a <Ara2,DataA1,%>% bonus to damage. |nLasts <Ara2,Dur1> seconds."
-// Code Reference: Aroa
 //=================================================================================
 "nightelf_roar"
 {
@@ -851,7 +843,6 @@
 //=================================================================================
 // Ability: Rejuvenation
 // Description: "Heals a target friendly unit for <Arej,DataA1> hit points over <Arej,Dur1> seconds."
-// Code Reference: Arej
 //=================================================================================
 "nightelf_rejuvenation"
 {
@@ -938,7 +929,6 @@
 //=================================================================================
 // Ability: Bear Form
 // Description: "Transforms the Druid into a bear, slowing mana regeneration, but making him an excellent warrior."
-// Code Reference: Abrf
 //=================================================================================
 "nightelf_bear_form"
 {
@@ -1174,7 +1164,6 @@
 //=================================================================================
 // Ability: Taunt
 // Description: "The closest <Atau,DataA1> enemies are forced to attack this unit."
-// Code Reference: Atau
 //=================================================================================
 "nightelf_taunt"
 {
@@ -1231,7 +1220,6 @@
 //=================================================================================
 // Ability: War Club
 // Description: "Picks up a tree to give the Mountain Giant Siege damage, and increased attack range. |nLasts for <Agra,DataE1> strikes."
-// Code Reference: Agra
 //=================================================================================
 "nightelf_war_club"
 {
@@ -1334,7 +1322,6 @@
 //=================================================================================
 // Ability: Hardened Skin
 // Description: "Reduces all attacks on the Mountain Giant by <Assk,DataC1> damage."
-// Code Reference: Assk
 //=================================================================================
 "nightelf_hardened_skin"
 {
@@ -1371,7 +1358,6 @@
 //=================================================================================
 // Ability: Resistant Skin
 // Description: "Reduces the duration of negative spells and renders the Mountain Giant immune to certain spells."
-// Code Reference: Arsk
 //=================================================================================
 "nightelf_resistant_skin"
 {
@@ -1392,7 +1378,6 @@
 //=================================================================================
 // Ability: Pick up Archer
 // Description: "Picks up an Archer so that the Archer can attack from the air. |n|n|cffffcc00Attacks land and air units.|r"
-// Code Reference: Aco3
 //=================================================================================
 "nightelf_pick_up_archer"
 {
@@ -1482,7 +1467,6 @@
 //=================================================================================
 // Ability: Mount Hippogryph
 // Description: "Mounts a Hippogryph so that the Archer can attack from the air. |n|n|cffffcc00Attacks land and air units.|r"
-// Code Reference: Aco2
 //=================================================================================
 "nightelf_mount_hippogryph"
 {
@@ -1518,7 +1502,6 @@
 //=================================================================================
 // Ability: Dismount
 // Description: "Dismounts the Archer from the Hippogryph."
-// Code Reference: Adec
 //=================================================================================
 "nightelf_dismount"
 {
@@ -1583,7 +1566,6 @@
 //=================================================================================
 // Ability: Faerie Fire
 // Description: "Reduces a target enemy unit's armor by <Afae,DataA1> and gives vision of that unit. |nLasts <Afae,Dur1> seconds."
-// Code Reference: Afae
 //=================================================================================
 "nightelf_faerie_fire"
 {
@@ -1688,7 +1670,6 @@
 //=================================================================================
 // Ability: Storm Crow Form
 // Description: "Transforms the Druid into a storm crow, giving him the ability to fly."
-// Code Reference: Arav
 //=================================================================================
 "nightelf_storm_crow_form"
 {
@@ -1899,7 +1880,6 @@
 //=================================================================================
 // Ability: Cyclone
 // Description: "Tosses a target non-mechanical enemy unit into the air, rendering it unable to move, attack or cast spells, and stopping others from attacking or casting on it. |nLasts <Acyc,Dur1> seconds."
-// Code Reference: Acyc
 //=================================================================================
 "nightelf_cyclone"
 {
@@ -1970,7 +1950,6 @@
 //=================================================================================
 // Ability: Phase Shift
 // Description: "Causes this unit to shift out of existence whenever it takes damage, temporarily avoiding any further damage. |nLasts <Apsh,Dur1> second."
-// Code Reference: Apsh
 //=================================================================================
 "nightelf_phase_shift"
 {
@@ -2089,7 +2068,6 @@
 //=================================================================================
 // Ability: Mana Flare
 // Description: "Causes the Faerie Dragon to channel negative magical energies that damage nearby enemies when they cast spells. Also increases the Faerie Dragon's armor by <Amfl,DataE1>. |nLasts <Amfl,Dur1> seconds."
-// Code Reference: Amfl
 //=================================================================================
 "nightelf_mana_flare"
 {
@@ -2212,7 +2190,6 @@
 //=================================================================================
 // Ability: Corrosive Breath
 // Description: "Hurls a ball of corrosive bile that is effective against buildings."
-// Code Reference: Acor
 //=================================================================================
 "nightelf_corrosive_breath"
 {
@@ -2334,7 +2311,6 @@
 // Ability: Root
 // Description: "Burrows the Ancient's roots into the ground, rendering it immobile, but allowing it to build units. 
 // For the Ancient Protector, this allows it to hurl enormous rocks through the air to damage enemy units. Also gives the Ancient Fortified armor."
-// Code Reference: Aroo
 //=================================================================================
 "nightelf_root"
 {
@@ -2651,7 +2627,6 @@
 //=================================================================================
 // Ability: Eat Tree
 // Description: "Consume a tree to restore <Aeat,DataC1> hit points over <Aeat,Dur1> seconds."
-// Code Reference: Aeat
 //=================================================================================
 "nightelf_eat_tree"
 {
