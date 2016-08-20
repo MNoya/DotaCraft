@@ -25,9 +25,8 @@ function Units:Init( unit )
     local bBuilder = IsBuilder(unit)
     local bBuilding = IsCustomBuilding(unit)
     if bBuilder then
-        unit.oldIdle = unit.IsIdle
         function unit:IsIdle()
-            return unit:oldIdle() and unit.state == "idle"
+            return not unit:IsMoving() and unit.state == "idle"
         end
     end
 

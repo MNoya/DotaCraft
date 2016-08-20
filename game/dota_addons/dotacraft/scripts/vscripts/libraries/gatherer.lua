@@ -46,6 +46,7 @@ function Gatherer:start()
     -- Game Event Listeners
     ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(Gatherer, 'OnGameRulesStateChange'), self)
     ListenToGameEvent('npc_spawned', Dynamic_Wrap(Gatherer, 'OnNPCSpawned'), self)
+    ListenToGameEvent('entity_killed', Dynamic_Wrap(Gatherer, 'OnEntityKilled'), self)
     ListenToGameEvent('tree_cut', Dynamic_Wrap(Gatherer, 'OnTreeCut'), self)
 
     -- Panorama Event Listeners
@@ -141,6 +142,13 @@ function Gatherer:OnNPCSpawned(event)
     local npc = EntIndexToHScript(event.entindex)
     if npc:IsGatherer() then
         Gatherer:Init(npc)
+    end
+end
+
+function Gatherer:OnEntityKilled(event)
+    local killed = EntIndexToHScript(event.entindex_killed)
+    if IsValidEntity(killed) and killed:IsGatherer() then
+        killed:CancelGather()
     end
 end
 
@@ -252,8 +260,19 @@ function Gatherer:OnGoldMineClick(event)
     local queue = event.queue == 1
     local unit = EntIndexToHScript(entityIndex)
 
-    Gatherer:print("OnGoldMineClick!")
+    Gatherer:print("OnGoldMineClick! "..gold_mine:GetUnitName())
 
+    if gold_mine:GetUnitName() == "undead_haunted_gold_mine" then
+        local mine = gold_mine.mine
+        if not mine:HasRoomForGatherer() then
+            if gold_mine:GetHealthDeficit() > 0 then
+                BuildingHelper:RepairCommand({PlayerID = playerID, targetIndex = targetIndex})
+            else
+                SendErrorMessage(playerID, "error_haunted_gold_mine_full")
+            end
+            return
+        end
+    end
     unit:GatherFromNearestGoldMine(gold_mine)
 end
 
@@ -668,7 +687,11 @@ function Gatherer:InitGoldMines()
             end
             if free_pos then
                 gold_mine.gatherers[free_pos] = unit
-                print("Added Gatherer, currently ", TableCount(gold_mine.gatherers))
+                local count = TableCount(gold_mine.gatherers)
+                Gatherer:print("Added Gatherer, currently "..count)
+                if IsValidEntity(gold_mine.building_on_top) then
+                    gold_mine:SetCounter(count)
+                end
                 return free_pos
             else
                 return false
@@ -679,7 +702,12 @@ function Gatherer:InitGoldMines()
             for k,v in pairs(gold_mine.gatherers) do
                 if v == unit then
                     gold_mine.gatherers[k] = nil
-                    print("Removed Gatherer currently ", TableCount(gold_mine.gatherers))
+                    local count = TableCount(gold_mine.gatherers)
+                    Gatherer:print("Removed Gatherer, currently "..count)
+
+                    if IsValidEntity(gold_mine.building_on_top) then
+                        gold_mine:SetCounter(count)
+                    end
                     break
                 end
             end
@@ -687,7 +715,7 @@ function Gatherer:InitGoldMines()
 
         function gold_mine:SetCounter(count)
             local building_on_top = gold_mine.building_on_top
-            print("SetGoldMineCounter ",count)
+            Gatherer:print("Set Gold MineCounter to "..count)
 
             for i=1,count do
                 --print("Set ",i," turned on")

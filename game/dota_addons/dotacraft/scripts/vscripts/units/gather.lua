@@ -78,15 +78,14 @@ function Gather( event )
 
     -- For gathering without a return ability
     event:OnLumberGained(function(value)
-        Gatherer:print("Gained "..value.." lumber")
+        --Gatherer:print("Gained "..value.." lumber")
         Players:ModifyLumber(playerID, value)
         PopupLumber(caster, value)
         Scores:IncrementLumberHarvested(playerID, value)
     end)
 
     event:OnTreeDamaged(function(tree)
-        Gatherer:print("OnTreeDamaged: "..tree.health)
-
+        --Gatherer:print("OnTreeDamaged: "..tree.health)
         caster:StartGesture(ACT_DOTA_ATTACK)
 
         -- Hit particle
@@ -112,6 +111,9 @@ function Gather( event )
 
     event:OnGoldMineReached(function(mine)
         Gatherer:print("Gold Mine reached")
+        if IsValidEntity(mine.building_on_top) and not mine:HasRoomForGatherer() then
+            caster:CancelGather()
+        end
     end)
 
     event:OnGoldMineFree(function(mine)
@@ -172,16 +174,12 @@ function Gather( event )
                     PlayerResource:RemoveFromSelection(playerID, caster)
                 end
             end
-
-            -- Particle Counter on overhead
-            counter = #mine:GetGatherers()
-            mine:SetCounter(counter)
         end
     end)
 
     -- For gathering without return
     event:OnGoldGained(function(value, mine)
-        Gatherer:print("Gained "..value.." gold from "..mine:GetUnitName().." "..mine:GetEntityIndex())
+        --Gatherer:print("Gained "..value.." gold from "..mine:GetUnitName().." "..mine:GetEntityIndex())
         if IsValidEntity(mine.building_on_top) then
             mine.building_on_top:SetMana(mine:GetHealth())
         end

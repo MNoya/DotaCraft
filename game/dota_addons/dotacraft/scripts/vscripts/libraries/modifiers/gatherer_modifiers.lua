@@ -27,7 +27,7 @@ modifier_gatherer_hidden = class({})
 function modifier_gatherer_hidden:CheckState()
     return {
         [MODIFIER_STATE_NO_UNIT_COLLISION] = true,
-        [MODIFIER_STATE_INVULNERABLE] = true,
+        [MODIFIER_STATE_INVULNERABLE] = self.restricted,
         [MODIFIER_STATE_ROOTED] = true,
         [MODIFIER_STATE_DISARMED] = true,
         [MODIFIER_STATE_NOT_ON_MINIMAP] = true,
