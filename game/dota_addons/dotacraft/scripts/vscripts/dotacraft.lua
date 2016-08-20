@@ -984,7 +984,9 @@ function dotacraft:OnEntityKilled( event )
 
         -- Cleanup building tables
         Players:RemoveStructure( killed_playerID, killed )
-        killed:AddNoDraw()
+        if not killed:HasDeathAnimation() then
+            killed:AddNoDraw()
+        end
 
         if attacker_playerID and attacker_playerID ~= -1 and attacker_playerID ~= killed_playerID then
             Scores:IncrementBuildingsRazed( attacker_playerID, killed )

@@ -532,6 +532,10 @@ function CDOTA_BaseNPC:HasSplashAttack()
     return self:GetKeyValue("SplashAttack")
 end
 
+function CDOTA_BaseNPC:HasDeathAnimation()
+    return self:GetKeyValue("HasDeathAnimation")
+end
+
 function CDOTA_BaseNPC:IsDummy()
     return self:GetUnitName():match("dummy_") or self:GetUnitLabel():match("dummy")
 end
