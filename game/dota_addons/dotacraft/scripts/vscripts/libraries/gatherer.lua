@@ -907,6 +907,11 @@ function Gatherer:Init(unit)
         unit:SetModifierStackCount(modifierName, unit, value)
     end
 
+    function unit:RemoveCarriedResource(resource_name)
+        unit[resource_name.."_gathered"] = 0
+        unit:RemoveModifierByName("modifier_carrying_"..resource_name)
+    end
+
     -- Carrying capacity can be enhanced by upgrades, in that case the ability must have a lumber_capacity AbilitySpecial
     function unit:GetLumberCapacity()
         return unit.GatherAbility and unit.GatherAbility:GetLevelSpecialValueFor("lumber_capacity", unit.GatherAbility:GetLevel()-1) or 0
@@ -942,6 +947,10 @@ function Gatherer:Init(unit)
         Gatherer:print("StartGatheringLumber - Gain "..lumber_per_interval.." lumber every "..lumber_interval.." seconds")
         unit:Stop()
         unit:SetForwardVector((tree:GetAbsOrigin() - unit:GetAbsOrigin()):Normalized())
+
+        -- Drop any gold
+        unit:RemoveCarriedResource("gold")
+
         unit.gatherer_timer = Timers:CreateTimer(lumber_interval, function()
             unit:SetForwardVector((tree:GetAbsOrigin() - unit:GetAbsOrigin()):Normalized())
             if damage_to_tree then
@@ -993,6 +1002,9 @@ function Gatherer:Init(unit)
         unit:AddNewModifier(unit, nil, "modifier_gatherer_hidden", {restricted=not unit:GetKeyValue("GoldMineControllable")})
         unit.gatherer_state = "gathering_gold"
         
+        -- Drop any lumber
+        unit:RemoveCarriedResource("lumber")
+
         unit.gatherer_timer = Timers:CreateTimer(gold_interval, function()
             local gold_gain = gold_per_interval
             if damage_to_mine then

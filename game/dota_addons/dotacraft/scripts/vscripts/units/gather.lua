@@ -262,13 +262,12 @@ function ReturnResources( event )
     event:OnLumberDepositReached(function(building)
         Gatherer:print("Lumber deposit reached: ".. building:GetUnitName())
         local lumber_gathered = caster:GetModifierStackCount("modifier_carrying_lumber",caster)
-        caster:RemoveModifierByName("modifier_carrying_lumber")
+        caster:RemoveCarriedResource("lumber")
         if lumber_gathered > 0 then
             PopupLumber(caster, lumber_gathered)
             Players:ModifyLumber(playerID, lumber_gathered)
             Scores:IncrementLumberHarvested( playerID, lumber_gathered)
         end
-        caster.lumber_gathered = 0
     end)
 
     event:OnGoldDepositReached(function(building)
@@ -277,14 +276,12 @@ function ReturnResources( event )
         local upkeep = Players:GetUpkeep( playerID )
         local gold_gain = caster.gold_gathered * upkeep
 
-        caster:RemoveModifierByName("modifier_carrying_gold")
+        caster:RemoveCarriedResource("gold")
         Scores:IncrementGoldMined(playerID, caster.gold_gathered)
         Scores:AddGoldLostToUpkeep(playerID, caster.gold_gathered - gold_gain)
 
         Players:ModifyGold(playerID, gold_gain)
         PopupGoldGain(caster, gold_gain)
-
-        caster.gold_gathered = 0
     end)
 end
 
