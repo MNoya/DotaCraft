@@ -237,7 +237,7 @@ function OnLeftButtonPressed() {
             // Hero or unit with inventory
             if (UnitCanPurchase(mainSelected))
             {
-                GameEvents.SendCustomGameEventToServer("shop_active_order", { shop: targetIndex, unit: mainSelected, targeted: true})
+                GameEvents.SendCustomGameEventToServer("shop_active_order", {shop: targetIndex, unit: mainSelected, targeted: true})
                 return true
             }
         }
@@ -381,7 +381,7 @@ function OnReleaseRotateLeft() {
 function RotateTimerLeft() {
     if (rotatingLeft) {
         angle-=1
-        GameUI.SetCameraYaw( angle);
+        GameUI.SetCameraYaw(angle);
         $.Schedule(1/60, RotateTimerLeft)
     }
 }
@@ -399,7 +399,7 @@ function OnReleaseRotateRight() {
 function RotateTimerRight() {
     if (rotatingRight) {
         angle+=1
-        GameUI.SetCameraYaw( angle);
+        GameUI.SetCameraYaw(angle);
         $.Schedule(1/60, RotateTimerRight)
     }
 }

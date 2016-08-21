@@ -194,7 +194,6 @@ function dotacraft:MapOverview(playerID, distance)
     SendToServerConsole("fog_enable 0")
     SendToServerConsole("dota_hud_healthbars 0")
 
-    dotacraft.center_unit:AddNoDraw()
     Timers:CreateTimer(0.1, function()
         CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "map_overview", {distance = distance})
     end)

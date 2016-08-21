@@ -2568,14 +2568,18 @@ function BuildingHelper:IsInsideEntityBounds(entity, location)
     local max = bounds.Maxs
     local X = location.x
     local Y = location.y
+    local Z = GetGroundPosition(location,nil).z
     local minX = min.x + origin.x
     local minY = min.y + origin.y
+    local minZ = min.z + origin.z
     local maxX = max.x + origin.x
     local maxY = max.y + origin.y
+    local maxZ = max.z + origin.z
     local betweenX = X >= minX and X <= maxX
     local betweenY = Y >= minY and Y <= maxY
+    local betweenZ = Z >= minZ and Z <= maxZ
 
-    return betweenX and betweenY
+    return betweenX and betweenY and betweenZ
 end
 
 -- In case a height restriction was defined, checks if the location passes the height test
