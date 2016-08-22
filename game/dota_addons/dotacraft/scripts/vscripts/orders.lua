@@ -1,5 +1,5 @@
-SQUARE_FACTOR = 1.3 --1 is a perfect square, higher numbers will increase the units per row
-UNIT_FORMATION_DISTANCE = 130
+UNIT_FORMATION_DISTANCE = 150
+UNIT_FORMATION_DISTANCE_LARGE = 400
 DEBUG = false
 
 function dotacraft:FilterExecuteOrder( filterTable )
@@ -39,11 +39,11 @@ function dotacraft:FilterExecuteOrder( filterTable )
             if unit and IsValidEntity(unit) then
                 unit.current_order = order_type -- Track the last executed order
                 unit.orderTable = filterTable -- Keep the whole order table, to resume it later if needed
-                
-                if not unit:IsBuilding() and not IsCustomBuilding(unit) then
-                    numUnits = numUnits + 1
-                elseif unit:IsBuilding() or IsCustomBuilding(unit) then
+                local bBuilding = IsCustomBuilding(unit) and not IsUprooted(unit)
+                if bBuilding then
                     numBuildings = numBuildings + 1
+                else
+                    numUnits = numUnits + 1
                 end
             end
         end
@@ -365,23 +365,28 @@ function dotacraft:FilterExecuteOrder( filterTable )
     ------------------------------------------------
     if (order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or order_type == DOTA_UNIT_ORDER_ATTACK_MOVE) and numUnits > 1 then
 
-        -- Get buildings out of the units table
-        local _units = {}
+        -- Get buildings out of the units table, separate ground units from flyers
+        local ground_units = {}
+        local flying_units = {}
         for _,unit_index in pairs(units) do 
             local unit = EntIndexToHScript(unit_index)
-            if unit and not IsCustomBuilding(unit) then
-                _units[#_units+1] = unit_index
+            if unit and (not IsCustomBuilding(unit) or IsUprooted(unit)) then
+                if unit:IsFlyingUnit() then
+                    flying_units[#flying_units+1] = unit_index
+                else
+                    ground_units[#ground_units+1] = unit_index
+                end
             end
         end
-        -- Filter channeling units
+        -- Filter channeling units (only ground units)
         local non_channeling = {}
-        for _,unit_index in pairs(_units) do
+        for _,unit_index in pairs(ground_units) do
             if not IsChanneling(EntIndexToHScript(unit_index)) then
                 non_channeling[#non_channeling+1] = unit_index
             end
         end
         if #non_channeling == 0 then -- If all units are channeling, move them all
-            units = _units
+            units = ground_units
         else
             units = non_channeling -- Ignore channeling units for the move order
         end
@@ -392,6 +397,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
         local point = Vector(x,y,z) -- initial goal
         MoveUnitsInGrid(units, point, order_type, queue)
+        MoveUnitsInGrid(flying_units, point, order_type, queue)
         
         return false
     end
@@ -651,11 +657,12 @@ function RepositionAroundRallyPoint(unit, building, point)
     local radius = UNIT_FORMATION_DISTANCE*1.2
     local units = {}
 
+    local moveCapability = unit:GetKeyValue("MovementCapabilities")
     local allies = FindAlliesInRadius(unit, radius, point)
     if allies[1] then
         local grouped_allies = GetUnitGroupWithin(allies[1], radius)      
         for _,v in pairs(grouped_allies) do
-            if v:GetPlayerOwnerID() == playerID and v:IsIdle() and not IsCustomBuilding(v) then
+            if v:GetPlayerOwnerID() == playerID and v:IsIdle() and not IsCustomBuilding(v) and v:GetKeyValue("MovementCapabilities") == moveCapability then
                 units[#units+1] = v:GetEntityIndex()
             end
         end
@@ -736,102 +743,171 @@ function CreateRallyFlagForBuilding( building )
 end
 
 function MoveUnitsInGrid(units, point, order_type, queue, forward)
-    local navPoints = {}
+    if not units[1] then return end
     local first_unit = EntIndexToHScript(units[1])
     local origin = first_unit:GetAbsOrigin()
-
-    if DEBUG then DebugDrawCircle(point, Vector(255,0,0), 100, 18, true, 3) end
-
-    local numUnits = #units
-    if numUnits == 1 then return ExecuteOrderFromTable({UnitIndex = units[1], OrderType = order_type, Position = point, Queue = queue}) end
-    local unitsPerRow = math.floor(math.sqrt(numUnits/SQUARE_FACTOR))
-    local unitsPerColumn = math.floor((numUnits / unitsPerRow))
-    local remainder = numUnits - (unitsPerRow*unitsPerColumn) 
-    --print(numUnits.." units = "..unitsPerRow.." rows of "..unitsPerColumn.." with a remainder of "..remainder)
-
-    local start = (unitsPerColumn-1)* -.5
-
-    local curX = start
-    local curY = 0
-
-    local offsetX = UNIT_FORMATION_DISTANCE
-    local offsetY = UNIT_FORMATION_DISTANCE
     local forward = forward or (point-origin):Normalized()
     if forward.x == 0 then forward.x = 0.5 end
     if forward.y == 0 then forward.y = 0.5 end
     local right = RotatePosition(Vector(0,0,0), QAngle(0,90,0), forward)
 
-    for i=1,unitsPerRow do
-      for j=1,unitsPerColumn do
-        local newPoint = point + (curX * offsetX * right) + (curY * offsetY * forward)
-        --print ('grid point (' .. curX .. ', ' .. curY .. '): '..VectorString(newPoint))
-        if DEBUG then 
-            DebugDrawCircle(newPoint, Vector(0,0,0), 255, 25, true, 5)
-            DebugDrawText(newPoint, curX .. ', ' .. curY, true, 10) 
-        end
-        navPoints[#navPoints+1] = newPoint
-        curX = curX + 1
-      end
-      curX = start
-      curY = curY - 1
-    end
-
-    local curX = ((remainder-1) * -.5)
-
-    for i=1,remainder do 
-        --print ('grid point (' .. curX .. ', ' .. curY .. ')')
-        local newPoint = point + (curX * offsetX * right) + (curY * offsetY * forward)
-        if DEBUG then 
-            DebugDrawCircle(newPoint, Vector(0,0,255), 255, 25, true, 5)
-            DebugDrawText(newPoint, curX .. ', ' .. curY, true, 10) 
-        end
-        navPoints[#navPoints+1] = newPoint
-        curX = curX + 1
-    end
-
-    for i=1,#navPoints do 
-        local point = navPoints[i]
-        --print(i,navPoints[i])
-    end
-
-    -- Sort the units by distance to the nav points
-    sortedUnits = {}
-    for i=1,#navPoints do
-        local point = navPoints[i]
-        local closest_unit_index = GetClosestUnitToPoint(units, point)
-        if closest_unit_index then
-            --print("Closest to point is ",closest_unit_index," - inserting in table of sorted units")
-            table.insert(sortedUnits, closest_unit_index)
-
-            --print("Removing unit of index "..closest_unit_index.." from the table:")
-            table.remove(units, getIndexTable(units, closest_unit_index))
+    -- Each formation rank uses its own block
+    -- Max length of each block row is based on total number of units in the whole group
+    local usedRows = 0
+    local N = #units
+    local unitsRank = {}
+    local numUnitsPerRank = {}
+    local maxColumns = 0
+    for i=0,5 do
+        unitsRank[i] = GetUnitsWithFormationRank(units, i)
+        if unitsRank[i] then
+            numUnitsPerRank[i] = #unitsRank[i]
+            local r,c = GetRowsAndColumns(numUnitsPerRank[i], N)
+            if c > maxColumns then
+                maxColumns = c
+            end
         end
     end
 
-    -- Sort the units by rank (1)
-    unitsByRank = {}
-    for i=0,4 do
-        local units = GetUnitsWithFormationRank(sortedUnits, i)
-        if units then
-            unitsByRank[i] = units
-        end
-    end
+    for rank,unitsByRank in pairs(unitsRank) do
+        if DEBUG then DebugDrawCircle(point, Vector(255,0,0), 100, 18, true, 3) end
+        local numUnits = numUnitsPerRank[rank]
+        local rows = 1
+        local columns = 1
+        local remainderFactor = 1
+        
+        local offsetX = UNIT_FORMATION_DISTANCE
+        local offsetY = UNIT_FORMATION_DISTANCE
 
-    -- Order each unit sorted to move to its respective Nav Point
-    local n = 0
-    for i=0,4 do
-        if unitsByRank[i] then
-            for _,unit_index in pairs(unitsByRank[i]) do
+        -- Move the center backwards on the number of rows created 
+        local center
+        if rank == 5 then -- Ancients take a larger area
+            offsetX = UNIT_FORMATION_DISTANCE_LARGE
+            offsetY = UNIT_FORMATION_DISTANCE_LARGE
+            center = point - UNIT_FORMATION_DISTANCE * usedRows * forward - UNIT_FORMATION_DISTANCE_LARGE/3 * forward
+        else
+            center = point - UNIT_FORMATION_DISTANCE * usedRows * forward
+        end
+
+        if numUnits == 1 then 
+            ExecuteOrderFromTable({UnitIndex = unitsByRank[1], OrderType = order_type, Position = center, Queue = queue})
+        else
+            local navPoints = {}
+            local squareFactor = 1
+
+            -- Handle specific layouts considering the max number of columns of the group
+            rows,columns = GetRowsAndColumnsForMaxColumns(numUnits, N, maxColumns)
+
+            -- Adjust for max width of the group
+            local row_len = offsetX * (maxColumns-1)
+            if columns ~= maxColumns then
+                local sub_row_len = offsetX * (columns-1)
+                local rowFactor = row_len/sub_row_len
+                if rowFactor > 0 then
+                    offsetX = offsetX * rowFactor
+                end
+            end
+
+            -- Adjust remainder offset
+            local remainder = numUnits - (rows*columns)   
+            local rem_len = offsetX * (remainder-1)  --length of remainder
+            if rem_len > 0 then
+                remainderFactor = row_len/rem_len
+            end
+
+            --print("[Formation Rank "..rank.."] "..numUnits.." units: "..rows.."x"..columns.." with a remainder of "..remainder)
+
+            -- Main Grid
+            local start = (columns-1)* -.5
+            local curX = start
+            local curY = 0
+            for i=1,rows do
+                for j=1,columns do
+                    local newPoint = center + (curX * offsetX * right) + (curY * offsetY * forward)
+                    if DEBUG then 
+                        DebugDrawCircle(newPoint, Vector(0,0,0), 255, 25, true, 5)
+                        DebugDrawText(newPoint, curX .. ', ' .. curY, true, 10) 
+                    end
+                    navPoints[#navPoints+1] = newPoint
+                    curX = curX + 1
+                end
+                curX = start
+                curY = curY - 1
+            end
+
+            -- Remainder Grid
+            local curX = ((remainder-1) * -.5)
+            offsetX = offsetX * remainderFactor -- Distribute across all the main grid length
+            for i=1,remainder do
+                local newPoint = center + (curX * offsetX * right) + (curY * offsetY * forward)
+                if DEBUG then 
+                    DebugDrawCircle(newPoint, Vector(0,0,255), 255, 25, true, 5)
+                    DebugDrawText(newPoint, curX .. ', ' .. curY, true, 10) 
+                end
+                navPoints[#navPoints+1] = newPoint
+                curX = curX + 1
+            end
+            if remainder > 0 then
+                usedRows = usedRows + 1
+            end
+
+            -- Sort the units by distance to the nav points
+            local sortedUnits = {}
+            for i=1,#navPoints do
+                local closest_unit_index = GetClosestUnitToPoint(unitsByRank, navPoints[i])
+                if closest_unit_index then
+                    --print("Closest to point is ",closest_unit_index," - inserting in table of sorted units")
+                    table.insert(sortedUnits, closest_unit_index)
+
+                    --print("Removing unit of index "..closest_unit_index.." from the table:")
+                    table.remove(unitsByRank, getIndexTable(unitsByRank, closest_unit_index))
+                end
+            end
+
+            -- Order each unit sorted to move to its respective Nav Point
+            local n = 0
+            for _,unit_index in pairs(sortedUnits) do
                 local unit = EntIndexToHScript(unit_index)
                 --print("Issuing a New Movement Order to unit index: ",unit_index)
 
-                local pos = navPoints[tonumber(n)+1]
-                --print("Unit Number "..n.." moving to ", pos)
+                local pos = navPoints[n+1]
+                --print("Unit Number "..n.." moving to "..VectorString(pos))
                 n = n+1
                 
                 ExecuteOrderFromTable({UnitIndex = unit_index, OrderType = order_type, Position = pos, Queue = queue})
             end
         end
+        usedRows = usedRows + rows
+    end
+end
+
+function GetRowsAndColumns(numUnits, total)
+    local squareFactor = 1
+    if numUnits == 4 and total > 4 then
+        return 1,4
+    elseif numUnits == 5 then
+        return 1,3
+    elseif numUnits == 7 then
+        return 2,3
+    elseif numUnits == 10 or numUnits == 1 then
+        return 2,4
+    else
+        if numUnits > 12 then
+            squareFactor = 1.3
+        end
+        local rows = math.floor(math.sqrt(numUnits/squareFactor))
+        local columns = math.floor(numUnits / rows)
+        return rows,columns
+    end
+end
+
+function GetRowsAndColumnsForMaxColumns(numUnits, total, numColumns)
+    if numColumns <= 4 then
+        return GetRowsAndColumns(numUnits, total)
+    else
+        local rows = math.floor(math.sqrt(numUnits/1.3))
+        local columns = math.min(numUnits, numColumns)
+        return rows,columns
     end
 end
 
