@@ -9,6 +9,14 @@ end
 
 --------------------------------------------------------------------------------
 
+neutral_devotion_aura = class({})
+
+function neutral_devotion_aura:GetIntrinsicModifierName()
+    return "modifier_devotion_aura"
+end
+
+--------------------------------------------------------------------------------
+
 modifier_devotion_aura = class({})
 
 function modifier_devotion_aura:IsAura()

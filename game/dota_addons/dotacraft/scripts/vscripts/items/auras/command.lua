@@ -14,6 +14,14 @@ end
 
 --------------------------------------------------------------------------------
 
+neutral_command_aura = class({})
+
+function neutral_command_aura:GetIntrinsicModifierName()
+    return "modifier_command_aura"
+end
+
+--------------------------------------------------------------------------------
+
 modifier_command_aura = class({})
 
 function modifier_command_aura:IsAura()

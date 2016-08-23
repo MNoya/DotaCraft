@@ -9,6 +9,14 @@ end
 
 --------------------------------------------------------------------------------
 
+neutral_thorns_aura = class({})
+
+function neutral_thorns_aura:GetIntrinsicModifierName()
+    return "modifier_thorns_aura"
+end
+
+--------------------------------------------------------------------------------
+
 modifier_thorns_aura = class({})
 
 function modifier_thorns_aura:IsAura()
@@ -68,7 +76,7 @@ function modifier_thorns_aura_buff:OnAttacked(event)
     if target == self:GetParent() then
         local attacker = event.attacker
         -- Apply the damage only to ranged attacker
-        if not IsCustomBuilding(attacker) and not attacker:IsRangedAttacker() and self:GetParent():IsOpposingTeam(target:GetTeamNumber()) then
+        if not IsCustomBuilding(attacker) and not attacker:IsRangedAttacker() and self:GetParent():IsOpposingTeam(attacker:GetTeamNumber()) then
             local ability = self:GetAbility()
             local return_damage = ability:GetSpecialValueFor("melee_damage_return") * event.damage * 0.01
             local abilityDamageType = ability:GetAbilityDamageType()
@@ -80,6 +88,10 @@ function modifier_thorns_aura_buff:OnAttacked(event)
             ParticleManager:SetParticleControlEnt(particle, 1, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)
         end
     end
+end
+
+function modifier_thorns_aura_buff:IsHidden()
+    return true
 end
 
 function modifier_thorns_aura_buff:IsPurgable()
