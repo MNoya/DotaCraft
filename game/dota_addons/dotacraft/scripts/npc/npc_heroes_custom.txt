@@ -1041,15 +1041,16 @@
 	// Creature: Pit Lord
 	// Warrior Hero, adept at terrorizing enemies. Can learn Rain of Fire, Howl of Terror, Cleaving Attack, and Doom. |n|n|cffffcc00Attacks land units.|r
 	//=================================================================================
-	"npc_dota_hero_undying"
+	"npc_dota_hero_abyssal_underlord"
 	{
 		// General
 		//----------------------------------------------------------------
-		"override_hero"				"npc_dota_hero_undying"	 // Placeholder
+		"override_hero"				"npc_dota_hero_abyssal_underlord"
 		"InternalName"				"neutral_pit_lord"
-		"model"						"models/heroes/undying/undying.vmdl"
+		"model"						"models/heroes/abyssal_underlord/abyssal_underlord_v2.vmdl"
 		"AttacksEnabled"			"ground"
 		"UnitLabel"					"undead"
+		"ModelScale"				"1.2"
 		
 		// Abilities
 		//----------------------------------------------------------------	
@@ -1094,6 +1095,7 @@
 	
 		// Bounds
 		//----------------------------------------------------------------
+		"RingRadius"				"80"
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"CollisionSize"				"32"
 		"FormationRank"				"0"

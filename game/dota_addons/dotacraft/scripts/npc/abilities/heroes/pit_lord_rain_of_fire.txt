@@ -8,11 +8,11 @@
     "AbilityTextureName"            "pit_lord_rain_of_fire"
     "MaxLevel"                      "3"
 
-    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
     "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
-    "AbilityCastAnimation"          "ACT_DOTA_VICTORY"
+    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
 
     "AbilityCastRange"              "800"
     "AbilityCastPoint"              "0.6"       
@@ -26,12 +26,7 @@
     
     "precache"
     {
-        "soundfile" "soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
-        "particle"  "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
-        "particle"  "particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
-        "particle"  "particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf"
-        "particle"  "particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf"
-        "particle"  "particles/units/heroes/hero_warlock/warlock_rain_of_chaos_explosion.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_abyssal_underlord.vsndevts"
     }
 
     "AbilitySpecial"
@@ -77,7 +72,7 @@
     {
         "FireSound"
         {
-            "EffectName"    "Hero_Jakiro.DualBreath"
+            "EffectName"    "Hero_AbyssalUnderlord.Firestorm.Cast"
             "Target"        "CASTER"
         }
     }
@@ -118,6 +113,14 @@
         "modifier_rain_of_fire_channelling"
         {
             "IsHidden"          "1"
+            "OnCreated"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "heroes/pit_lord/rain_of_fire.lua"
+                    "Function"      "ApplyAnimation"
+                }
+            }
             "ThinkInterval"     "1.0"
             "OnIntervalThink"
             {
@@ -146,7 +149,8 @@
                         "Center"    "TARGET"
                         "Radius"    "%radius"
                         "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
-                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
                     }
                     "ModifierName"  "modifier_rain_of_fire_burn"
                 }
@@ -167,7 +171,8 @@
                         "Center"    "TARGET"
                         "Radius"    "%radius"
                         "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
-                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+                        "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
                     }
                     "ModifierName"  "modifier_rain_of_fire_burn"
                 }

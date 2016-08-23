@@ -9278,7 +9278,7 @@
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC"
 	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
-	    "AbilityCastAnimation"          "ACT_DOTA_SPAWN"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
 	
 	    "TargetsAllowed"                "organic"
 	    "MaxCreepLevel"                 "5"
@@ -9834,7 +9834,7 @@
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	    "AbilityCastAnimation"          "ACT_DOTA_UNDYING_TOMBSTONE"
+	    "AbilityCastAnimation"          "ACT_DOTA_OVERRIDE_ABILITY_4"
 	
 	    "AbilityCastRange"              "500"
 	    "AbilityCastPoint"              "0.3"
@@ -9846,7 +9846,7 @@
 	    "precache"
 	    {
 	        "particle"  "particles/custom/vengeful_wave_of_terror_recipient_reduction.vpcf"
-	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_abyssal_underlord.vsndevts"
 	    }
 	    
 	    "AbilitySpecial"
@@ -9872,7 +9872,7 @@
 	    {
 	        "FireSound"
 	        {
-	            "EffectName"    "Hero_VengefulSpirit.WaveOfTerror"
+	            "EffectName"    "Hero_AbyssalUnderlord.PitOfMalice.Start"
 	            "Target"        "CASTER"
 	        }
 	
@@ -9922,11 +9922,11 @@
 	    "AbilityTextureName"            "pit_lord_rain_of_fire"
 	    "MaxLevel"                      "3"
 	
-	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
-	    "AbilityCastAnimation"          "ACT_DOTA_VICTORY"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
 	
 	    "AbilityCastRange"              "800"
 	    "AbilityCastPoint"              "0.6"       
@@ -9940,12 +9940,7 @@
 	    
 	    "precache"
 	    {
-	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
-	        "particle"  "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
-	        "particle"  "particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
-	        "particle"  "particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf"
-	        "particle"  "particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf"
-	        "particle"  "particles/units/heroes/hero_warlock/warlock_rain_of_chaos_explosion.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_abyssal_underlord.vsndevts"
 	    }
 	
 	    "AbilitySpecial"
@@ -9991,7 +9986,7 @@
 	    {
 	        "FireSound"
 	        {
-	            "EffectName"    "Hero_Jakiro.DualBreath"
+	            "EffectName"    "Hero_AbyssalUnderlord.Firestorm.Cast"
 	            "Target"        "CASTER"
 	        }
 	    }
@@ -10032,6 +10027,14 @@
 	        "modifier_rain_of_fire_channelling"
 	        {
 	            "IsHidden"          "1"
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/pit_lord/rain_of_fire.lua"
+	                    "Function"      "ApplyAnimation"
+	                }
+	            }
 	            "ThinkInterval"     "1.0"
 	            "OnIntervalThink"
 	            {
@@ -10060,7 +10063,8 @@
 	                        "Center"    "TARGET"
 	                        "Radius"    "%radius"
 	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
-	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 	                    }
 	                    "ModifierName"  "modifier_rain_of_fire_burn"
 	                }
@@ -10081,7 +10085,8 @@
 	                        "Center"    "TARGET"
 	                        "Radius"    "%radius"
 	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
-	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 	                    }
 	                    "ModifierName"  "modifier_rain_of_fire_burn"
 	                }
@@ -26979,7 +26984,7 @@
 	    "BaseClass"                 "ability_datadriven"
 	    "AbilityTextureName"        "orc_healing_ward"
 	    "MaxLevel"                  "1"
-	        
+	    
 	    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	
 	    "TargetsAllowed"            "organic"
@@ -27195,7 +27200,6 @@
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	    "AbilityCastAnimation"          "ACT_DOTA_UNDYING_TOMBSTONE"
 	
 	    "AbilityCastRange"              "500"
 	    "AbilityCastPoint"              "0.3"
@@ -30346,10 +30350,10 @@
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
 	
-	"neutral_train_undying_acquired"
+	"neutral_train_abyssal_underlord_acquired"
 	{
 	    "BaseClass"                     "ability_datadriven"
-	    "AbilityTextureName"            "neutral_train_undying"
+	    "AbilityTextureName"            "neutral_train_abyssal_underlord"
 	    "MaxLevel"                      "1"
 	
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -34512,10 +34516,10 @@
 	}
 	
 	//  180 30
-	"neutral_train_undying_revive1"
+	"neutral_train_abyssal_underlord_revive1"
 	{
 	    "BaseClass"                     "ability_datadriven"
-	    "AbilityTextureName"            "neutral_train_undying"
+	    "AbilityTextureName"            "neutral_train_abyssal_underlord"
 	    "MaxLevel"                      "1"
 	
 	    "AbilityGoldCost"               "180"
@@ -34575,16 +34579,16 @@
 	        {
 	            "ScriptFile"    "buildings/altar.lua"
 	            "Function"      "ReviveHero"
-	            "Hero"          "npc_dota_hero_undying"
+	            "Hero"          "npc_dota_hero_abyssal_underlord"
 	        }
 	    }
 	}
 	
 	//  225 35
-	"neutral_train_undying_revive2"
+	"neutral_train_abyssal_underlord_revive2"
 	{
 	    "BaseClass"                     "ability_datadriven"
-	    "AbilityTextureName"            "neutral_train_undying"
+	    "AbilityTextureName"            "neutral_train_abyssal_underlord"
 	    "MaxLevel"                      "2"
 	
 	    "AbilityGoldCost"               "225"
@@ -34644,16 +34648,16 @@
 	        {
 	            "ScriptFile"    "buildings/altar.lua"
 	            "Function"      "ReviveHero"
-	            "Hero"          "npc_dota_hero_undying"
+	            "Hero"          "npc_dota_hero_abyssal_underlord"
 	        }
 	    }
 	}
 	
 	//  270 40
-	"neutral_train_undying_revive3"
+	"neutral_train_abyssal_underlord_revive3"
 	{
 	    "BaseClass"                     "ability_datadriven"
-	    "AbilityTextureName"            "neutral_train_undying"
+	    "AbilityTextureName"            "neutral_train_abyssal_underlord"
 	    "MaxLevel"                      "3"
 	
 	    "AbilityGoldCost"               "270"
@@ -34713,16 +34717,16 @@
 	        {
 	            "ScriptFile"    "buildings/altar.lua"
 	            "Function"      "ReviveHero"
-	            "Hero"          "npc_dota_hero_undying"
+	            "Hero"          "npc_dota_hero_abyssal_underlord"
 	        }
 	    }
 	}
 	
 	//  315 45
-	"neutral_train_undying_revive4"
+	"neutral_train_abyssal_underlord_revive4"
 	{
 	    "BaseClass"                     "ability_datadriven"
-	    "AbilityTextureName"            "neutral_train_undying"
+	    "AbilityTextureName"            "neutral_train_abyssal_underlord"
 	    "MaxLevel"                      "4"
 	
 	    "AbilityGoldCost"               "315"
@@ -34782,16 +34786,16 @@
 	        {
 	            "ScriptFile"    "buildings/altar.lua"
 	            "Function"      "ReviveHero"
-	            "Hero"          "npc_dota_hero_undying"
+	            "Hero"          "npc_dota_hero_abyssal_underlord"
 	        }
 	    }
 	}
 	
 	//  360 50
-	"neutral_train_undying_revive5"
+	"neutral_train_abyssal_underlord_revive5"
 	{
 	    "BaseClass"                     "ability_datadriven"
-	    "AbilityTextureName"            "neutral_train_undying"
+	    "AbilityTextureName"            "neutral_train_abyssal_underlord"
 	    "MaxLevel"                      "5"
 	
 	    "AbilityGoldCost"               "360"
@@ -34851,17 +34855,17 @@
 	        {
 	            "ScriptFile"    "buildings/altar.lua"
 	            "Function"      "ReviveHero"
-	            "Hero"          "npc_dota_hero_undying"
+	            "Hero"          "npc_dota_hero_abyssal_underlord"
 	        }
 	    }
 	
 	}
 	
 	//  405 60
-	"neutral_train_undying_revive6"
+	"neutral_train_abyssal_underlord_revive6"
 	{
 	    "BaseClass"                     "ability_datadriven"
-	    "AbilityTextureName"            "neutral_train_undying"
+	    "AbilityTextureName"            "neutral_train_abyssal_underlord"
 	    "MaxLevel"                      "6"
 	
 	    "AbilityGoldCost"               "405"
@@ -34921,16 +34925,16 @@
 	        {
 	            "ScriptFile"    "buildings/altar.lua"
 	            "Function"      "ReviveHero"
-	            "Hero"          "npc_dota_hero_undying"
+	            "Hero"          "npc_dota_hero_abyssal_underlord"
 	        }
 	    }
 	}
 	
 	//  450 70
-	"neutral_train_undying_revive7"
+	"neutral_train_abyssal_underlord_revive7"
 	{
 	    "BaseClass"                     "ability_datadriven"
-	    "AbilityTextureName"            "neutral_train_undying"
+	    "AbilityTextureName"            "neutral_train_abyssal_underlord"
 	    "MaxLevel"                      "7"
 	
 	    "AbilityGoldCost"               "450"
@@ -34990,16 +34994,16 @@
 	        {
 	            "ScriptFile"    "buildings/altar.lua"
 	            "Function"      "ReviveHero"
-	            "Hero"          "npc_dota_hero_undying"
+	            "Hero"          "npc_dota_hero_abyssal_underlord"
 	        }
 	    }
 	}
 	
 	//  495 80
-	"neutral_train_undying_revive8"
+	"neutral_train_abyssal_underlord_revive8"
 	{
 	    "BaseClass"                     "ability_datadriven"
-	    "AbilityTextureName"            "neutral_train_undying"
+	    "AbilityTextureName"            "neutral_train_abyssal_underlord"
 	    "MaxLevel"                      "8"
 	
 	    "AbilityGoldCost"               "495"
@@ -35059,16 +35063,16 @@
 	        {
 	            "ScriptFile"    "buildings/altar.lua"
 	            "Function"      "ReviveHero"
-	            "Hero"          "npc_dota_hero_undying"
+	            "Hero"          "npc_dota_hero_abyssal_underlord"
 	        }
 	    }
 	}
 	
 	//  540 90
-	"neutral_train_undying_revive9"
+	"neutral_train_abyssal_underlord_revive9"
 	{
 	    "BaseClass"                     "ability_datadriven"
-	    "AbilityTextureName"            "neutral_train_undying"
+	    "AbilityTextureName"            "neutral_train_abyssal_underlord"
 	    "MaxLevel"                      "9"
 	
 	    "AbilityGoldCost"               "540"
@@ -35128,16 +35132,16 @@
 	        {
 	            "ScriptFile"    "buildings/altar.lua"
 	            "Function"      "ReviveHero"
-	            "Hero"          "npc_dota_hero_undying"
+	            "Hero"          "npc_dota_hero_abyssal_underlord"
 	        }
 	    }
 	}
 	
 	//  585 100
-	"neutral_train_undying_revive10"
+	"neutral_train_abyssal_underlord_revive10"
 	{
 	    "BaseClass"                     "ability_datadriven"
-	    "AbilityTextureName"            "neutral_train_undying"
+	    "AbilityTextureName"            "neutral_train_abyssal_underlord"
 	    "MaxLevel"                      "10"
 	
 	    "AbilityGoldCost"               "585"
@@ -35197,7 +35201,7 @@
 	        {
 	            "ScriptFile"    "buildings/altar.lua"
 	            "Function"      "ReviveHero"
-	            "Hero"          "npc_dota_hero_undying"
+	            "Hero"          "npc_dota_hero_abyssal_underlord"
 	        }
 	    }
 	}

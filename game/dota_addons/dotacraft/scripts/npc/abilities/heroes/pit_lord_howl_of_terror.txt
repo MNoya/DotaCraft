@@ -12,7 +12,7 @@
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-    "AbilityCastAnimation"          "ACT_DOTA_UNDYING_TOMBSTONE"
+    "AbilityCastAnimation"          "ACT_DOTA_OVERRIDE_ABILITY_4"
 
     "AbilityCastRange"              "500"
     "AbilityCastPoint"              "0.3"
@@ -24,7 +24,7 @@
     "precache"
     {
         "particle"  "particles/custom/vengeful_wave_of_terror_recipient_reduction.vpcf"
-        "soundfile" "soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_abyssal_underlord.vsndevts"
     }
     
     "AbilitySpecial"
@@ -50,7 +50,7 @@
     {
         "FireSound"
         {
-            "EffectName"    "Hero_VengefulSpirit.WaveOfTerror"
+            "EffectName"    "Hero_AbyssalUnderlord.PitOfMalice.Start"
             "Target"        "CASTER"
         }
 
