@@ -296,8 +296,8 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
-    "Ability2"                  ""
+    "Ability1"                  "neutral_heal"
+    "Ability2"                  "neutral_abolish_magic"
     
     // Armor
     //----------------------------------------------------------------
@@ -397,8 +397,8 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
-    "Ability2"                  ""
+    "Ability1"                  "neutral_slow"
+    "Ability2"                  "neutral_spell_immunity"
     
     // Armor
     //----------------------------------------------------------------
@@ -485,7 +485,7 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
+    "Ability1"                  "neutral_shadow_meld"
     
     // Armor
     //----------------------------------------------------------------
@@ -569,8 +569,8 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
-    "Ability2"                  ""
+    "Ability1"                  "neutral_shadow_meld"
+    "Ability2"                  "neutral_envenomed_weapon"
     
     // Armor
     //----------------------------------------------------------------
@@ -622,96 +622,6 @@
     //----------------------------------------------------------------
     "StatusHealth"              "450"
     "StatusHealthRegen"         "0.5"
-    
-    // Vision
-    //----------------------------------------------------------------
-    "VisionDaytimeRange"        "1400"
-    "VisionNighttimeRange"      "800"
-    
-    // Attack Damage types
-    //----------------------------------------------------------------
-    "AttackType"         "pierce"
-    "ArmorType"                 "medium"
-    
-    // Creature Data
-    //----------------------------------------------------------------
-}
-
-//=================================================================================
-// Creature: Kobold Geomancer
-// Description: "Light ranged unit that casts Slow and Abolish Magic. |n|n|cffffcc00Attacks land and air units.|r"
-//=================================================================================
-"neutral_kobold_geomancer"
-{
-    // General
-    //----------------------------------------------------------------
-    "BaseClass"                 "npc_dota_creature"
-    "Model"                     "models/creeps/neutral_creeps/n_creep_kobold/kobold_a/n_creep_kobold_a.vmdl"
-    "ModelScale"                "1"
-    "Level"                     "3"
-    "HealthBarOffset"           "140"
-
-    "FormationRank"             "2"
-    "AttacksEnabled"            "ground,air"
-    
-    // Abilities
-    //----------------------------------------------------------------
-    "Ability1"                  ""
-    "Ability2"                  ""
-    
-    // Armor
-    //----------------------------------------------------------------
-    "ArmorPhysical"             "0"
-    "MagicalResistance"         "0"
-    
-    // Attack
-    //----------------------------------------------------------------
-    "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
-    "AttackDamageMin"           "23.0"
-    "AttackDamageMax"           "27.0"
-    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-    "AttackRate"                "1.8"
-    "AttackAnimationPoint"      "0.38"
-    "AttackAcquisitionRange"    "600"
-    "AttackRange"               "600"
-    "ProjectileModel"           "particles/base_attacks/ranged_badguy.vpcf"
-    "ProjectileSpeed"           "900"
-    
-    // Bounty
-    //----------------------------------------------------------------
-    "BountyGoldMin"             "8.0"
-    "BountyGoldMax"             "10.0"
-    
-    // Bounds
-    //----------------------------------------------------------------
-    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
-    "RingRadius"                "31"
-    "CollisionSize"             "31"
-    "FormationRank"             "2"
-    
-    // Unit Costs
-    //----------------------------------------------------------------
-    "GoldCost"                  "255"
-    "LumberCost"                "30"
-    "FoodCost"                  "2"
-    "StockMax"                  "1"
-    "StockTime"                 "160"
-    "StockInitial"              "0"
-    "StockStartDelay"           "440"
-    
-    // Movement
-    //----------------------------------------------------------------
-    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-    "MovementSpeed"             "270"
-    "MovementTurnRate"          "0.5"
-    
-    // Status
-    //----------------------------------------------------------------
-    "StatusHealth"              "300"
-    "StatusHealthRegen"         "0.5"
-    "StatusMana"                "300"
-    "StatusManaRegen"           "0.75"
-    "StatusStartingMana"        "300"
     
     // Vision
     //----------------------------------------------------------------
@@ -914,7 +824,7 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
+    "Ability1"                  "neutral_faerie_fire"
     
     // Armor
     //----------------------------------------------------------------
@@ -1003,7 +913,7 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
+    "Ability1"                  "neutral_searing_arrows"
     
     // Armor
     //----------------------------------------------------------------
@@ -1175,8 +1085,8 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
-    "Ability2"                  ""
+    "Ability1"                  "neutral_slow"
+    "Ability2"                  "neutral_abolish_magic"
     
     // Armor
     //----------------------------------------------------------------
@@ -1348,8 +1258,8 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
-    "Ability2"                  ""
+    "Ability1"                  "neutral_entangling_roots"
+    "Ability2"                  "neutral_summon_prawns"
     
     // Armor
     //----------------------------------------------------------------
@@ -1610,7 +1520,7 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
+    "Ability1"                  "neutral_cold_arrows"
     
     // Armor
     //----------------------------------------------------------------
@@ -1699,7 +1609,7 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
+    "Ability1"                  "neutral_immolation"
     
     // Armor
     //----------------------------------------------------------------
@@ -1786,8 +1696,8 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
-    "Ability2"                  ""
+    "Ability1"                  "neutral_shadow_meld"
+    "Ability2"                  "neutral_curse"
     
     // Armor
     //----------------------------------------------------------------
@@ -1966,8 +1876,7 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
-    "Ability2"                  ""
+    "Ability1"                  "neutral_slam"
     
     // Armor
     //----------------------------------------------------------------
@@ -2056,7 +1965,7 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
+    "Ability1"                  "neutral_cannibalize"
     
     // Armor
     //----------------------------------------------------------------
@@ -2141,7 +2050,7 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
+    "Ability1"                  "neutral_slow"
     
     // Armor
     //----------------------------------------------------------------
@@ -2231,8 +2140,8 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
-    "Ability2"                  ""
+    "Ability1"                  "neutral_mana_burn"
+    "Ability2"                  "neutral_raise_dead"
     
     // Armor
     //----------------------------------------------------------------
@@ -2405,7 +2314,7 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
+    "Ability1"                  "neutral_evasion"
     
     // Armor
     //----------------------------------------------------------------
@@ -2489,7 +2398,7 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
+    "Ability1"                  "neutral_spell_immunity"
     
     // Armor
     //----------------------------------------------------------------
@@ -2573,8 +2482,8 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
-    "Ability2"                  ""
+    "Ability1"                  "neutral_abolish_magic"
+    "Ability2"                  "neutral_frost_armor"
     
     // Armor
     //----------------------------------------------------------------
@@ -2832,7 +2741,7 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
+    "Ability1"                  "neutral_blizzard"
     
     // Armor
     //----------------------------------------------------------------
@@ -2919,9 +2828,8 @@
     
     // Abilities
     //----------------------------------------------------------------
-    "Ability1"                  ""
-    "Ability2"                  ""
-    "Ability3"                  ""
+    "Ability1"                  "neutral_web"
+    "Ability2"                  "neutral_raise_dead"
     
     // Armor
     //----------------------------------------------------------------

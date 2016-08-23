@@ -11819,7 +11819,7 @@
 		"StatusHealth"				"450"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"300"
-		"StatsManaRegen"			"0.75"
+		"StatusManaRegen"			"0.75"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -11989,7 +11989,7 @@
 		"StatusHealth"				"675"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"400"
-		"StatsManaRegen"			"1"
+		"StatusManaRegen"			"1"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -12064,7 +12064,7 @@
 		"StatusHealth"				"600"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"400"
-		"StatsManaRegen"			"1"
+		"StatusManaRegen"			"1"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -12364,7 +12364,7 @@
 		"StatusHealth"				"350"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"200"
-		"StatsManaRegen"			"0.5"
+		"StatusManaRegen"			"0.5"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -12400,8 +12400,8 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"neutral_abolish_magic"
-		"Ability2"					"neutral_bloodlust"
+		"Ability1"					"neutral_bloodlust"
+		"Ability2"					"neutral_abolish_magic"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -12442,7 +12442,7 @@
 		"StatusHealth"				"600"
 		"StatusHealthRegen"			"1"
 		"StatusMana"				"400"
-		"StatsManaRegen"			"1"
+		"StatusManaRegen"			"1"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -12664,7 +12664,7 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"neutral_healing_ward"
-		"Ability2"					"neutral_feral_spirit"
+		"Ability2"					"neutral_feral_spirit_pigs"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -12708,7 +12708,7 @@
 		"StatusHealth"				"600"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"400"
-		"StatsManaRegen"			"1"
+		"StatusManaRegen"			"1"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -12735,6 +12735,71 @@
 			}
 		}
 	}
+	
+	"neutral_spirit_pig"
+	{                                       
+	    // General
+	    //----------------------------------------------------------------
+	    "Model"                     "models/items/beastmaster/boar/beast_deming/beast_deming.vmdl"
+	    "BaseClass"                 "npc_dota_creature"
+	    "SoundSet"                  "Beastmaster_Boar"
+	    "Level"                     "2"
+	    "ModelScale"                "0.65"
+	
+	    "AttacksEnabled"            "ground"
+	    "LeavesCorpse"              "0"
+	
+	    // Armor
+	    //----------------------------------------------------------------
+	    "ArmorPhysical"             "0"     // Physical protection.
+	    "MagicalResistance"         "0"     // Magical protection.
+	
+	    // Attack
+	    //----------------------------------------------------------------
+	    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+	    "AttackDamageMin"           "11"        // Damage range min.
+	    "AttackDamageMax"           "12"        // Damage range max.    
+	    "AttackRate"                "1.25"      // Speed of attack.
+	    "AttackAnimationPoint"      "0.33"      // Normalized time in animation cycle to attack.
+	    "AttackAcquisitionRange"    "500"       // Range within a target can be acquired.
+	    "AttackRange"               "128"       // Range within a target can be attacked.      
+	
+	    // Bounds
+	    //----------------------------------------------------------------
+	    "RingRadius"                "40"
+	    "HealthBarOffset"           "160"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
+	    "FormationRank"             "0"
+	
+	    // Bounty
+	    //----------------------------------------------------------------
+	    "BountyXP"                  "20"        // Experience earn.
+	    "BountyGoldMin"             "21"        // Gold earned min.
+	    "BountyGoldMax"             "21"        // Gold earned max.
+	
+	    // Movement
+	    //----------------------------------------------------------------
+	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+	    "MovementSpeed"             "350"       // Speed.
+	
+	    // Status
+	    //----------------------------------------------------------------
+	    "StatusHealth"              "200"       // Base health.
+	    "StatusHealthRegen"         "0.5"       // Health regeneration rate.
+	    "StatusMana"                "0"         // Base mana.
+	    "StatusManaRegen"           "0"         // Mana regeneration rate.       
+	    
+	    // Vision
+	    //----------------------------------------------------------------
+	    "VisionDaytimeRange"        "1200"      // Range of vision during day light.
+	    "VisionNighttimeRange"      "800"       // Range of vision at night time.
+	
+	    // Attack Damage types
+	    //----------------------------------------------------------------                          // Attack Damage types name.
+	    "AttackType"                "normal"
+	    "ArmorType"                 "heavy"
+	} 
 	
 	
 	//=================================================================================
@@ -12797,7 +12862,7 @@
 		"StatusHealth"				"950"
 		"StatusHealthRegen"			"0.5"
 		"StatusMana"				"500"
-		"StatsManaRegen"			"1.25"
+		"StatusManaRegen"			"1.25"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -14158,8 +14223,8 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"neutral_heal"
-		"Ability2"					"neutral_abolish_magic"
-		"Ability3"					"neutral_frost_armor"
+		"Ability2"					"neutral_frost_armor"
+		"Ability3"					"neutral_abolish_magic"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -14439,7 +14504,6 @@
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"RingRadius"				"31"
 		"CollisionSize"				"31"
-		"FormationRank"				"2"
 		
 		// Unit Costs
 		//----------------------------------------------------------------
@@ -14526,7 +14590,6 @@
 		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"31"
 		"CollisionSize"				"31"
-		"FormationRank"				"0"
 		
 		// Unit Costs
 		//----------------------------------------------------------------
@@ -14584,6 +14647,7 @@
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 	
+		"FormationRank"				"0"
 		"AttacksEnabled"			"ground"
 		
 		// Abilities
@@ -14615,7 +14679,6 @@
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"RingRadius"				"31"
 		"CollisionSize"				"31"
-		"FormationRank"				"0"
 		
 		// Unit Costs
 		//----------------------------------------------------------------
@@ -14666,6 +14729,7 @@
 		"Level"						"5"
 		"HealthBarOffset"			"140"
 	
+		"FormationRank"				"2"
 		"AttacksEnabled"			"ground,air"
 		
 		// Abilities
@@ -14701,7 +14765,6 @@
 		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 		"RingRadius"				"32"
 		"CollisionSize"				"32"
-		"FormationRank"				"2"
 		
 		// Unit Costs
 		//----------------------------------------------------------------
@@ -15410,8 +15473,8 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
-	    "Ability2"                  ""
+	    "Ability1"                  "neutral_heal"
+	    "Ability2"                  "neutral_abolish_magic"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -15511,8 +15574,8 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
-	    "Ability2"                  ""
+	    "Ability1"                  "neutral_slow"
+	    "Ability2"                  "neutral_spell_immunity"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -15599,7 +15662,7 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
+	    "Ability1"                  "neutral_shadow_meld"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -15683,8 +15746,8 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
-	    "Ability2"                  ""
+	    "Ability1"                  "neutral_shadow_meld"
+	    "Ability2"                  "neutral_envenomed_weapon"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -15736,96 +15799,6 @@
 	    //----------------------------------------------------------------
 	    "StatusHealth"              "450"
 	    "StatusHealthRegen"         "0.5"
-	    
-	    // Vision
-	    //----------------------------------------------------------------
-	    "VisionDaytimeRange"        "1400"
-	    "VisionNighttimeRange"      "800"
-	    
-	    // Attack Damage types
-	    //----------------------------------------------------------------
-	    "AttackType"         "pierce"
-	    "ArmorType"                 "medium"
-	    
-	    // Creature Data
-	    //----------------------------------------------------------------
-	}
-	
-	//=================================================================================
-	// Creature: Kobold Geomancer
-	// Description: "Light ranged unit that casts Slow and Abolish Magic. |n|n|cffffcc00Attacks land and air units.|r"
-	//=================================================================================
-	"neutral_kobold_geomancer"
-	{
-	    // General
-	    //----------------------------------------------------------------
-	    "BaseClass"                 "npc_dota_creature"
-	    "Model"                     "models/creeps/neutral_creeps/n_creep_kobold/kobold_a/n_creep_kobold_a.vmdl"
-	    "ModelScale"                "1"
-	    "Level"                     "3"
-	    "HealthBarOffset"           "140"
-	
-	    "FormationRank"             "2"
-	    "AttacksEnabled"            "ground,air"
-	    
-	    // Abilities
-	    //----------------------------------------------------------------
-	    "Ability1"                  ""
-	    "Ability2"                  ""
-	    
-	    // Armor
-	    //----------------------------------------------------------------
-	    "ArmorPhysical"             "0"
-	    "MagicalResistance"         "0"
-	    
-	    // Attack
-	    //----------------------------------------------------------------
-	    "AttackCapabilities"        "DOTA_UNIT_CAP_RANGED_ATTACK"
-	    "AttackDamageMin"           "23.0"
-	    "AttackDamageMax"           "27.0"
-	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-	    "AttackRate"                "1.8"
-	    "AttackAnimationPoint"      "0.38"
-	    "AttackAcquisitionRange"    "600"
-	    "AttackRange"               "600"
-	    "ProjectileModel"           "particles/base_attacks/ranged_badguy.vpcf"
-	    "ProjectileSpeed"           "900"
-	    
-	    // Bounty
-	    //----------------------------------------------------------------
-	    "BountyGoldMin"             "8.0"
-	    "BountyGoldMax"             "10.0"
-	    
-	    // Bounds
-	    //----------------------------------------------------------------
-	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
-	    "RingRadius"                "31"
-	    "CollisionSize"             "31"
-	    "FormationRank"             "2"
-	    
-	    // Unit Costs
-	    //----------------------------------------------------------------
-	    "GoldCost"                  "255"
-	    "LumberCost"                "30"
-	    "FoodCost"                  "2"
-	    "StockMax"                  "1"
-	    "StockTime"                 "160"
-	    "StockInitial"              "0"
-	    "StockStartDelay"           "440"
-	    
-	    // Movement
-	    //----------------------------------------------------------------
-	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
-	    "MovementSpeed"             "270"
-	    "MovementTurnRate"          "0.5"
-	    
-	    // Status
-	    //----------------------------------------------------------------
-	    "StatusHealth"              "300"
-	    "StatusHealthRegen"         "0.5"
-	    "StatusMana"                "300"
-	    "StatusManaRegen"           "0.75"
-	    "StatusStartingMana"        "300"
 	    
 	    // Vision
 	    //----------------------------------------------------------------
@@ -16028,7 +16001,7 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
+	    "Ability1"                  "neutral_faerie_fire"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -16117,7 +16090,7 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
+	    "Ability1"                  "neutral_searing_arrows"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -16289,8 +16262,8 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
-	    "Ability2"                  ""
+	    "Ability1"                  "neutral_slow"
+	    "Ability2"                  "neutral_abolish_magic"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -16462,8 +16435,8 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
-	    "Ability2"                  ""
+	    "Ability1"                  "neutral_entangling_roots"
+	    "Ability2"                  "neutral_summon_prawns"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -16724,7 +16697,7 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
+	    "Ability1"                  "neutral_cold_arrows"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -16813,7 +16786,7 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
+	    "Ability1"                  "neutral_immolation"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -16900,8 +16873,8 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
-	    "Ability2"                  ""
+	    "Ability1"                  "neutral_shadow_meld"
+	    "Ability2"                  "neutral_curse"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -17080,8 +17053,7 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
-	    "Ability2"                  ""
+	    "Ability1"                  "neutral_slam"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -17170,7 +17142,7 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
+	    "Ability1"                  "neutral_cannibalize"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -17255,7 +17227,7 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
+	    "Ability1"                  "neutral_slow"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -17345,8 +17317,8 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
-	    "Ability2"                  ""
+	    "Ability1"                  "neutral_mana_burn"
+	    "Ability2"                  "neutral_raise_dead"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -17519,7 +17491,7 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
+	    "Ability1"                  "neutral_evasion"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -17603,7 +17575,7 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
+	    "Ability1"                  "neutral_spell_immunity"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -17687,8 +17659,8 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
-	    "Ability2"                  ""
+	    "Ability1"                  "neutral_abolish_magic"
+	    "Ability2"                  "neutral_frost_armor"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -17946,7 +17918,7 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
+	    "Ability1"                  "neutral_blizzard"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -18033,9 +18005,8 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
-	    "Ability2"                  ""
-	    "Ability3"                  ""
+	    "Ability1"                  "neutral_web"
+	    "Ability2"                  "neutral_raise_dead"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -19994,7 +19965,7 @@
 	    "StatusHealth"          "1250"
 	    "StatusHealthRegen"     "0"
 	    "StatusMana"            "0"
-	    "StatsManaRegen"        "0"
+	    "StatusManaRegen"        "0"
 	    
 	    // Vision
 	    //----------------------------------------------------------------
@@ -20068,7 +20039,7 @@
 	    //----------------------------------------------------------------
 	    "StatusHealth"          "200"
 	    "StatusMana"            "0"
-	    "StatsManaRegen"        "0"
+	    "StatusManaRegen"        "0"
 	    
 	    // Vision
 	    //----------------------------------------------------------------
@@ -20140,7 +20111,7 @@
 	    "StatusHealth"          "140"
 	    "StatusHealthRegen"     "0" //2 burrow
 	    "StatusMana"            "0"
-	    "StatsManaRegen"        "0"
+	    "StatusManaRegen"        "0"
 	    
 	    // Vision
 	    //----------------------------------------------------------------
@@ -20208,7 +20179,7 @@
 	    "StatusHealth"          "275"
 	    "StatusHealthRegen"     "0" //2 burrow
 	    "StatusMana"            "0"
-	    "StatsManaRegen"        "0"
+	    "StatusManaRegen"        "0"
 	    
 	    // Vision
 	    //----------------------------------------------------------------
@@ -20276,7 +20247,7 @@
 	    "StatusHealth"          "410"
 	    "StatusHealthRegen"     "0" //2 burrow
 	    "StatusMana"            "0"
-	    "StatsManaRegen"        "0"
+	    "StatusManaRegen"        "0"
 	    
 	    // Vision
 	    //----------------------------------------------------------------
@@ -20345,7 +20316,7 @@
 	    //----------------------------------------------------------------
 	    "StatusHealth"          "65"
 	    "StatusHealthRegen"     "0.25"
-	    "StatsManaRegen"        "-"
+	    "StatusManaRegen"        "-"
 	    
 	    // Vision
 	    //----------------------------------------------------------------
@@ -20942,7 +20913,7 @@
 	    "StatusHealth"          "425"
 	    "StatusHealthRegen"     "0.25"
 	    "StatusMana"            "0"
-	    "StatsManaRegen"        "0"
+	    "StatusManaRegen"        "0"
 	    
 	    // Vision
 	    //----------------------------------------------------------------
@@ -21013,7 +20984,7 @@
 	    "StatusHealth"          "550"
 	    "StatusHealthRegen"     "0.25"
 	    "StatusMana"            "0"
-	    "StatsManaRegen"        "0"
+	    "StatusManaRegen"        "0"
 	    
 	    // Vision
 	    //----------------------------------------------------------------
@@ -21083,7 +21054,7 @@
 	    "StatusHealth"          "700"
 	    "StatusHealthRegen"     "0.25"
 	    "StatusMana"            "0"
-	    "StatsManaRegen"        "0"
+	    "StatusManaRegen"        "0"
 	    
 	    // Vision
 	    //----------------------------------------------------------------
@@ -21171,7 +21142,7 @@
 	    "StatusHealth"          "300"
 	    "StatusHealthRegen"     "0.5"
 	    "StatusMana"            "0"
-	    "StatsManaRegen"        "0"
+	    "StatusManaRegen"        "0"
 	    
 	    // Vision
 	    //----------------------------------------------------------------
@@ -22086,7 +22057,7 @@
 	    "StatusHealth"          "80"
 	    "StatusHealthRegen"     "2"
 	    "StatusMana"            "0"
-	    "StatsManaRegen"        "0"
+	    "StatusManaRegen"        "0"
 	    
 	    // Vision
 	    //----------------------------------------------------------------
@@ -22169,7 +22140,7 @@
 	    //----------------------------------------------------------------
 	    "StatusHealth"          "300"
 	    "StatusMana"            "0"
-	    "StatsManaRegen"        "0"
+	    "StatusManaRegen"        "0"
 	    
 	    // Vision
 	    //----------------------------------------------------------------
@@ -22245,7 +22216,7 @@
 	    //----------------------------------------------------------------
 	    "StatusHealth"          "450"
 	    "StatusMana"            "0"
-	    "StatsManaRegen"        "0"
+	    "StatusManaRegen"        "0"
 	    
 	    // Vision
 	    //----------------------------------------------------------------
@@ -22321,7 +22292,7 @@
 	    //----------------------------------------------------------------
 	    "StatusHealth"          "600"
 	    "StatusMana"            "0"
-	    "StatsManaRegen"        "0"
+	    "StatusManaRegen"        "0"
 	    
 	    // Vision
 	    //----------------------------------------------------------------

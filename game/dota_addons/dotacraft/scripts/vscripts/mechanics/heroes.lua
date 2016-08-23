@@ -139,6 +139,18 @@ function CDOTA_BaseNPC_Hero:CreateSummon(unitName, position, duration)
     return unit
 end
 
+-- Neutral summon
+function CDOTA_BaseNPC_Creature:CreateSummon(unitName, position, duration)
+    local playerID = self:GetPlayerOwnerID()
+    local unit = CreateUnitByName(unitName, position, true, nil, nil, self:GetTeamNumber())
+    unit:SetForwardVector(self:GetForwardVector())
+    unit:SetControllableByPlayer(playerID,true)
+    unit:AddNewModifier(self, ability, "modifier_kill", {duration=duration})
+    unit:AddNewModifier(self, nil, "modifier_phased", {duration=0.03})
+    unit:AddNewModifier(self, nil, "modifier_summoned", {})
+    return unit
+end
+
 -- Returns a string with the race of the hero
 -- Hero race names must be defined in the "Label" keyvalue
 function CDOTA_BaseNPC_Hero:GetRace()

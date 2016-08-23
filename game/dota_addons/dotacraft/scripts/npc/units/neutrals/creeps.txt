@@ -543,7 +543,7 @@
 	"StatusHealth"				"450"
 	"StatusHealthRegen"			"0.5"
 	"StatusMana"				"300"
-	"StatsManaRegen"			"0.75"
+	"StatusManaRegen"			"0.75"
 	
 	// Vision
 	//----------------------------------------------------------------
@@ -713,7 +713,7 @@
 	"StatusHealth"				"675"
 	"StatusHealthRegen"			"0.5"
 	"StatusMana"				"400"
-	"StatsManaRegen"			"1"
+	"StatusManaRegen"			"1"
 	
 	// Vision
 	//----------------------------------------------------------------
@@ -788,7 +788,7 @@
 	"StatusHealth"				"600"
 	"StatusHealthRegen"			"0.5"
 	"StatusMana"				"400"
-	"StatsManaRegen"			"1"
+	"StatusManaRegen"			"1"
 	
 	// Vision
 	//----------------------------------------------------------------
@@ -1088,7 +1088,7 @@
 	"StatusHealth"				"350"
 	"StatusHealthRegen"			"0.5"
 	"StatusMana"				"200"
-	"StatsManaRegen"			"0.5"
+	"StatusManaRegen"			"0.5"
 	
 	// Vision
 	//----------------------------------------------------------------
@@ -1124,8 +1124,8 @@
 	
 	// Abilities
 	//----------------------------------------------------------------
-	"Ability1"					"neutral_abolish_magic"
-	"Ability2"					"neutral_bloodlust"
+	"Ability1"					"neutral_bloodlust"
+	"Ability2"					"neutral_abolish_magic"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1166,7 +1166,7 @@
 	"StatusHealth"				"600"
 	"StatusHealthRegen"			"1"
 	"StatusMana"				"400"
-	"StatsManaRegen"			"1"
+	"StatusManaRegen"			"1"
 	
 	// Vision
 	//----------------------------------------------------------------
@@ -1388,7 +1388,7 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"Ability1"					"neutral_healing_ward"
-	"Ability2"					"neutral_feral_spirit"
+	"Ability2"					"neutral_feral_spirit_pigs"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -1432,7 +1432,7 @@
 	"StatusHealth"				"600"
 	"StatusHealthRegen"			"0.5"
 	"StatusMana"				"400"
-	"StatsManaRegen"			"1"
+	"StatusManaRegen"			"1"
 	
 	// Vision
 	//----------------------------------------------------------------
@@ -1459,6 +1459,71 @@
 		}
 	}
 }
+
+"neutral_spirit_pig"
+{                                       
+    // General
+    //----------------------------------------------------------------
+    "Model"                     "models/items/beastmaster/boar/beast_deming/beast_deming.vmdl"
+    "BaseClass"                 "npc_dota_creature"
+    "SoundSet"                  "Beastmaster_Boar"
+    "Level"                     "2"
+    "ModelScale"                "0.65"
+
+    "AttacksEnabled"            "ground"
+    "LeavesCorpse"              "0"
+
+    // Armor
+    //----------------------------------------------------------------
+    "ArmorPhysical"             "0"     // Physical protection.
+    "MagicalResistance"         "0"     // Magical protection.
+
+    // Attack
+    //----------------------------------------------------------------
+    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+    "AttackDamageMin"           "11"        // Damage range min.
+    "AttackDamageMax"           "12"        // Damage range max.    
+    "AttackRate"                "1.25"      // Speed of attack.
+    "AttackAnimationPoint"      "0.33"      // Normalized time in animation cycle to attack.
+    "AttackAcquisitionRange"    "500"       // Range within a target can be acquired.
+    "AttackRange"               "128"       // Range within a target can be attacked.      
+
+    // Bounds
+    //----------------------------------------------------------------
+    "RingRadius"                "40"
+    "HealthBarOffset"           "160"
+    "BoundsHullName"            "DOTA_HULL_SIZE_SMALL"          // Hull type used for navigation/locomotion.
+    "FormationRank"             "0"
+
+    // Bounty
+    //----------------------------------------------------------------
+    "BountyXP"                  "20"        // Experience earn.
+    "BountyGoldMin"             "21"        // Gold earned min.
+    "BountyGoldMax"             "21"        // Gold earned max.
+
+    // Movement
+    //----------------------------------------------------------------
+    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+    "MovementSpeed"             "350"       // Speed.
+
+    // Status
+    //----------------------------------------------------------------
+    "StatusHealth"              "200"       // Base health.
+    "StatusHealthRegen"         "0.5"       // Health regeneration rate.
+    "StatusMana"                "0"         // Base mana.
+    "StatusManaRegen"           "0"         // Mana regeneration rate.       
+    
+    // Vision
+    //----------------------------------------------------------------
+    "VisionDaytimeRange"        "1200"      // Range of vision during day light.
+    "VisionNighttimeRange"      "800"       // Range of vision at night time.
+
+    // Attack Damage types
+    //----------------------------------------------------------------                          // Attack Damage types name.
+    "AttackType"                "normal"
+    "ArmorType"                 "heavy"
+} 
 
 
 //=================================================================================
@@ -1521,7 +1586,7 @@
 	"StatusHealth"				"950"
 	"StatusHealthRegen"			"0.5"
 	"StatusMana"				"500"
-	"StatsManaRegen"			"1.25"
+	"StatusManaRegen"			"1.25"
 	
 	// Vision
 	//----------------------------------------------------------------
@@ -2882,8 +2947,8 @@
 	// Abilities
 	//----------------------------------------------------------------
 	"Ability1"					"neutral_heal"
-	"Ability2"					"neutral_abolish_magic"
-	"Ability3"					"neutral_frost_armor"
+	"Ability2"					"neutral_frost_armor"
+	"Ability3"					"neutral_abolish_magic"
 	
 	// Armor
 	//----------------------------------------------------------------
@@ -3163,7 +3228,6 @@
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"RingRadius"				"31"
 	"CollisionSize"				"31"
-	"FormationRank"				"2"
 	
 	// Unit Costs
 	//----------------------------------------------------------------
@@ -3250,7 +3314,6 @@
 	"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 	"RingRadius"				"31"
 	"CollisionSize"				"31"
-	"FormationRank"				"0"
 	
 	// Unit Costs
 	//----------------------------------------------------------------
@@ -3308,6 +3371,7 @@
 	"Level"						"1"
 	"HealthBarOffset"			"140"
 
+	"FormationRank"				"0"
 	"AttacksEnabled"			"ground"
 	
 	// Abilities
@@ -3339,7 +3403,6 @@
 	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 	"RingRadius"				"31"
 	"CollisionSize"				"31"
-	"FormationRank"				"0"
 	
 	// Unit Costs
 	//----------------------------------------------------------------
@@ -3390,6 +3453,7 @@
 	"Level"						"5"
 	"HealthBarOffset"			"140"
 
+	"FormationRank"				"2"
 	"AttacksEnabled"			"ground,air"
 	
 	// Abilities
@@ -3425,7 +3489,6 @@
 	"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
 	"RingRadius"				"32"
 	"CollisionSize"				"32"
-	"FormationRank"				"2"
 	
 	// Unit Costs
 	//----------------------------------------------------------------

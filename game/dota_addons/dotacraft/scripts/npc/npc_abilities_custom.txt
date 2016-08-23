@@ -5174,7 +5174,6 @@
 	    "AbilityCooldown"               "30.0 25.0 25.0"
 	
 	    "AbilityManaCost"               "75"
-	    "AbilityDamage"                 "75 130 200"
 	
 	    "precache"
 	    {
@@ -24080,15 +24079,6 @@
 	        {
 	            "Passive"           "1"
 	            "IsHidden"          "1"
-	            
-	            "OnCreated"
-	            {
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "mechanics/abilities.lua"
-	                    "Function"      "ToggleOnAutocast"
-	                }
-	            }
 	
 	            "ThinkInterval" "1.0"
 	            "OnIntervalThink"
@@ -24645,6 +24635,12 @@
 	
 	            "OnCreated"
 	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "mechanics/abilities.lua"
+	                    "Function"      "ToggleOnAutocast"
+	                }
+	
 	                "RunScript"
 	                {
 	                    "ScriptFile"    "units/orc/shaman.lua"
@@ -26344,20 +26340,20 @@
 	    }
 	}
 	
-	"neutral_feral_spirit"
+	// Summons 2 Spirit Pig companions. Lasts 60 seconds.
+	"neutral_feral_spirit_pigs"
 	{
 	    "BaseClass"                     "ability_datadriven"
-	    "AbilityTextureName"            "far_seer_feral_spirit"
-	    "MaxLevel"                      "3"
+	    "AbilityTextureName"            "neutral_feral_spirit_pigs"
+	    "MaxLevel"                      "1"
 	
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_2"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
 	
 	    "AbilityCastPoint"              "0.3"
-	    "AbilityCooldown"               "30.0 25.0 25.0"
+	    "AbilityCooldown"               "15"
 	
-	    "AbilityManaCost"               "75"
-	    "AbilityDamage"                 "75 130 200"
+	    "AbilityManaCost"               "100"
 	
 	    "precache"
 	    {
@@ -26372,17 +26368,17 @@
 	        "01"
 	        {
 	            "var_type"                  "FIELD_INTEGER"
-	            "wolf_duration"             "60"
+	            "pig_duration"              "60"
 	        }
 	        "02"
 	        {
 	            "var_type"                  "FIELD_INTEGER"
-	            "wolf_damage"               "11 16 21"
+	            "pig_damage"                "11"
 	        }
 	        "03"
 	        {
 	            "var_type"                  "FIELD_INTEGER"
-	            "wolf_hp"                   "200 300 500"
+	            "pig_hp"                    "200"
 	        }
 	    }
 	
@@ -26390,7 +26386,7 @@
 	    {
 	        "FireSound"
 	        {
-	            "EffectName"    "Hero_Lycan.SummonWolves"
+	            "EffectName"    "Hero_Beastmaster.Call.Boar"
 	            "Target"        "CASTER"
 	        }
 	
@@ -26408,7 +26404,7 @@
 	        "RunScript"
 	        {
 	            "ScriptFile"    "heroes/far_seer/feral_spirit.lua"
-	            "Function"      "SpawnWolves"
+	            "Function"      "SpawnPigs"
 	        }
 	    }
 	}
@@ -26504,7 +26500,7 @@
 	    "AbilityCastPoint"              "0.4"
 	    "AbilityCooldown"               "2.0"
 	
-	    "AbilityManaCost"               "40"
+	    "AbilityManaCost"               "50"
 	    "AbilityDuration"               "45"
 	    
 	    "AbilitySpecial"
@@ -26897,12 +26893,12 @@
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_3"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
 	
 	    "TargetsAllowed"                "organic"
 	    "RequiresHealthDeficit"         "target"
 	    
-	    "AbilityCastPoint"              "0.0"
+	    "AbilityCastPoint"              "0.3"
 	    "AbilityCastRange"              "250"
 	    "AbilityCooldown"               "1"
 	    "AbilityManaCost"               "5"
@@ -26985,7 +26981,6 @@
 	    "MaxLevel"                  "1"
 	        
 	    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-	    "AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_2"
 	
 	    "TargetsAllowed"            "organic"
 	        
@@ -29135,6 +29130,7 @@
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityCastAnimation"          "ACT_DOTA_ATTACK"
 	
 	    "AbilityCastRange"              "600"
 	    "AbilityCastPoint"              "0.3"
@@ -29389,9 +29385,44 @@
 	    }
 	}
 	
-	"neutral_spiked_shell" //TODO
+	// Razor-sharp spikes on the Turtle's shell deal 30% of an enemy unit's melee attack damage back to it.
+	"neutral_spiked_shell"
 	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "crypt_lord_spiked_carapace"
+	    "MaxLevel"                      "1"
 	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "melee_damage_return"       "30"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_spiked_carapace"
+	        {
+	            "Passive"           "1"
+	
+	            "OnAttacked"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/crypt_lord/spiked_carapace.lua"
+	                    "Function"      "SpikedCarapace"
+	                    "Damage"        "%attack_damage"
+	                }
+	            }
+	        }
+	    }
 	}
 	
 	//"neutral_summon_prawns"
