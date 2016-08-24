@@ -62,6 +62,15 @@ end
 
 --------------------------------------------------------------------------------
 
+neutral_immolation = class({})
+
+neutral_immolation.OnToggle = demon_hunter_immolation.OnToggle
+neutral_immolation.OnToggleOn = demon_hunter_immolation.OnToggleOn
+neutral_immolation.OnToggleOff = demon_hunter_immolation.OnToggleOff
+neutral_immolation.OnIntervalThink = demon_hunter_immolation.OnIntervalThink
+
+--------------------------------------------------------------------------------
+
 modifier_immolation_aura = class({})
 
 function modifier_immolation_aura:OnCreated()

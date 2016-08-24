@@ -4380,7 +4380,6 @@
 	    "precache"
 	    {
 	        "particle"  "soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
-	        "soundfile" "particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
 	    }
 	    
 	    "AbilitySpecial"
@@ -24435,7 +24434,6 @@
 	}
 	
 	// Calls down waves of freezing ice shards that damage units in a target area. 50% damage reduction vs. buildings.
-	// 12 CD, 125 Mana Cost, 800 range, 200 AoE, 6 waves of 15 damage per wave
 	"neutral_blizzard"
 	{
 	    "BaseClass"                     "ability_datadriven"
@@ -24473,7 +24471,7 @@
 	        "03"
 	        {
 	            "var_type"              "FIELD_INTEGER"
-	            "wave_damage"           "30"
+	            "wave_damage"           "15"
 	        }
 	        "04"
 	        {
@@ -24785,21 +24783,19 @@
 	    {
 	        "01"
 	        {
-	            "var_type"      "FIELD_INTEGER"
-	            "duration"      "33"
+	            "var_type"          "FIELD_INTEGER"
+	            "duration"          "33"
 	        }
 	        "02"
 	        {
-	            "var_type"      "FIELD_INTEGER"
-	            "health_per_second"     "10" //TODO: 15 on abominations
+	            "var_type"          "FIELD_INTEGER"
+	            "health_per_second" "10"
 	        }
 	        "03"
 	        {
-	            "var_type"      "FIELD_INTEGER"
-	            "search_radius"         "800"
+	            "var_type"          "FIELD_INTEGER"
+	            "search_radius"     "800"
 	        }
-	        // The unit'll find the nearest corpse in this radius.
-	        // According to classic.battle.net, they'll also eat corpses from Meat Wagons. The most injured units will be prioritized should you order a group to cannibalize.
 	    }
 	    
 	    "precache"
@@ -25091,7 +25087,124 @@
 	    }
 	}
 	
-	//"neutral_cold_arrows"
+	"neutral_cold_arrows"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "naga_sea_witch_frost_arrows"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+	
+	    "AbilityCastRange"              "600"
+	
+	    "AbilityManaCost"               "10"
+	    "AbilityDamage"                 "5"
+	
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
+	        "particle"  "particles/generic_gameplay/generic_slowed_cold.vpcf"
+	        "particle"  "particles/status_fx/status_effect_frost.vpcf"  
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                      "FIELD_FLOAT"
+	            "slow_hero_duration"            "0.75"
+	        }
+	        "02"
+	        {
+	            "var_type"                      "FIELD_FLOAT"
+	            "slow_creep_duration"           "3"
+	        }
+	        "03"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "slow_percentage"               "-25"       
+	        }       
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_frost_arrows"
+	        {
+	            "Passive"               "1" 
+	            "IsHidden"              "1"
+	            "Orb"
+	            {
+	                "Priority"          "DOTA_ORB_PRIORITY_ABILITY"
+	                "ProjectileName"    "particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
+	                "CastAttack"        "1"
+	            }
+	
+	            "OnOrbFire"
+	            {
+	                "SpendMana"
+	                {
+	                    "Mana"              "%AbilityManaCost"
+	                }
+	                "FireSound"
+	                {
+	                    "EffectName"        "Hero_DrowRanger.FrostArrows"
+	                    "Target"            "CASTER"
+	                }
+	            }
+	            
+	            "OnOrbImpact"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_frost_arrows_slow"
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO"
+	                    }
+	                    "Duration"      "%slow_hero_duration"
+	                }
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_frost_arrows_slow"
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Types"     "DOTA_UNIT_TARGET_BASIC"
+	                    }
+	                    "Duration"      "%slow_creep_duration"
+	                }
+	                "Damage"
+	                {
+	                    "Type"              "DAMAGE_TYPE_PHYSICAL"
+	                    "Damage"            "%AbilityDamage"
+	                    "Target"            "TARGET"
+	                }
+	            }
+	        }
+	
+	        "modifier_frost_arrows_slow"
+	        {
+	            "IsDebuff"          "1"
+	            "TextureName"       "naga_sea_witch_frost_arrows"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"      "%slow_percentage"
+	                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"      "%slow_percentage"
+	
+	            }
+	            "EffectName"            "particles/generic_gameplay/generic_slowed_cold.vpcf"
+	            "EffectAttachType"      "attach_hitloc"
+	            
+	            "StatusEffectName"      "particles/status_fx/status_effect_frost.vpcf"
+	            "StatusEffectPriority"  "10"
+	        }
+	    }
+	}
 	
 	"neutral_command_aura"
 	{
@@ -25992,7 +26105,7 @@
 	{
 	    "BaseClass"                     "ability_datadriven"
 	    "AbilityTextureName"            "keeper_entangling_roots"
-	    "MaxLevel"                      "3"
+	    "MaxLevel"                      "1"
 	
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -26021,17 +26134,17 @@
 	        "01"
 	        {
 	            "var_type"              "FIELD_INTEGER"
-	            "damage_per_second"     "15 15 25"
+	            "damage_per_second"     "10"
 	        }
 	        "02"
 	        {
 	            "var_type"              "FIELD_INTEGER"
-	            "hero_duration"         "3 4 5"
+	            "hero_duration"         "3"
 	        }
 	        "03"
 	        {
 	            "var_type"              "FIELD_INTEGER"
-	            "creep_duration"        "9 24 36"
+	            "creep_duration"        "8"
 	        }
 	    }
 	
@@ -26752,7 +26865,7 @@
 	{
 	    "BaseClass"                     "ability_datadriven"
 	    "AbilityTextureName"            "lich_frost_nova_warcraft"
-	    "MaxLevel"                      "3"
+	    "MaxLevel"                      "1"
 	
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -26796,17 +26909,17 @@
 	        "04"
 	        {
 	            "var_type"              "FIELD_INTEGER"
-	            "aoe_damage"            "50 100 150"
+	            "aoe_damage"            "50"
 	        }
 	        "05"
 	        {
 	            "var_type"              "FIELD_INTEGER"
-	            "slow_hero_duration"    "2 3 4"
+	            "slow_hero_duration"    "2"
 	        }
 	        "06"
 	        {
 	            "var_type"              "FIELD_INTEGER"
-	            "slow_creep_duration"   "4 6 8"
+	            "slow_creep_duration"   "4"
 	        }
 	    }
 	
@@ -27112,7 +27225,7 @@
 	{
 	    "BaseClass"                     "ability_datadriven"
 	    "AbilityTextureName"            "shadow_hunter_hex"
-	    "MaxLevel"                      "3"
+	    "MaxLevel"                      "1"
 	
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -27139,12 +27252,12 @@
 	        "01"
 	        {
 	            "var_type"                  "FIELD_FLOAT"
-	            "hero_duration"             "4 5 6"
+	            "hero_duration"             "4"
 	        }
 	        "02"
 	        {
 	            "var_type"                  "FIELD_FLOAT"
-	            "creep_duration"            "15 30 45"
+	            "creep_duration"            "15"
 	        }
 	        "03"
 	        {
@@ -27378,7 +27491,47 @@
 	    }
 	}
 	
-	//"neutral_immolation"
+	"neutral_immolation"
+	{
+	    "BaseClass"                     "ability_lua"
+	    "ScriptFile"                    "heroes/demon_hunter/immolation.lua"
+	    "AbilityTextureName"            "demon_hunter_immolation"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+	
+	    "TargetsAllowed"                "ground,organic"
+	
+	    "AbilityCastRange"              "220"
+	    "AbilityManaCost"               "25"
+	
+	    "precache"
+	    {
+	        "particle"  "soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
+	
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "damage_per_second"     "10"
+	        }
+	        "02"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "mana_cost_per_second"  "7"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "220"
+	        }
+	    }
+	}
 	
 	"neutral_inferno"
 	{
@@ -27647,7 +27800,7 @@
 	{
 	    "BaseClass"                     "ability_datadriven"
 	    "AbilityTextureName"            "dark_ranger_life_drain"
-	    "MaxLevel"                      "3"
+	    "MaxLevel"                      "1"
 	
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -27675,7 +27828,7 @@
 	        "01"
 	        {
 	            "var_type"              "FIELD_INTEGER"
-	            "hp_drain_per_second"   "25 40 55"
+	            "hp_drain_per_second"   "25"
 	        }
 	    }
 	
@@ -27853,7 +28006,7 @@
 	
 	    "RequiresTargetMana"            "1"
 	    
-	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_4"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
 	
 	    "AbilityCastRange"              "300"
 	    "AbilityCastPoint"              "0.3"
@@ -27872,7 +28025,7 @@
 	        "01"
 	        {
 	            "var_type"          "FIELD_INTEGER"
-	            "mana_burn"         "50 100 150"
+	            "mana_burn"         "100"
 	        }
 	        "02"
 	        {
@@ -28303,27 +28456,25 @@
 	    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 	    "AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_1"
 	        
-	    "AbilityCastRange"          "900 900"
-	    "AbilityCastPoint"          "0 0"
-	    "AbilityCooldown"           "8 8"
-	    "AbilityManaCost"           "75 75"
+	    "AbilityCastRange"          "600"
+	    "AbilityCastPoint"          "0"
+	    "AbilityCooldown"           "8"
+	    "AbilityManaCost"           "75"
 	
-	    "RequiresCorpsesAround"     "900"
+	    "RequiresCorpsesAround"     "600"
 	        
 	    "AbilitySpecial"
 	    {
 	        "01"
 	        {
 	            "var_type"      "FIELD_INTEGER"
-	            "duration"      "40 40"
+	            "duration"      "40"
 	        }
 	        "02"
 	        {
 	            "var_type"      "FIELD_INTEGER"
-	            "radius"        "900 900"
+	            "radius"        "600"
 	        }
-	        // It raises 2 melee skeletons at level one then 1 melee skeleton, 1 ranged skeleton at level two.
-	        // Can be autocasted to automatically raise corpses in the 600 radius.
 	    }
 	    
 	    "precache"
@@ -28353,6 +28504,15 @@
 	        {
 	            "Passive" "1"
 	            "IsHidden" "1"
+	
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "mechanics/abilities.lua"
+	                    "Function"      "ToggleOnAutocast"
+	                }
+	            }
 	            
 	            "ThinkInterval"  "1.0"
 	            "OnIntervalThink"
@@ -29311,7 +29471,7 @@
 	{
 	    "BaseClass"                     "ability_datadriven"
 	    "AbilityTextureName"            "dread_lord_sleep"
-	    "MaxLevel"                      "3"
+	    "MaxLevel"                      "1"
 	
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -29326,7 +29486,7 @@
 	    "AbilityCooldown"               "8.0"
 	
 	    "AbilityManaCost"               "100"
-	    "AbilityDamage"                 "75 130 200"
+	    "AbilityDamage"                 "75"
 	
 	    "precache"
 	    {
@@ -29338,12 +29498,12 @@
 	        "01"
 	        {
 	            "var_type"          "FIELD_INTEGER"
-	            "hero_duration"     "5 10 15"
+	            "hero_duration"     "5"
 	        }
 	        "02"
 	        {
 	            "var_type"          "FIELD_INTEGER"
-	            "creep_duration"    "20 40 60"
+	            "creep_duration"    "20"
 	        }
 	    }
 	        
@@ -30074,7 +30234,7 @@
 	        
 	    "AbilityCastRange"          "400"
 	    "AbilityCastPoint"          "0"
-	    "AbilityCooldown"           "12"
+	    "AbilityCooldown"           "20"
 	    "AbilityManaCost"           "0"
 	        
 	    "AbilitySpecial"
@@ -30082,7 +30242,7 @@
 	        "01"
 	        {
 	            "var_type"          "FIELD_INTEGER"
-	            "duration"          "12"
+	            "duration"          "20"
 	        }
 	    }
 	
