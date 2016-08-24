@@ -30,29 +30,30 @@ function SpawnWolves(event)
     end
 end
 
-function SpawnPigs(event)
+function SummonByName(event)
     local caster = event.caster
     local ability = event.ability
-    local duration = ability:GetLevelSpecialValueFor("pig_duration", ability:GetLevel()-1)
+    local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel()-1)
+    local unitName = event.UnitName
     local position = caster:GetAbsOrigin() + caster:GetForwardVector() * 150
 
     -- Reset table
-    local pigs = caster.pigs or {}
-    for _,unit in pairs(pigs) do     
+    local summoned = caster.summoned or {}
+    for _,unit in pairs(summoned) do     
         if unit and IsValidEntity(unit) then
             unit:ForceKill(true) 
         end
     end
-    caster.pigs = {}
+    caster.summoned = {}
     
     -- Gets 2 points facing a distance away from the caster origin and separated from each other at 30 degrees left and right
     local positions = {}
     positions[1] = RotatePosition(caster:GetAbsOrigin(), QAngle(0, 30, 0), position)
     positions[2] = RotatePosition(caster:GetAbsOrigin(), QAngle(0, -30, 0), position)
 
-    -- Summon 2 pigs
+    -- Summon 2
     for i=1,2 do
-        caster.pigs[i] = caster:CreateSummon("neutral_spirit_pig", positions[i], duration)
-        ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster.pigs[i])
+        caster.summoned[i] = caster:CreateSummon(unitName, positions[i], duration)
+        ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster.summoned[i])
     end
 end

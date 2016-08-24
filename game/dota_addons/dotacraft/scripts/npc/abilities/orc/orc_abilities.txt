@@ -349,6 +349,7 @@
 	"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 	"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 	"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 	"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 	"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 
@@ -1212,6 +1213,7 @@
 	"precache"
 	{
 		"particle"  "particles/units/heroes/hero_siren/siren_net.vpcf"
+		"particle"  "particles/units/heroes/hero_siren/siren_net_projectile.vpcf"
 		"soundfile" "soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
 	}
 

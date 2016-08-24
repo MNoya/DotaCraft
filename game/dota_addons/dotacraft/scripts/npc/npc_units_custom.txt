@@ -16507,6 +16507,85 @@
 	}
 	
 	//=================================================================================
+	// Creature: Makrura Snapper
+	// Description: "Heavy melee unit. |n|n|cffffcc00Attacks land units.|r"
+	//=================================================================================
+	"neutral_makrura_prawn"
+	{
+	    // General
+	    //----------------------------------------------------------------
+	    "BaseClass"                 "npc_dota_creature"
+	    "Model"                     "models/heroes/siren/siren.vmdl"
+	    "ModelScale"                "0.6"
+	    "Level"                     "5"
+	    "HealthBarOffset"           "140"
+	
+	    "FormationRank"             "0"
+	    "AttacksEnabled"            "ground"
+	    
+	    // Abilities
+	    //----------------------------------------------------------------
+	    
+	    // Armor
+	    //----------------------------------------------------------------
+	    "ArmorPhysical"             "6"
+	    "MagicalResistance"         "0"
+	    
+	    // Attack
+	    //----------------------------------------------------------------
+	    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+	    "AttackDamageMin"           "10.0"
+	    "AttackDamageMax"           "11.0"
+	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+	    "AttackRate"                "1.35"
+	    "AttackAnimationPoint"      "0.38"
+	    "AttackAcquisitionRange"    "500"
+	    "AttackRange"               "100"
+	    
+	    // Bounty
+	    //----------------------------------------------------------------
+	    "BountyGoldMin"             "4.0"
+	    "BountyGoldMax"             "6.0"
+	    
+	    // Bounds
+	    //----------------------------------------------------------------
+	    "BoundsHullName"            "DOTA_HULL_SIZE_HUGE"
+	    "RingRadius"                "32"
+	    "CollisionSize"             "32"
+	    "FormationRank"             "0"
+	    
+	    // Unit Costs
+	    //----------------------------------------------------------------
+	    "GoldCost"                  "105"
+	    "LumberCost"                "0"
+	    "FoodCost"                  "1"
+	    
+	    // Movement
+	    //----------------------------------------------------------------
+	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+	    "MovementSpeed"             "270"
+	    "MovementTurnRate"          "0.5"
+	    
+	    // Status
+	    //----------------------------------------------------------------
+	    "StatusHealth"              "170"
+	    "StatusHealthRegen"         "0.5"
+	    
+	    // Vision
+	    //----------------------------------------------------------------
+	    "VisionDaytimeRange"        "1400"
+	    "VisionNighttimeRange"      "800"
+	    
+	    // Attack Damage types
+	    //----------------------------------------------------------------
+	    "AttackType"                "normal"
+	    "ArmorType"                 "heavy"
+	    
+	    // Creature Data
+	    //----------------------------------------------------------------
+	}
+	
+	//=================================================================================
 	// Creature: Fel Beast
 	// Description: "Light melee unit. |n|n|cffffcc00Attacks land units.|r"
 	//=================================================================================

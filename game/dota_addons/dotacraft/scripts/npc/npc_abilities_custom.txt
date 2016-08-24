@@ -3964,7 +3964,7 @@
 	    "AbilityCastPoint"              "0.453"
 	
 	    "AbilityCooldown"               "180"
-	    "AbilityManacost"               "175"
+	    "AbilityManaCost"               "175"
 	
 	    "RequiresCorpsesAround"         "900"
 	
@@ -11756,7 +11756,7 @@
 	    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 	
 	    "AbilityCooldown"       "2"
-	    "AbilityManacost"       "25"
+	    "AbilityManaCost"       "25"
 	    "AbilityCastRange"      "900"
 	
 	    "RequiresCorpsesAround"         "900"
@@ -11958,7 +11958,7 @@
 	    "AbilityCastPoint"              "0.3"
 	    "AbilityCooldown"               "9.0"
 	
-	    "AbilityManacost"               "100"
+	    "AbilityManaCost"               "100"
 	    "AbilityDamage"                 "75 125 190"
 	
 	    "precache"
@@ -24123,7 +24123,7 @@
 	    "AbilityCastPoint"              "0.453"
 	
 	    "AbilityCooldown"               "180"
-	    "AbilityManacost"               "175"
+	    "AbilityManaCost"               "175"
 	
 	    "RequiresCorpsesAround"         "900"
 	
@@ -25884,6 +25884,7 @@
 	    "precache"
 	    {
 	        "particle"  "particles/units/heroes/hero_siren/siren_net.vpcf"
+	        "particle"  "particles/units/heroes/hero_siren/siren_net_projectile.vpcf"
 	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
 	    }
 	
@@ -26370,10 +26371,9 @@
 	
 	    "precache"
 	    {
-	        "soundfile"     "soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"     
+	        "soundfile"     "soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"     
 	        "particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"       
 	        "particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
-	        "particle"      "particles/units/heroes/hero_lycan/lycan_claw_blur.vpcf"
 	    }
 	    
 	    "AbilitySpecial"
@@ -26381,17 +26381,17 @@
 	        "01"
 	        {
 	            "var_type"                  "FIELD_INTEGER"
-	            "pig_duration"              "60"
+	            "duration"                  "60"
 	        }
 	        "02"
 	        {
 	            "var_type"                  "FIELD_INTEGER"
-	            "pig_damage"                "11"
+	            "damage"                    "11"
 	        }
 	        "03"
 	        {
 	            "var_type"                  "FIELD_INTEGER"
-	            "pig_hp"                    "200"
+	            "hp"                        "200"
 	        }
 	    }
 	
@@ -26417,7 +26417,8 @@
 	        "RunScript"
 	        {
 	            "ScriptFile"    "heroes/far_seer/feral_spirit.lua"
-	            "Function"      "SpawnPigs"
+	            "Function"      "SpawnByName"
+	            "UnitName"      "neutral_spirit_pig"
 	        }
 	    }
 	}
@@ -27286,9 +27287,95 @@
 	    }
 	}
 	
-	"neutral_hurl_boulder" //TODO
+	//A magical boulder is thrown at an enemy unit, causing 100 points of damage and stunning the target for 2 seconds.
+	"neutral_hurl_boulder"
 	{
+	    "BaseClass"                 "ability_datadriven"
+	    "AbilityTextureName"        "neutral_hurl_boulder"
+	    "MaxLevel"                  "1"
 	
+	    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	    "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitDamageType"     "DAMAGE_TYPE_MAGICAL"
+	
+	    "AbilityCooldown"           "8.0"
+	    "AbilityManaCost"           "75"
+	    "AbilityDamage"             "100"
+	
+	    "AbilityCastRange"          "800"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_FLOAT"
+	            "stun_duration"     "2.0"
+	        }
+	    }
+	
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_brewmaster/brewmaster_hurl_boulder.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts"
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"        "Brewmaster_Earth.Boulder.Cast"
+	            "Target"            "CASTER"
+	        }
+	        "TrackingProjectile"
+	        {
+	            "Target"            "TARGET"
+	            "EffectName"        "particles/units/heroes/hero_brewmaster/brewmaster_hurl_boulder.vpcf"
+	            "Dodgeable"         "1"
+	            "ProvidesVision"    "0"
+	            "MoveSpeed"         "900"
+	            "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+	        }
+	    }
+	
+	    "OnProjectileHitUnit"
+	    {
+	        "DeleteOnHit"    "1"
+	        "FireSound"
+	        {
+	            "EffectName"    "Brewmaster_Earth.Boulder.Target"
+	            "Target"        "TARGET"
+	        }
+	
+	        "Damage"
+	        {
+	            "Target"    "TARGET"
+	            "Type"      "DAMAGE_TYPE_MAGICAL"
+	            "Damage"    "%AbilityDamage"
+	        }
+	
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_hurl_boulder_stun"
+	            "Target"        "TARGET"
+	            "Duration"      "%stun_duration"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_hurl_boulder_stun"
+	        {
+	            "IsDebuff"  "1"
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"         
+	            }
+	            "OverrideAnimation" "ACT_DOTA_DISABLED"
+	            "EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
+	            "EffectAttachType"  "follow_overhead"
+	        }
+	    }
 	}
 	
 	//"neutral_immolation"
@@ -27685,6 +27772,7 @@
 	    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 	    "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_BOTH"
 	    "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+	    "AbilityUnitTargetFlags"    "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 	    "AbilityUnitDamageType"     "DAMAGE_TYPE_MAGICAL"
 	    "AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_4"
 	
@@ -28471,7 +28559,81 @@
 	    }
 	}
 	
-	//"neutral_searing_arrows"
+	"neutral_searing_arrows"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "potm_searing_arrows"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+	
+	    "AbilityCastRange"              "700"
+	
+	    "AbilityManaCost"               "10"
+	    "AbilityDamage"                 "10"
+	
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_searing_arrows"
+	        {
+	            "Passive"               "1" 
+	            "IsHidden"              "1"
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "mechanics/abilities.lua"
+	                    "Function"      "ToggleOnAutocast"
+	                }
+	            }
+	
+	            "Orb"
+	            {
+	                "Priority"          "DOTA_ORB_PRIORITY_ABILITY"
+	                "ProjectileName"    "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+	                "CastAttack"        "1"
+	            }
+	
+	            "OnOrbFire"
+	            {
+	                "SpendMana"
+	                {
+	                    "Mana"              "%AbilityManaCost"
+	                }
+	                "FireSound"
+	                {
+	                    "EffectName"        "Hero_Clinkz.SearingArrows"
+	                    "Target"            "CASTER"
+	                }
+	            }
+	            
+	            "OnOrbImpact"
+	            {
+	                "FireSound"
+	                {
+	                    "EffectName"    "Hero_Clinkz.SearingArrows.Impact"
+	                    "Target"        "TARGET"
+	                }
+	                
+	                "Damage"
+	                {
+	                    "Type"              "DAMAGE_TYPE_PHYSICAL"
+	                    "Damage"            "%AbilityDamage"
+	                    "Target"            "TARGET"
+	                }
+	            }
+	        }
+	    }
+	}
 	
 	"neutral_shadow_meld"
 	{
@@ -29021,9 +29183,128 @@
 	    }   
 	}
 	
-	"neutral_slam" //TODO
+	//Slams the ground, dealing 70 points of damage to nearby enemy units.
+	"neutral_slam"
 	{
+	    "BaseClass"                 "ability_datadriven"
+	    "AbilityTextureName"        "neutral_slam"
+	    "MaxLevel"                  "1"
 	
+	    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitDamageType"     "DAMAGE_TYPE_MAGICAL"
+	
+	    "AbilityCooldown"           "6.0"
+	    "AbilityManaCost"           "90"
+	    "AbilityDamage"             "70"
+	
+	    "AbilityCastRange"          "250"
+	
+	    "TargetsAllowed"            "ground"
+	
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts"
+	    }
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "radius"            "250"
+	        }
+	        "02"
+	        {
+	            "var_type"          "FIELD_FLOAT"
+	            "creep_duration"    "4.0"
+	        }
+	        "03"
+	        {
+	            "var_type"          "FIELD_FLOAT"
+	            "hero_duration"     "2.0"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "FireEffect"
+	        {
+	            "EffectName"        "particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	            "Target"            "CASTER"
+	            "ControlPoints"
+	            {
+	                "01"    "0 %radius/2 0"
+	            }
+	        }
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Ursa.Earthshock"
+	            "Target"        "CASTER"
+	        }
+	        "ActOnTargets"
+	        {
+	            "Target"
+	            {
+	                "Center"    "CASTER"
+	                "Radius"    "%radius"
+	                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            }
+	        
+	            "Action"    
+	            {
+	                "Damage"
+	                {
+	                    "Target"    "TARGET"
+	                    "Type"      "DAMAGE_TYPE_MAGICAL"
+	                    "Damage"    "%AbilityDamage"
+	                }
+	
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_slam_stun"
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO"
+	                    }
+	                    "Duration"      "%hero_duration"
+	                }
+	                
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_slam_stun"
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	                        "Types"     "DOTA_UNIT_TARGET_BASIC"
+	                    }
+	                    "Duration"      "%creep_duration"
+	                }
+	            }
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_slam_stun"
+	        {
+	            "IsDebuff"  "1"
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"         
+	            }
+	            "OverrideAnimation" "ACT_DOTA_DISABLED"
+	            "EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
+	            "EffectAttachType"  "follow_overhead"
+	        }
+	    }
 	}
 	
 	"neutral_sleep"
@@ -29437,7 +29718,74 @@
 	    }
 	}
 	
-	//"neutral_summon_prawns"
+	//Summons 2 Makrura Prawns to do their master's bidding. Summoned Prawns lasts 60 seconds.
+	"neutral_summon_prawns"
+	{
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityTextureName"            "neutral_summon_prawns"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
+	
+	    "AbilityCastPoint"              "0.3"
+	    "AbilityCooldown"               "15"
+	
+	    "AbilityManaCost"               "100"
+	
+	    "precache"
+	    {
+	        "soundfile"     "soundevents/game_sounds_heroes/game_sounds_beastmaster.vsndevts"     
+	        "particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"       
+	        "particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "duration"                  "60"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "damage"                    "10"
+	        }
+	        "03"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "hp"                        "170"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Beastmaster.Call.Boar"
+	            "Target"        "CASTER"
+	        }
+	
+	        "AttachEffect"
+	        {
+	            "EffectName"        "particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"
+	            "EffectAttachType"  "start_at_customorigin"
+	            "Target"            "CASTER"
+	            "ControlPointEntities"
+	            {
+	                "CASTER"    "attach_attack1"
+	            }
+	        }
+	        
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/far_seer/feral_spirit.lua"
+	            "Function"      "SummonByName"
+	            "UnitName"      "neutral_makrura_prawn"
+	        }
+	    }
+	}
 	
 	//"neutral_summon_sea_elemental"
 	
@@ -47908,6 +48256,7 @@
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 	
@@ -48771,6 +49120,7 @@
 		"precache"
 		{
 			"particle"  "particles/units/heroes/hero_siren/siren_net.vpcf"
+			"particle"  "particles/units/heroes/hero_siren/siren_net_projectile.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_naga_siren.vsndevts"
 		}
 	
