@@ -25,6 +25,10 @@ function ApplyAnimation(event)
     end)
 end
 
+function StopAnimation(event)
+    event.caster:RemoveGesture(ACT_DOTA_CAST_ABILITY_1)
+end
+
 function RainOfFireWave(event)
     local caster = event.caster
     local ability = event.ability
@@ -39,16 +43,7 @@ function RainOfFireWave(event)
     ParticleManager:SetParticleControl(firestorm, 0, target_position)
     ParticleManager:SetParticleControl(firestorm, 4, Vector(radius, 1, 1))
 
-    --[[local particle1 = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf", PATTACH_CUSTOMORIGIN, caster)
-    ParticleManager:SetParticleControl( particle1, 0, target_position )
-
-    local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_rain_of_chaos_explosion.vpcf", PATTACH_CUSTOMORIGIN, caster)
-    ParticleManager:SetParticleControl( particle2, 0, target_position )
-
-    local particle3 = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf", PATTACH_CUSTOMORIGIN, caster)
-    ParticleManager:SetParticleControl( particle3, 0, target_position )]]
-
-    caster:EmitSound("Hero_AbyssalUnderlord.Firestorm.Start")
+    caster:EmitSound("Hero_AbyssalUnderlord.Firestorm.Cast")
 
     ability:ApplyDamageUnitsMax(damage, FindAllUnitsInRadius(caster, radius, target_position), max_wave_damage)
 end

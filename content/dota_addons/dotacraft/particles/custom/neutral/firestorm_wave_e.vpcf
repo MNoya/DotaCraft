@@ -57,14 +57,13 @@
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
-			m_nParticlesToEmit = 6
+			m_nParticlesToEmit = 12
 		},
 	]
 	m_Children = 
 	[
 		{
 			m_ChildRef = resource:"particles/custom/neutral/firestorm_wave_e0.vpcf"
-			m_bDisableChild = true
 		},
 		{
 			m_flDelay = 0.05
@@ -80,6 +79,15 @@
 		},
 		{
 			m_flDelay = 0.12
+			m_ChildRef = resource:"particles/custom/neutral/firestorm_wave_e0.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/neutral/firestorm_wave_e0.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/neutral/firestorm_wave_e0.vpcf"
+		},
+		{
 			m_ChildRef = resource:"particles/custom/neutral/firestorm_wave_e0.vpcf"
 		},
 		{

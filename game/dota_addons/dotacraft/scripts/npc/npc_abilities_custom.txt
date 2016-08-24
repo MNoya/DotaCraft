@@ -9986,7 +9986,7 @@
 	    {
 	        "FireSound"
 	        {
-	            "EffectName"    "Hero_AbyssalUnderlord.Firestorm.Cast"
+	            "EffectName"    "Hero_AbyssalUnderlord.Firestorm.Start"
 	            "Target"        "CASTER"
 	        }
 	    }
@@ -10042,6 +10042,14 @@
 	                {
 	                    "ScriptFile"    "heroes/pit_lord/rain_of_fire.lua"
 	                    "Function"      "ApplyAnimation"
+	                }
+	            }
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "heroes/pit_lord/rain_of_fire.lua"
+	                    "Function"      "StopAnimation"
 	                }
 	            }
 	        }
@@ -10109,7 +10117,7 @@
 	                "AttachEffect"
 	                {
 	                    "Target"        "TARGET"
-	                    "EffectName"    "particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
+	                    "EffectName"    "particles/custom/neutral/firestorm_wave_burn.vpcf"
 	                    "EffectAttachType"  "follow_origin"
 	                }
 	            }                                                                                                                                                                           
