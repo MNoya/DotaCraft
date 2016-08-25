@@ -9619,7 +9619,7 @@
 	    "AbilityTextureName"            "pit_lord_rain_of_fire"
 	    "MaxLevel"                      "1"
 	
-	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_BOTH"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
@@ -9637,12 +9637,7 @@
 	    
 	    "precache"
 	    {
-	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
-	        "particle"  "particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
-	        "particle"  "particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
-	        "particle"  "particles/units/heroes/hero_invoker/invoker_sun_strike_team.vpcf"
-	        "particle"  "particles/units/heroes/hero_invoker/invoker_sun_strike.vpcf"
-	        "particle"  "particles/units/heroes/hero_warlock/warlock_rain_of_chaos_explosion.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_abyssal_underlord.vsndevts"
 	    }
 	
 	    "AbilitySpecial"
@@ -9655,22 +9650,22 @@
 	        "02"
 	        {
 	            "var_type"              "FIELD_INTEGER"
-	            "wave_count"            "6 8 10"
+	            "wave_count"            "6"
 	        }
 	        "03"
 	        {
 	            "var_type"              "FIELD_INTEGER"
-	            "wave_damage"           "25 30 35"
+	            "wave_damage"           "25"
 	        }
 	        "04"
 	        {
 	            "var_type"              "FIELD_INTEGER"
-	            "max_wave_damage"       "125 150 175"
+	            "max_wave_damage"       "125"
 	        }
 	        "05"
 	        {
 	            "var_type"              "FIELD_INTEGER"
-	            "burn_damage"           "5 10 15"
+	            "burn_damage"           "5"
 	        }
 	        "06"
 	        {
@@ -9688,7 +9683,7 @@
 	    {
 	        "FireSound"
 	        {
-	            "EffectName"    "Hero_Jakiro.DualBreath"
+	            "EffectName"    "Hero_AbyssalUnderlord.Firestorm.Start"
 	            "Target"        "CASTER"
 	        }
 	    }
@@ -9728,16 +9723,8 @@
 	    {
 	        "modifier_rain_of_fire_channelling"
 	        {
-	            "IsHidden"          "1"
-	            "ThinkInterval"     "1.0"
-	            "OnIntervalThink"
-	            {
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "heroes/pit_lord/rain_of_fire.lua"
-	                    "Function"      "ApplyAnimation"
-	                }
-	            }
+	            "IsHidden"              "1"
+	            "OverrideAnimation"     "ACT_DOTA_VICTORY"
 	        }
 	
 	        "modifier_rain_of_fire_thinker"
@@ -9757,7 +9744,8 @@
 	                        "Center"    "TARGET"
 	                        "Radius"    "%radius"
 	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
-	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 	                    }
 	                    "ModifierName"  "modifier_rain_of_fire_burn"
 	                }
@@ -9778,7 +9766,8 @@
 	                        "Center"    "TARGET"
 	                        "Radius"    "%radius"
 	                        "Teams"     "DOTA_UNIT_TARGET_TEAM_BOTH"
-	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+	                        "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 	                    }
 	                    "ModifierName"  "modifier_rain_of_fire_burn"
 	                }
@@ -9801,7 +9790,7 @@
 	                "AttachEffect"
 	                {
 	                    "Target"        "TARGET"
-	                    "EffectName"    "particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
+	                    "EffectName"    "particles/custom/neutral/firestorm_wave_burn.vpcf"
 	                    "EffectAttachType"  "follow_origin"
 	                }
 	            }                                                                                                                                                                           
@@ -9817,7 +9806,7 @@
 	                }               
 	            }   
 	        }
-	    }   
+	    }  
 	}
 	// Pit Lord Howl of Terror
 	// Author: Noya
@@ -10132,7 +10121,7 @@
 	                }               
 	            }   
 	        }
-	    }   
+	    }
 	}
 	// Priestess of the Moon Scout
 	// Author: Noya
