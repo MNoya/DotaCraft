@@ -14,7 +14,12 @@ function BloodlustAutocast_Attack(event)
     if attacker:IsMagicImmune() or attacker:HasModifier("modifier_bloodlust") then return end
 
     -- Check all units and see if there's one valid cast the ability
-    local units = Players:GetUnits(playerID)
+    local units
+    if not PlayerResource:IsValidPlayerID(playerID) then
+        units = caster.allies -- Neutral
+    else
+        units = Players:GetUnits(playerID)
+    end
     local radius = 600
     for _,v in pairs(units) do
         if IsValidEntity(v) and v.bloodlustAbility then
@@ -37,7 +42,12 @@ function BloodlustAutocast_Attacked(event)
     if target:IsMagicImmune() or target:HasModifier("modifier_bloodlust") then return end
 
     -- Check all units and see if there's one valid to cast the ability
-    local units = Players:GetUnits(playerID)
+    local units
+    if not PlayerResource:IsValidPlayerID(playerID) then
+        units = caster.allies -- Neutral
+    else
+        units = Players:GetUnits(playerID)
+    end
     local radius = 600
     for _,v in pairs(units) do
         if IsValidEntity(v) and v.bloodlustAbility then
