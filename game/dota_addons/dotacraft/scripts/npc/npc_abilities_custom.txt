@@ -24551,7 +24551,7 @@
 	    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 	    "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 	    "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-	    "AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_2"
+	    "AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_1"
 	        
 	    "AbilityCastRange"          "600"
 	    "AbilityCastPoint"          "0"
@@ -24635,12 +24635,6 @@
 	
 	            "OnCreated"
 	            {
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "mechanics/abilities.lua"
-	                    "Function"      "ToggleOnAutocast"
-	                }
-	
 	                "RunScript"
 	                {
 	                    "ScriptFile"    "units/orc/shaman.lua"
@@ -25650,6 +25644,11 @@
 	
 	    "TargetsAllowed"            "ground,organic"
 	    "MaxCreepLevel"             "5"
+	
+	    "AI"
+	    {
+	        "CastLogic" "OnCooldown"
+	    }
 	        
 	    "AbilitySpecial"
 	    {
@@ -25962,12 +25961,19 @@
 	    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	    "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
 	    "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-	    "AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_2"
+	    "AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_1"
 	        
 	    "AbilityCastRange"          "500"
 	    "AbilityCastPoint"          "0"
 	    "AbilityCooldown"           "16"
 	    "AbilityManaCost"           "0"
+	
+	    "AI"
+	    {
+	        "CastLogic"         "OnCooldown"
+	        "PriorizeAirUnits"  "1"
+	        "ModifierName"      "modifier_ensnare"
+	    }
 	        
 	    "AbilitySpecial"
 	    {
@@ -26477,6 +26483,11 @@
 	        "particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_cast.vpcf"       
 	        "particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
 	    }
+	
+	    "AI"
+	    {
+	        "CastLogic" "OnCooldown"
+	    }
 	    
 	    "AbilitySpecial"
 	    {
@@ -26519,7 +26530,7 @@
 	        "RunScript"
 	        {
 	            "ScriptFile"    "heroes/far_seer/feral_spirit.lua"
-	            "Function"      "SpawnByName"
+	            "Function"      "SummonByName"
 	            "UnitName"      "neutral_spirit_pig"
 	        }
 	    }
@@ -27106,6 +27117,12 @@
 	    "AbilityManaCost"           "200"
 	    "AOERadius"                 "500"
 	
+	    "AI"
+	    {
+	        "CastLogic"     "AllyHealthDeficit"
+	        "HealthPercent" "75"
+	    }
+	
 	    "precache"
 	    {
 	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
@@ -27406,6 +27423,12 @@
 	    "AbilityDamage"             "100"
 	
 	    "AbilityCastRange"          "800"
+	
+	    "AI"
+	    {
+	        "CastLogic"     "OnCooldown"
+	        "ModifierName"  "modifier_hurl_boulder_stun"
+	    }
 	
 	    "AbilitySpecial"
 	    {
@@ -29084,7 +29107,7 @@
 	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
 	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
-	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_5"
+	    "AbilityCastAnimation"          "ACT_DOTA_CAST_ABILITY_1"
 	
 	    "TargetsAllowed"                "ground"
 	
@@ -29094,6 +29117,13 @@
 	
 	    "AbilityManaCost"               "100"
 	    "AbilityDamage"                 "75"
+	
+	    "AI"
+	    {
+	        "CastLogic"     "LinedTargets"
+	        "MinTargets"    "3"
+	        "LineWidth"     "250"
+	    }
 	
 	    "precache"
 	    {
@@ -29351,6 +29381,12 @@
 	    "AbilityCastRange"          "250"
 	
 	    "TargetsAllowed"            "ground"
+	
+	    "AI"
+	    {
+	        "CastLogic"     "TargetsAround"
+	        "MinTargets"    "3"
+	    }
 	
 	    "precache"
 	    {

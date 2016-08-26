@@ -40,9 +40,8 @@ function Units:Init( unit )
         end
 
         -- Neutral AI aggro and leashing
-        if unit:GetTeamNumber() == DOTA_TEAM_NEUTRALS and string.match(unit:GetUnitName(), "neutral_") then
+        if unit:IsNeutral() then
             ApplyModifier(unit,"modifier_neutral_idle_aggro")
-
             NeutralAI:Start( unit )
         end
     end
@@ -359,6 +358,10 @@ function CDOTA_BaseNPC:IsFlyingUnit()
     return self:GetKeyValue("MovementCapabilities") == "DOTA_UNIT_CAP_MOVE_FLY"
 end
 
+function CDOTA_BaseNPC:IsNeutral()
+    return self:GetTeamNumber() == DOTA_TEAM_NEUTRALS and self:GetUnitName():match("neutral_")
+end
+
 -- Shortcut for a very common check
 function IsValidAlive( unit )
     return (IsValidEntity(unit) and unit:IsAlive())
@@ -432,6 +435,15 @@ function FindOrganicAlliesInRadius( unit, radius, point )
         end
     end
     return organic_allies
+end
+
+-- Returns the first unit that passes the filter
+function FindFirstUnit(list, filter)
+    for _,unit in ipairs(list) do
+        if filter(unit) then
+            return unit
+        end
+    end
 end
 
 function HasGoldMineDistanceRestriction( unit_name )
