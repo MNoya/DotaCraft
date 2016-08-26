@@ -33,6 +33,7 @@ TEST_CODES = {
     ["testheroes"] = function(...) dotacraft:TestAllHeroes(...) end,   -- Creates all heroes, optional race parameter
     ["testunits"] = function(...) dotacraft:TestAllUnits(...) end,     -- Creates all army units, optional race parameter
     ["testcorpses"] = function(...) dotacraft:TestCorpses(...) end,    -- Creates many corpses around
+    ["testneutral"] = function(...) dotacraft:TestNeutral(...) end,    -- Creates a neutral by name
     ["kill"] = function(...) dotacraft:ForceKill(...) end,             -- Kills the currently selected units
     ["damage"] = function(...) dotacraft:Damage(...) end,              -- Deals damage to the currently selected units
     ["respawn"] = function(...) dotacraft:Respawn(...) end,            -- Respawns the currently selected units
@@ -436,6 +437,37 @@ function dotacraft:TestUnit(playerID, name, bEnemy)
             FindClearSpaceForUnit(unit, selected:GetAbsOrigin()+RandomVector(100), true)
             unit:Hold()
 
+        end, playerID)
+    end
+end
+
+function dotacraft:TestNeutral(playerID, name)
+    local selected = PlayerResource:GetMainSelectedEntity(playerID)
+    if not selected then return end
+    selected = EntIndexToHScript(selected)
+    name = name or "neutral_gnoll"
+
+    local pos = selected:GetAbsOrigin()
+
+    if not GetUnitKV(name) then
+        for k,_ in pairs(KeyValues.UnitKV) do
+            if k:match(name) or GetInternalHeroName(k) and GetInternalHeroName(k):match(name) then
+                name = k
+                break
+            end
+        end
+    end
+    if not GetUnitKV(name) then
+        Say(nil,"No match for '"..name.."'", false)
+        return
+    end
+
+    if name then
+        PrecacheUnitByNameAsync(name, function()
+            local unit = CreateUnitByName(name, pos, true, nil, nil, DOTA_TEAM_NEUTRALS)
+            unit:SetMana(unit:GetMaxMana())
+            unit:SetControllableByPlayer(playerID,true)
+            FindClearSpaceForUnit(unit, selected:GetAbsOrigin()+RandomVector(100), true)
         end, playerID)
     end
 end
