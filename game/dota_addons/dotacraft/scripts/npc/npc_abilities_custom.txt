@@ -36542,14 +36542,15 @@
 	
 	    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 	
-	    "AbilityCastRange"          "50"
+	    "AbilityMultiOrder"         "1"
 	
 	    "OnSpellStart"
 	    {
-	        "ApplyModifier"
+	        "RunScript"
 	        {
-	            "ModifierName"  "modifier_zeppelin_unloading"
-	            "Target"        "CASTER"
+	            "ScriptFile"    "units/neutral/zeppelin.lua"
+	            "Function"      "UnloadStart"
+	            "Target"        "POINT"
 	        }
 	    }
 	
@@ -36566,6 +36567,15 @@
 	    {
 	        "modifier_zeppelin_unloading"
 	        {
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/neutral/zeppelin.lua"
+	                    "Function"      "Unload"
+	                }
+	            }
+	
 	            "ThinkInterval"  "0.5"
 	            "OnIntervalThink"
 	            {
@@ -36581,15 +36591,29 @@
 	                "RemoveModifier"
 	                {
 	                    "ModifierName"  "modifier_zeppelin_unloading"
-	                    "Target"        "TARGET"
+	                    "Target"        "CASTER"
+	                }
+	            }
+	        }
+	
+	        "modifier_zeppelin_unloading_order"
+	        {
+	            "IsHidden"  "1"
+	            "OnOrder"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/neutral/zeppelin.lua"
+	                    "Function"      "CancelUnload"
 	                }
 	            }
 	        }
 	
 	        "modifier_dizziness"
 	        {
+	            "TextureName"       "neutral_dizziness"
 	            "EffectName"        "particles/custom/generic_slowed.vpcf"
-	            "EffectAttachType"  "follow_origin"
+	            "EffectAttachType"  "follow_overhead"
 	
 	            "IsDebuff"  "1"
 	            "Duration"  "30"

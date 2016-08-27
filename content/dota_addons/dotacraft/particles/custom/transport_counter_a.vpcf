@@ -3,29 +3,23 @@
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
 	m_nMaxParticles = 1
-	m_flConstantRadius = 27.000000
-	m_ConstantColor =
-	[
-		255,
-		240,
-		20,
-		255,
-	]
+	m_flConstantRadius = 27.0
+	m_ConstantColor = [ 255, 240, 20, 255 ]
 	m_nConstantSequenceNumber = 4
-	m_Renderers =
+	m_Renderers = 
 	[
 		{
 			_class = "C_OP_RenderSprites"
-			VisibilityInputs =
+			VisibilityInputs = 
 			{
-				m_flCameraBias = 100.000000
+				m_flCameraBias = 100.0
 			}
 			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
 			m_bDisableZBuffering = true
 			m_hTexture = resource:"materials/particle/white_bars/white_bar.vtex"
 		},
 	]
-	m_Operators =
+	m_Operators = 
 	[
 		{
 			_class = "C_OP_PositionLock"
@@ -40,7 +34,7 @@
 			m_nCPInput = 1
 		},
 	]
-	m_Initializers =
+	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_CreateWithinSphere"
@@ -51,7 +45,7 @@
 			m_nCPInput = 1
 		},
 	]
-	m_Emitters =
+	m_Emitters = 
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"

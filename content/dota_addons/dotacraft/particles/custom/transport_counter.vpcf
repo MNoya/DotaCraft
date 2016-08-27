@@ -3,47 +3,31 @@
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
 	m_nMaxParticles = 10
-	m_flConstantRadius = 27.000000
-	m_ConstantColor =
-	[
-		36,
-		28,
-		24,
-		255,
-	]
+	m_flConstantRadius = 27.0
+	m_ConstantColor = [ 36, 28, 24, 255 ]
 	m_nConstantSequenceNumber = 4
-	m_Renderers =
+	m_Renderers = 
 	[
 		{
 			_class = "C_OP_RenderSprites"
-			VisibilityInputs =
+			VisibilityInputs = 
 			{
-				m_flCameraBias = 100.000000
+				m_flCameraBias = 100.0
 			}
 			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
 			m_bDisableZBuffering = true
 			m_hTexture = resource:"materials/particle/white_bars/white_bar.vtex"
 		},
 	]
-	m_Operators =
+	m_Operators = 
 	[
 		{
 			_class = "C_OP_SetToCP"
-			m_vecOffset =
-			[
-				0.000000,
-				0.000000,
-				20.000000,
-			]
+			m_vecOffset = [ 0.0, 0.0, 20.0 ]
 		},
 		{
 			_class = "C_OP_MovementMaintainOffset"
-			m_vecOffset =
-			[
-				-8.000000,
-				0.000000,
-				0.000000,
-			]
+			m_vecOffset = [ -8.0, 0.0, 0.0 ]
 		},
 		{
 			_class = "C_OP_Decay"
@@ -69,50 +53,45 @@
 			m_bSetOrientation = true
 		},
 	]
-	m_Initializers =
+	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_CreateWithinSphere"
-			m_vecDistanceBiasAbs =
-			[
-				0.000000,
-				0.000000,
-				1.000000,
-			]
+			m_vecDistanceBiasAbs = [ 0.0, 0.0, 1.0 ]
 		},
 	]
-	m_Emitters =
+	m_Emitters = 
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
 			m_nParticlesToEmit = 8
 		},
 	]
-	m_Children =
+	m_Children = 
 	[
 		{
-			m_ChildRef = resource:"particles/custom/undead/corpse_counter_point.vpcf"
+			m_ChildRef = resource:"particles/custom/transport_counter_a.vpcf"
 		},
 		{
-			m_ChildRef = resource:"particles/custom/undead/corpse_counter_point.vpcf"
+			m_ChildRef = resource:"particles/custom/transport_counter_a.vpcf"
 		},
 		{
-			m_ChildRef = resource:"particles/custom/undead/corpse_counter_point.vpcf"
+			m_ChildRef = resource:"particles/custom/transport_counter_a.vpcf"
 		},
 		{
-			m_ChildRef = resource:"particles/custom/undead/corpse_counter_point.vpcf"
+			m_ChildRef = resource:"particles/custom/transport_counter_a.vpcf"
 		},
 		{
-			m_ChildRef = resource:"particles/custom/undead/corpse_counter_point.vpcf"
+			m_ChildRef = resource:"particles/custom/transport_counter_a.vpcf"
 		},
 		{
-			m_ChildRef = resource:"particles/custom/undead/corpse_counter_point.vpcf"
+			m_ChildRef = resource:"particles/custom/transport_counter_a.vpcf"
 		},
 		{
-			m_ChildRef = resource:"particles/custom/undead/corpse_counter_point.vpcf"
+			m_ChildRef = resource:"particles/custom/transport_counter_a.vpcf"
 		},
 		{
-			m_ChildRef = resource:"particles/custom/undead/corpse_counter_point.vpcf"
+			m_ChildRef = resource:"particles/custom/transport_counter_a.vpcf"
 		},
 	]
 }

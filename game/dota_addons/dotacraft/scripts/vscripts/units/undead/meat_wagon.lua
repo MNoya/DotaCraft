@@ -68,7 +68,7 @@ function GetCorpse_Autocast(keys)
     local max_corpses = keys.ability:GetSpecialValueFor("max_corpses")
     
     caster.corpses = {}
-    caster.counter_particle = ParticleManager:CreateParticle("particles/custom/undead/corpse_counter.vpcf", PATTACH_OVERHEAD_FOLLOW, caster)
+    caster.counter_particle = ParticleManager:CreateParticleForTeam("particles/custom/transport_counter.vpcf", PATTACH_OVERHEAD_FOLLOW, caster, caster:GetTeamNumber())
 
     -- Removes one specific corpse from the meat wagon
     function meat_wagon:RemoveCorpse(corpse)

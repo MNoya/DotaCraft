@@ -358,6 +358,13 @@ function CDOTA_BaseNPC:IsFlyingUnit()
     return self:GetKeyValue("MovementCapabilities") == "DOTA_UNIT_CAP_MOVE_FLY"
 end
 
+function CDOTA_BaseNPC:IsTransportableOnZeppelin(unit)
+    local size = self:GetKeyValue("TransportSize") or 1
+    local bTransportable = not IsCustomBuilding(self) and not self:IsWard() and not self:IsFlyingUnit() and not self:IsOutOfGame() and not self:IsUnselectable()
+    local bSameOwner = self:GetPlayerOwnerID() == unit:GetPlayerOwnerID()  
+    return bSameOwner and bTransportable and unit.transportCount + size <= unit.maxTransportCount
+end
+
 function CDOTA_BaseNPC:IsNeutral()
     return self:GetTeamNumber() == DOTA_TEAM_NEUTRALS and self:GetUnitName():match("neutral_")
 end
@@ -430,7 +437,7 @@ function FindOrganicAlliesInRadius( unit, radius, point )
     local allies = FindUnitsInRadius(team, position, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, target_type, flags, FIND_CLOSEST, false)
     local organic_allies = {}
     for _,ally in pairs(allies) do
-        if not IsCustomBuilding(ally) and not ally:IsMechanical() then
+        if not IsCustomBuilding(ally) and not ally:IsWard() and not ally:IsMechanical() then
             table.insert(organic_allies, ally)
         end
     end

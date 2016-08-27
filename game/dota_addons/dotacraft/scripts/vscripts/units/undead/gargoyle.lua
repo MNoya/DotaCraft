@@ -4,7 +4,7 @@ function StoneForm(event)
     local ability = event.ability
 
     -- Prevent landing on deep water (Error: "Unable to land there")
-    -- Find a clear space for landing, don't land or trees or
+    -- Find a clear space for landing, don't land or trees or buildings
     local treeBlocked = GridNav:IsNearbyTree(origin, 30, true)
     local terrainBlocked = not GridNav:IsTraversable(origin) or GridNav:IsBlocked(origin)
     local location = origin

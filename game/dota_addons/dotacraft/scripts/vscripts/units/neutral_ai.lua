@@ -9,7 +9,7 @@ NeutralAI.__index = NeutralAI
 
 function NeutralAI:Start( unit )
     unit.id = unit:GetUnitName().." "..unit:GetEntityIndex()
-    print("[NeutralAI] Starting "..unit.id)
+    --print("[NeutralAI] Starting "..unit.id)
 
     local ai = {}
     setmetatable( ai, NeutralAI )

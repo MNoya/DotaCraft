@@ -54,12 +54,40 @@ function dotacraft:FilterExecuteOrder( filterTable )
 
     -- Redirect move-to-target to move-to-position in flying units, to prevent clumping issues
     if order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET and unit and unit:HasFlyMovementCapability() then
-        order_type = DOTA_UNIT_ORDER_MOVE_TO_POSITION
-        point = EntIndexToHScript(targetIndex):GetAbsOrigin()
-        filterTable["order_type"] = DOTA_UNIT_ORDER_MOVE_TO_POSITION
-        filterTable["position_x"] = point.x
-        filterTable["position_y"] = point.y
-        filterTable["position_z"] = point.z
+        local target = targetIndex and EntIndexToHScript(targetIndex)
+        if unit:GetUnitName() == "neutral_goblin_zeppelin" and target and target:IsTransportable() then -- Handle zeppelin right click
+            local chosenZeppelin
+
+            -- Choose an available zeppelin to transport the unit
+            for _,unit_index in pairs(units) do
+                local v = EntIndexToHScript(unit_index)
+                if v:GetUnitName() == "neutral_goblin_zeppelin" and v.loadAbility:IsActivated() then
+                    chosenZeppelin = v:GetEntityIndex()
+                    ExecuteOrderFromTable({UnitIndex = v:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = v.loadAbility:GetEntityIndex(), Queue = queue})
+                    break
+                end
+            end
+
+            -- Rest of the units should keep the original move order
+            if chosenZeppelin then
+                local pos = EntIndexToHScript(targetIndex):GetAbsOrigin()
+                for _,unit_index in pairs(units) do
+                    if unit_index ~= chosenZeppelin then
+                        ExecuteOrderFromTable({UnitIndex = unit_index, OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION, Position = pos, Queue = queue})
+                    end
+                end
+            else
+                return true
+            end
+            return false
+        else
+            order_type = DOTA_UNIT_ORDER_MOVE_TO_POSITION
+            point = EntIndexToHScript(targetIndex):GetAbsOrigin()
+            filterTable["order_type"] = DOTA_UNIT_ORDER_MOVE_TO_POSITION
+            filterTable["position_x"] = point.x
+            filterTable["position_y"] = point.y
+            filterTable["position_z"] = point.z
+        end
     end
 
     -- Remove moving timers
@@ -69,6 +97,24 @@ function dotacraft:FilterExecuteOrder( filterTable )
             v.moving_timer = nil
         end
     end)
+
+    -- Redirect move to zeppelin cargo
+    if order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
+        local target = targetIndex and EntIndexToHScript(targetIndex)
+        if target and target:GetUnitName() == "neutral_goblin_zeppelin" and unit and unit:IsTransportableOnZeppelin(target) then
+            local vIndex = unit:GetEntityIndex()
+            local zepIndex = target:GetEntityIndex()
+            ExecuteOrderFromTable({UnitIndex = zepIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = targetIndex, AbilityIndex = target.loadAbility:GetEntityIndex(), Queue = queue})
+
+            local selectedEntities = PlayerResource:GetSelectedEntities(issuer)
+            for _,entityIndex in pairs(selectedEntities) do
+                if entityIndex ~= targetIndex then
+                    ExecuteOrderFromTable({UnitIndex = zepIndex, OrderType = DOTA_UNIT_ORDER_CAST_TARGET, TargetIndex = entityIndex, AbilityIndex = target.loadAbility:GetEntityIndex(), Queue = true})
+                end
+            end
+            return true
+        end
+    end
 
     -- Deny Unit-Target Orders requirements
     if order_type == DOTA_UNIT_ORDER_CAST_TARGET then
