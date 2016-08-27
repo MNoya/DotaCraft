@@ -33,7 +33,7 @@ function Units:Init( unit )
     -- Attack system, only applied to units and buildings with an attack
     local attacks_enabled = unit:GetAttacksEnabled()
     if attacks_enabled ~= "none" then
-        if bBuilder then
+        if bBuilder or unit:GetUnitName() == "neutral_goblin_sapper" then
             ApplyModifier(unit, "modifier_attack_system_passive")
         else
             ApplyModifier(unit, "modifier_attack_system")

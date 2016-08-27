@@ -115,70 +115,50 @@
 //Explosion deals 30/60/80 damage.
 "tinker_clockwerk_goblin_kaboom"
 {
-    "BaseClass"             "ability_datadriven"
-    "AbilityTextureName"    "tinker_clockwerk_goblin_kaboom"
-    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
-    "AbilityUnitTargetTeam" "DOTA_UNIT_TARGET_TEAM_ENEMY"
-    "AbilityUnitTargetType" "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-    "AbilityUnitDamageType" "DAMAGE_TYPE_MAGICAL"
-    "MaxLevel"              "3"
+    "BaseClass"                 "ability_datadriven"
+    "AbilityTextureName"        "tinker_clockwerk_goblin_kaboom"
+    "MaxLevel"                  "3"
 
-    "AbilityCastRange"      "100"
-    "AbilityCastPoint"      "0.0"
+    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+    "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"     "DAMAGE_TYPE_MAGICAL"
 
-    "TargetsAllowed"        "ground"
+    "AbilityCastRange"          "100"
+    "AbilityCastPoint"          "0.0"
 
-    "AbilityDamage"         "30 60 80"
+    "TargetsAllowed"            "ground"
 
     "AbilitySpecial"
     {
         "01"
         {
             "var_type"          "FIELD_INTEGER"
-            "radius"            "150"
+            "full_dmg"          "30 60 80"
+        }
+        "02"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "full_dmg_radius"   "100"
+        }
+        "03"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "outer_dmg"         "12 22 30"
+        }
+        "04"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "outer_dmg_radius"  "250"
         }
     }
 
     "OnSpellStart"
     {
-        "FireEffect"
+        "RunScript"
         {
-            "Target"            "CASTER"
-            "EffectName"        "particles/units/heroes/hero_techies/techies_suicide_fire.vpcf"
-            "EffectAttachType"  "follow_origin"
-            "ControlPointEntities"
-            {
-                "CASTER" "attach_hitloc"
-                "CASTER" "attach_hitloc"
-                "CASTER" "attach_hitloc"
-                "CASTER" "attach_hitloc"
-            }
-        }
-
-        "FireSound"
-        {
-            "EffectName"    "Hero_Techies.Suicide"
-            "Target"        "CASTER"
-        }
-
-        "Damage"
-        {
-            "Target"
-            {
-                "Center"    "CASTER"
-                "Radius"    "%radius"
-                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-            }
-            "Damage"        "%AbilityDamage"
-            "Type"          "DAMAGE_TYPE_MAGICAL"
-        }
-        
-        "Damage"
-        {
-            "Target"    "CASTER"            
-            "Damage"    "99999"
-            "Type"      "DAMAGE_TYPE_PURE"
+            "ScriptFile"    "units/neutral/sapper.lua"
+            "Function"      "Kaboom"
         }
     }
 }

@@ -15197,16 +15197,17 @@
 	    //----------------------------------------------------------------
 	    "BaseClass"                 "npc_dota_creature"
 	    "Model"                     "models/heroes/techies/techies.vmdl"
-	    "ModelScale"                "0.5"
+	    "ModelScale"                "0.75"
 	    "Level"                     "4"
 	    "HealthBarOffset"           "140"
 	
 	    "FormationRank"             "0"
-	    "AttacksEnabled"            "none"
+	    "AttacksEnabled"            "ground"
+	    "LeavesCorpse"              "0"
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
+	    "Ability1"                  "sapper_kaboom"
 	    
 	    // Armor
 	    //----------------------------------------------------------------
@@ -15216,8 +15217,12 @@
 	    // Attack
 	    //----------------------------------------------------------------
 	    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+	    "AttackDamageMin"           "0"
+	    "AttackDamageMax"           "0"
+	    "AttackRange"               "100"
 	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
-	    "AttackRate"                "0"
+	    "AttackRate"                "1"
+	    "AttackAnimationPoint"      "0.01"
 	    "AttackAcquisitionRange"    "500"
 	    
 	    // Bounty
@@ -15228,7 +15233,7 @@
 	    // Bounds
 	    //----------------------------------------------------------------
 	    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
-	    "RingRadius"                "32"
+	    "RingRadius"                "60"
 	    "CollisionSize"             "32"
 	    "FormationRank"             "0"
 	    
@@ -15312,6 +15317,8 @@
 	    // Attack
 	    //----------------------------------------------------------------
 	    "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+	    "AttackDamageMin"           "0"
+	    "AttackDamageMax"           "0"
 	    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
 	    "AttackRate"                "0"
 	    "AttackAcquisitionRange"    "500"

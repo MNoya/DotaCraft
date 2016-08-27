@@ -1,0 +1,94 @@
+"sapper_kaboom"
+{
+    "BaseClass"                 "ability_datadriven"
+    "AbilityTextureName"        "tinker_clockwerk_goblin_kaboom"
+    "MaxLevel"                  "1"
+
+    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+    "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"     "DAMAGE_TYPE_MAGICAL"
+
+    "AbilityCastRange"          "100"
+    "AbilityCastPoint"          "0.0"
+
+    "TargetsAllowed"        "ground"
+
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_techies/techies_suicide.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
+    }
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "full_dmg"          "250"
+        }
+        "02"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "full_dmg_radius"   "100"
+        }
+        "03"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "outer_dmg"         "100"
+        }
+        "04"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "outer_dmg_radius"  "250"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "DestroyTrees"
+        {
+            "Target"    "CASTER"
+            "Radius"    "%full_dmg_radius"
+        }
+
+        "RunScript"
+        {
+            "ScriptFile"    "units/neutral/sapper.lua"
+            "Function"      "Kaboom"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_sapper_logic"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            
+            "OnAttackLanded"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "units/neutral/sapper.lua"
+                    "Function"      "KaboomCast"
+                }
+            }
+
+            "ThinkInterval"  "0.1"
+            "OnIntervalThink"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "units/neutral/sapper.lua"
+                    "Function"      "KaboomThink"
+                }
+            }
+
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_DISABLE_AUTOATTACK" "1"
+            }
+        }
+    }
+}
