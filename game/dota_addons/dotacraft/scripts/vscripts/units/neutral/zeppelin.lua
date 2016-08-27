@@ -26,6 +26,16 @@ function Load(event)
         end)
         SetCounter(caster.counter_particle, caster.transportCount, caster.maxTransportCount)
 
+        local playerID = target:GetPlayerOwnerID()
+        local selectedUnits = PlayerResource:GetSelectedEntities(playerID)
+        local numSelected = TableCount(selectedUnits)
+        if PlayerResource:IsUnitSelected(playerID, target) then
+            if numSelected == 1 then
+                PlayerResource:AddToSelection(playerID, caster)
+            end
+            PlayerResource:RemoveFromSelection(playerID, target)
+        end
+
         if caster.transportCount == caster.maxTransportCount then
             ability:SetActivated(false)
         end

@@ -55,7 +55,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     -- Redirect move-to-target to move-to-position in flying units, to prevent clumping issues
     if order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET and unit and unit:HasFlyMovementCapability() then
         local target = targetIndex and EntIndexToHScript(targetIndex)
-        if unit:GetUnitName() == "neutral_goblin_zeppelin" and target and target:IsTransportable() then -- Handle zeppelin right click
+        if unit:GetUnitName() == "neutral_goblin_zeppelin" and target and target:IsTransportableOnZeppelin(unit) then -- Handle zeppelin right click
             local chosenZeppelin
 
             -- Choose an available zeppelin to transport the unit
