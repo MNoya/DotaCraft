@@ -2639,6 +2639,7 @@
 	    "GameSoundsFile"            "soundevents/game_sounds_heroes/game_sounds_techies.vsndevts"
 	
 		"AttacksEnabled"			"ground"
+		"TransportSize"				"2"
 	
 		"Artillery"					"1"
 		"SplashAttack"				"1"
@@ -2758,6 +2759,7 @@
 		"AttacksEnabled"			"building"
 		"LeavesCorpse"				"0"
 		"UnitLabel"					"mechanical"
+		"TransportSize"				"4"
 	
 		// Research
 		"Upgrades"
@@ -4630,6 +4632,7 @@
 		"AttacksEnabled"			"ground"
 		"LeavesCorpse"				"0"
 		"UnitLabel"					"mechanical"
+		"TransportSize"				"2"
 	
 		"SplashAttack"				"1"
 		"SplashFullRadius"			"25"
@@ -4976,6 +4979,7 @@
 	
 		"AttacksEnabled"			"ground"
 		"LeavesCorpse"				"0"
+		"TransportSize"				"2"
 	
 		// Research
 		"Upgrades"
@@ -5086,6 +5090,7 @@
 	
 		"AttacksEnabled"			"ground"
 		"LeavesCorpse"				"0"
+		"TransportSize"				"2"
 	
 		// Research
 		"Upgrades"
@@ -7328,6 +7333,7 @@
 		"AttacksEnabled"			"ground"
 		"LeavesCorpse"				"0"
 		"UnitLabel"					"mechanical"
+		"TransportSize"				"2"
 	
 		"Artillery"					"1"
 		"SplashAttack"				"1"
@@ -10401,6 +10407,7 @@
 		"AttacksEnabled"			"ground"
 		"LeavesCorpse"				"0"
 		"UnitLabel"					"mechanical"
+		"TransportSize"				"2"
 	
 		"Artillery"					"1"
 		"SplashAttack"				"1"
@@ -15282,7 +15289,7 @@
 	    //----------------------------------------------------------------
 	    "BaseClass"                 "npc_dota_creature"
 	    "Model"                     "models/courier/tegu/tegu_flying.vmdl"
-	    "ModelScale"                "1"
+	    "ModelScale"                "2"
 	    "Level"                     "1"
 	    "HealthBarOffset"           "140"
 	
@@ -15292,8 +15299,8 @@
 	    
 	    // Abilities
 	    //----------------------------------------------------------------
-	    "Ability1"                  ""
-	    "Ability2"                  ""
+	    "Ability1"                  "zeppelin_load"
+	    "Ability2"                  "zeppelin_unload"
 	    "Ability3"                  ""
 	    "Ability4"                  ""
 	    

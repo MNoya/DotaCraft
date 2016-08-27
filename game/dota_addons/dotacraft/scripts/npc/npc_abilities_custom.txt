@@ -36463,6 +36463,144 @@
 			}
 		}
 	}
+	//Right click on the zeppelin -> Move towards the zeppelin, zeppelin casts Load on the target.
+	//Right click from the zeppelin on a unit -> zeppelin casts Load on the target (target stays still)
+	//Load is hidden after zeppelin is full. Unload is hidden if there's nothing to unload. No error messages
+	//Killing the zep should drop all units and applies 30 seconds of Dizziness.
+	//If a Goblin Zeppelin is killed above water or an area where units cannot easily unload, the Goblin Zeppelin will die with everyone inside.
+	"zeppelin_load"
+	{
+	    "BaseClass"                 "ability_datadriven"
+	    "AbilityTextureName"        "neutral_load"
+	    "MaxLevel"                  "1"
+	
+	    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+	    "AbilityUnitTargetTeam"     "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityUnitTargetType"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	
+	    "AbilityCastRange"          "50"
+	    "AbilityCastPoint"          "0.1"
+	
+	    "TargetsAllowed"            "ground"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "capacity"          "8"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "units/neutral/zeppelin.lua"
+	            "Function"      "Load"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_zeppelin_cargo"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	    
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/neutral/zeppelin.lua"
+	                    "Function"      "InitCargo"
+	                }
+	            }
+	        }
+	
+	        "modifier_zeppelin_transporting"
+	        {
+	            "IsHidden"  "1"
+	            "States"
+	            {
+	                "MODIFIER_STATE_UNSELECTABLE"   "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_STUNNED"        "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_OUT_OF_GAME"    "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_PASSIVES_DISABLED"  "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_INVULNERABLE"   "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	    }
+	}
+	
+	"zeppelin_unload"
+	{
+	    "BaseClass"                 "ability_datadriven"
+	    "AbilityTextureName"        "neutral_unload"
+	    "MaxLevel"                  "1"
+	
+	    "AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+	
+	    "AbilityCastRange"          "50"
+	
+	    "OnSpellStart"
+	    {
+	        "ApplyModifier"
+	        {
+	            "ModifierName"  "modifier_zeppelin_unloading"
+	            "Target"        "CASTER"
+	        }
+	    }
+	
+	    "OnOwnerDied"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "units/neutral/zeppelin.lua"
+	            "Function"      "OnDeath"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_zeppelin_unloading"
+	        {
+	            "ThinkInterval"  "0.5"
+	            "OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "units/neutral/zeppelin.lua"
+	                    "Function"      "Unload"
+	                }
+	            }
+	
+	            "OnOrder"
+	            {
+	                "RemoveModifier"
+	                {
+	                    "ModifierName"  "modifier_zeppelin_unloading"
+	                    "Target"        "TARGET"
+	                }
+	            }
+	        }
+	
+	        "modifier_dizziness"
+	        {
+	            "EffectName"        "particles/custom/generic_slowed.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	
+	            "IsDebuff"  "1"
+	            "Duration"  "30"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "-25"
+	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "-25" 
+	            }
+	        }
+	    }
+	}
 	//=================================================================================
 	// Ability: Detonate
 	// Description: "Destroys the Wisp, dispelling all magical buffs and draining <Adtn,DataA1> mana from each unit in an area around the Wisp. |n|cffffcc00Deals <Adtn,DataB1> damage to summoned units.|r"

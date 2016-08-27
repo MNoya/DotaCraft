@@ -284,7 +284,7 @@ function dotacraft:InitializePlayer( hero )
     race_setup_table.mid_point = race_setup_table.closest_mine_pos + (position-race_setup_table.closest_mine_pos)/2
 
     -- Find neutrals near the starting zone and remove them
-    local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 1000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
+    local neutrals = FindUnitsInRadius(hero:GetTeamNumber(), position, nil, 1000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC+DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, true)
     for k,v in pairs(neutrals) do
         if v:GetTeamNumber() == DOTA_TEAM_NEUTRALS and not v:GetUnitName():match("minimap_") then
             v:RemoveSelf()
