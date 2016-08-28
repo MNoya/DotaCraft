@@ -45,8 +45,9 @@ function Drops:Init()
 end
 
 -- Returns a list of all the possible map drops of the current map
-function Drops:GetMapDropList()
+function Drops:GetMapDropList(bIgnorePowerUps)
     local drops = {}
+    if self.MapDropList then return self.MapDropList end
     local mapDrops = self.DropList[dotacraft:GetMapName()]
     for creepName,creepDrops in pairs(mapDrops) do
         for item_type,v in pairs(creepDrops) do
@@ -55,11 +56,13 @@ function Drops:GetMapDropList()
                 drops[itemName] = true
             else
                 local item_type_table = self.TierList[item_type]
-                local possible_item_drops = item_type_table[tostring(v)]
-                local choices = TableCount(possible_item_drops)
-                for i=1,choices do
-                    local itemName = "item_"..possible_item_drops[tostring(i)]
-                    drops[itemName] = true
+                if not bIgnorePowerUps or (bIgnorePowerUps and item_type ~= "powerup") then
+                    local possible_item_drops = item_type_table[tostring(v)]
+                    local choices = TableCount(possible_item_drops)
+                    for i=1,choices do
+                        local itemName = "item_"..possible_item_drops[tostring(i)]
+                        drops[itemName] = true
+                    end
                 end
             end
         end
@@ -69,11 +72,12 @@ function Drops:GetMapDropList()
         table.insert(dropList,k)
     end
 
+    self.MapDropList = dropList
     return dropList    
 end
 
 function Drops:GetRandomDrop()
-    local possible_item_drops = self:GetMapDropList()
+    local possible_item_drops = self:GetMapDropList(true)
     return possible_item_drops[RandomInt(1, #possible_item_drops)]
 end
 

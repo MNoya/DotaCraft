@@ -18580,6 +18580,76 @@
 	    // Creature Data
 	    //----------------------------------------------------------------
 	}
+	
+	"marketplace"
+	{
+	    // General
+	    //----------------------------------------------------------------
+	    "BaseClass"                 "npc_dota_building"
+	    "Model"                     "models/props_debris/secret_shop001.vmdl"
+	    "ModelScale"                "1.2"
+	    "Level"                     "10"
+	    "BoundsHullName"            "DOTA_HULL_SIZE_BARRACKS"
+	    "HealthBarOffset"           "200"
+	    "UseNeutralCreepBehavior"   "0"
+	
+	    "UnitLabel"                 "marketplace"
+	
+	    "MinimapIcon"               "minimap_shop"
+	    "MinimapIconSize"           "500"
+	    "MinimapDisableTint"        "1"
+	
+	    "Ability1"                  "" //ability_shop
+	    "Ability2"                  "ability_tavern"
+	
+	    // Armor
+	    //----------------------------------------------------------------
+	    "ArmorPhysical"             "0"
+	    "MagicalResistance"         "0"
+	    
+	    // Attack
+	    //----------------------------------------------------------------
+	    "AttackCapabilities"        "DOTA_UNIT_CAP_NO_ATTACK"
+	    
+	    // Bounty
+	    //----------------------------------------------------------------
+	    "BountyGoldMin"             "4.0"
+	    "BountyGoldMax"             "6.0"
+	    
+	    // Gold and Lumber
+	    //----------------------------------------------------------------
+	    "GoldCost"                  "105"
+	    "LumberCost"                "105"
+	    
+	    // Movement
+	    //----------------------------------------------------------------
+	    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_NONE"
+	    "MovementSpeed"             "100"
+	    "MovementTurnRate"          "0.5"
+	    
+	    // Status
+	    //----------------------------------------------------------------
+	    "StatusHealth"              "240"
+	    "StatusHealthRegen"         "0.5"
+	    
+	    // Vision
+	    //----------------------------------------------------------------
+	    "VisionDaytimeRange"        "1400"
+	    "VisionNighttimeRange"      "800"
+	
+	    // Building Size
+	    //----------------------------------------------------------------
+	    "ConstructionSize"          "8"
+	    "BlockPathingSize"          "6"
+	    
+	    // Team
+	    //----------------------------------------------------------------
+	    "TeamName"                  "DOTA_TEAM_NEUTRALS"
+	    "UnitRelationShipClass"     "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	    
+	    // Creature Data
+	    //----------------------------------------------------------------
+	}
 	//Skeleton Archer - item_book_of_the_dead
 	//Furbolg - item_talisman_of_the_wild
 	//Red Drake - item_red_drake_egg

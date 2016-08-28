@@ -307,7 +307,7 @@ function IsTavern(entIndex) {
 
 function IsGlobalShop(entIndex) {
 	var entityName = Entities.GetUnitLabel(entIndex);
-    return (entityName == "goblin_merchant" || entityName == "goblin_lab" || entityName == "mercenary")
+    return (entityName == "goblin_merchant" || entityName == "goblin_lab" || entityName == "mercenary" || entityName == "marketplace")
 }
 
 function IsAlliedUnit(targetIndex) {
