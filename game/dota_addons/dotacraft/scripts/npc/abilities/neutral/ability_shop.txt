@@ -22,13 +22,8 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile"	"mechanics/shop.lua"
-					"Function"		"CheckHeroInRadius"
-				}
-				"RunScript"
-				{
-					"ScriptFile"	"mechanics/shop.lua"
-					"Function"		"SellItemsInInventory"
+					"ScriptFile"	"mechanics/shops.lua"
+					"Function"		"ShopThink"
 				}
 			}
 
@@ -36,7 +31,7 @@
             {
                 "RunScript"
                 {
-                    "ScriptFile"    "mechanics/shop.lua"
+                    "ScriptFile"    "mechanics/shops.lua"
                     "Function"      "RemoveShop"
                 }
             }
@@ -51,12 +46,11 @@
 			{
 				"RunScript"
 				{
-					"ScriptFile" 	"mechanics/shop.lua"
-					"Function"		"Setup_Shop"			
+					"ScriptFile" 	"mechanics/shops.lua"
+					"Function"		"SetupShop"			
 				}		
 			}
-		}
-		
+		}	
 	}		
 }
 

@@ -501,7 +501,7 @@ function ReviveHero( event )
 	end
 	
 	-- remove hero panel when revived
-	unit_shops:RemoveHeroPanel(GameRules.HeroTavernEntityID, caster:GetPlayerOwnerID(), hero_name)
+	Shops:RemoveHeroPanel(Shops.TavernID, caster:GetPlayerOwnerID(), hero_name)
 end
 
 -- Hide the revive ability on every altar

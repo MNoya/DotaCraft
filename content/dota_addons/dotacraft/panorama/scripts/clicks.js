@@ -191,7 +191,7 @@ function OnRightButtonPressed()
                     return false
                 }
                 else
-                    CreateErrorMessage({message:"error_already_sacrificing"})
+                    GameUI.CreateErrorMessage({message:"error_already_sacrificing"})
             }
             // on an allied unit
             else if (IsAlliedUnit(targetIndex))
@@ -302,11 +302,11 @@ function IsShop(entIndex) {
 }
 
 function IsTavern(entIndex) {
-    return (Entities.GetUnitLabel(entIndex ) == "tavern")
+    return (Entities.GetUnitName(entIndex) == "tavern")
 }
 
 function IsGlobalShop(entIndex) {
-	var entityName = Entities.GetUnitLabel(entIndex);
+	var entityName = Entities.GetUnitName(entIndex);
     return (entityName == "goblin_merchant" || entityName == "goblin_lab" || entityName == "mercenary" || entityName == "marketplace")
 }
 

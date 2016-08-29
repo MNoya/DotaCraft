@@ -73,8 +73,9 @@ function CreateErrorMessage(msg){
     }
 }
 
+GameUI.CreateErrorMessage = CreateErrorMessage;
 
-(function () {
-	GameEvents.Subscribe("dotacraft_error_message", CreateErrorMessage)
-	$.Msg("Expanding CustomGameUI functionality");
-})();
+(function(){
+    GameEvents.Subscribe("dotacraft_error_message", CreateErrorMessage)
+    $.Msg("Expanding CustomGameUI functionality");
+})()

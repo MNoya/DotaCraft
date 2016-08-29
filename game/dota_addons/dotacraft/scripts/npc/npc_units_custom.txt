@@ -1410,7 +1410,7 @@
 		"HealthBarOffset"			"140"
 		"HasInventory"				"1"
 	
-		"UnitLabel"					"human_shop"
+		"ShopType"					"team"
 	
 		// Research
 		"Upgrades"
@@ -3435,8 +3435,7 @@
 		"Level"						"1"
 		"HealthBarOffset"			"140"
 	
-		"UnitLabel"					"nightelf_shop"
-	
+		"ShopType"					"team"
 		"AttacksEnabled"			"ground"
 		"HasQueue"					"1"
 		"HasDeathAnimation"			"1"
@@ -6616,7 +6615,7 @@
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
 	
-		"UnitLabel"					"orc_shop"
+		"ShopType"					"team"
 		"HasDeathAnimation"			"1"
 	
 		"Upgrades"
@@ -9277,7 +9276,7 @@
 		"HasInventory"				"1"
 		"ConsideredHero"			"1"
 	
-		"UnitLabel"					"undead_shop"
+		"ShopType"					"team"
 		
 		// Abilities
 		//----------------------------------------------------------------
@@ -18313,7 +18312,8 @@
 	    "HealthBarOffset"           "200"
 	    "UseNeutralCreepBehavior"   "0"
 	
-	    "UnitLabel"                 "tavern"
+	    "ShopType"                  "tavern"
+	    "SellsHeroes"               "1"
 	
 	    "MinimapIcon"               "minimap_shop"
 	    "MinimapIconSize"           "500"
@@ -18383,7 +18383,7 @@
 	    "HealthBarOffset"           "200"
 	    "UseNeutralCreepBehavior"   "0"
 	
-	    "UnitLabel"                 "goblin_merchant"
+	    "ShopType"                  "global"
 	
 	    "MinimapIcon"               "minimap_shop"
 	    "MinimapIconSize"           "500"
@@ -18453,7 +18453,8 @@
 	    "HealthBarOffset"           "200"
 	    "UseNeutralCreepBehavior"   "0"
 	
-	    "UnitLabel"                 "goblin_lab"
+	    "ShopType"                  "global"
+	    "SellsNPCs"                 "1"
 	
 	    "MinimapIcon"               "minimap_shop"
 	    "MinimapIconSize"           "500"
@@ -18523,7 +18524,8 @@
 	    "HealthBarOffset"           "200"
 	    "UseNeutralCreepBehavior"   "0"
 	
-	    "UnitLabel"                 "mercenary"
+	    "ShopType"                  "global"
+	    "SellsNPCs"                 "1"
 	
 	    "MinimapIcon"               "minimap_shop"
 	    "MinimapIconSize"           "500"
@@ -18593,7 +18595,7 @@
 	    "HealthBarOffset"           "200"
 	    "UseNeutralCreepBehavior"   "0"
 	
-	    "UnitLabel"                 "marketplace"
+	    "ShopType"                  "marketplace"
 	
 	    "MinimapIcon"               "minimap_shop"
 	    "MinimapIconSize"           "500"

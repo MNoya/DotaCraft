@@ -51,7 +51,3 @@ PlayerTables.GetColor = function(pPlayerID){
 	var color_index = this.GetColorID(pPlayerID);
 	return CustomNetTables.GetTableValue( this.COLORTABLENAME, color_index);
 };
-
-(function () {
-	$.Msg("[Initializing Custom NetTable Getters]");
-})();

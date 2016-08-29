@@ -268,8 +268,8 @@ function Build( event )
             unit:SetBaseHealthRegen(0.5)
         end
 
-        -- Add ability_shop on buildings labeled with _shop
-        if string.match(unit:GetUnitLabel(), "_shop") then
+        -- Add ability_shop on team shop buildings
+        if unit:GetKeyValue("ShopType") == "team" then
             TeachAbility(unit, "ability_shop")
         end
 

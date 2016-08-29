@@ -99,6 +99,10 @@ function Players:SetCityCenterLevel( playerID, level )
     hero.city_center_level = level
 end
 
+function Players:GetTier(playerID)
+    return playerID and Players:GetCityLevel(playerID) or 9000
+end
+
 -- Returns float with the percentage to reduce income
 function Players:GetUpkeep( playerID )
     local food_used = Players:GetFoodUsed(playerID)
@@ -752,6 +756,116 @@ end
 
 function Players:GetNumInitialBuilders(playerID)
     return Units:GetNumInitialBuildersForRace(Players:GetRace(playerID))
+end
+
+---------------------------------------------------------------
+
+function Players:CreateMercenary(playerID, shopID, unitName)
+    local player = PlayerResource:GetPlayer(playerID)
+    local hero = player:GetAssignedHero()
+    local shop = EntIndexToHScript(shopID)
+    local mercenary = CreateUnitByName(unitName, shop:GetAbsOrigin(), true, hero, player, hero:GetTeamNumber())
+    mercenary:SetControllableByPlayer(playerID, true)
+    mercenary:SetOwner(hero)
+
+    -- Add food cost
+    Players:ModifyFoodUsed(playerID, 5)
+
+    -- Add to player table
+    Players:AddUnit(playerID, mercenary)
+
+    Scores:IncrementMercenariesHired(playerID)
+end
+
+function Players:CreateHeroFromTavern(playerID, heroName, tavernID)
+    local player = PlayerResource:GetPlayer(playerID)
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    local tavern = EntIndexToHScript(tavernID)
+
+    -- Add food cost
+    Players:ModifyFoodUsed(playerID, 5)
+
+    -- Acquired ability
+    local train_ability_name = "neutral_train_"..heroName
+    train_ability_name = string.gsub(train_ability_name, "npc_dota_hero_" , "")
+    
+    -- Add the acquired ability to each altar
+    local altarStructures = Players:GetAltars(playerID)
+    for _,altar in pairs(altarStructures) do
+        local acquired_ability_name = train_ability_name.."_acquired"
+        TeachAbility(altar, acquired_ability_name)
+        SetAbilityLayout(altar, 5)  
+    end
+
+    -- Increase the altar tier
+    dotacraft:IncreaseAltarTier( playerID )
+
+    -- handle_UnitOwner needs to be nil, else it will crash the game.
+    PrecacheUnitByNameAsync(heroName, function()
+        local new_hero = CreateUnitByName(heroName, tavern:GetAbsOrigin(), true, hero, nil, hero:GetTeamNumber())
+        new_hero:SetPlayerID(playerID)
+        new_hero:SetControllableByPlayer(playerID, true)
+        new_hero:SetOwner(player)
+        FindClearSpaceForUnit(new_hero, tavern:GetAbsOrigin(), true)
+
+        new_hero:RespawnUnit()
+        
+        -- Add a teleport scroll
+        local tpScroll = CreateItem("item_scroll_of_town_portal", new_hero, new_hero)
+        new_hero:AddItem(tpScroll)
+        tpScroll:SetPurchaseTime(0) --Dont refund fully
+
+        -- Add the hero to the table of heroes acquired by the player
+        Players:AddHero( playerID, new_hero )
+
+        --Reference to swap to a revive ability when the hero dies
+        new_hero.RespawnAbility = train_ability_name 
+
+        CreateHeroPanel(new_hero)
+    end, playerID)
+end
+
+function Players:ReviveHeroFromTavern(playerID, heroName, tavernID)
+    local player = PlayerResource:GetPlayer(playerID)
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+    local tavern = EntIndexToHScript(tavernID)
+    local health_factor = 0.5
+    local ability_name --Ability on the altars, needs to be removed after the hero is revived
+    local level
+
+    local playerHeroes = Players:GetHeroes(playerID)
+    for k,hero in pairs(playerHeroes) do
+        if hero:GetUnitName() == heroName then
+            hero:RespawnUnit()
+            FindClearSpaceForUnit(hero, tavern:GetAbsOrigin(), true)
+            hero:SetMana(0)
+            hero:SetHealth(hero:GetMaxHealth() * health_factor)
+            ability_name = hero.RespawnAbility
+            level = hero:GetLevel()
+            print("Revived "..heroName.." with 50% Health at Level "..hero:GetLevel())
+        end
+    end
+
+    ability_name =  ability_name.."_revive"..level
+    
+    -- Swap the _revive ability on the altars for a _acquired ability
+    local altarStructures = Players:GetAltars(playerID)
+    for _,altar in pairs(altarStructures) do
+        local new_ability_name = string.gsub(ability_name, "_revive" , "")
+        new_ability_name = Upgrades:GetBaseAbilityName(new_ability_name) --Take away numbers or research
+        new_ability_name = new_ability_name.."_acquired"
+
+        print("new_ability_name is "..new_ability_name..", it will replace: "..ability_name)
+
+        altar:AddAbility(new_ability_name)
+        altar:SwapAbilities(ability_name, new_ability_name, false, true)
+        altar:RemoveAbility(ability_name)
+        
+        local new_ability = altar:FindAbilityByName(new_ability_name)
+        new_ability:SetLevel(new_ability:GetMaxLevel())
+
+        PrintAbilities(altar)
+    end
 end
 
 ---------------------------------------------------------------

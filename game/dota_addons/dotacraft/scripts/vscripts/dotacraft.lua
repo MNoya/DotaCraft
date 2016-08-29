@@ -88,14 +88,14 @@ function dotacraft:InitGameMode()
     GameMode:SetItemAddedToInventoryFilter( Dynamic_Wrap(dotacraft, "FilterItemAdded"), self )
 
     -- Panorama listeners
-    CustomGameEventManager:RegisterListener( "selection_update", Dynamic_Wrap(dotacraft, 'OnPlayerSelectedEntities'))
-    CustomGameEventManager:RegisterListener( "moonwell_order", Dynamic_Wrap(dotacraft, "MoonWellOrder"))
-    CustomGameEventManager:RegisterListener( "burrow_order", Dynamic_Wrap(dotacraft, "BurrowOrder")) 
-    CustomGameEventManager:RegisterListener( "hippogryph_ride_order", Dynamic_Wrap(dotacraft, "HippogryphRiderOrder")) 
-    CustomGameEventManager:RegisterListener( "sacrifice_order", Dynamic_Wrap(dotacraft, "SacrificeOrder"))
-    CustomGameEventManager:RegisterListener( "entangle_order", Dynamic_Wrap(dotacraft, "EntangleOrder"))
-    CustomGameEventManager:RegisterListener( "shop_active_order", Dynamic_Wrap(dotacraft, "ShopActiveOrder")) 
-    CustomGameEventManager:RegisterListener( "building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder"))
+    CustomGameEventManager:RegisterListener("selection_update", Dynamic_Wrap(dotacraft, 'OnPlayerSelectedEntities'))
+    CustomGameEventManager:RegisterListener("moonwell_order", Dynamic_Wrap(dotacraft, "MoonWellOrder"))
+    CustomGameEventManager:RegisterListener("burrow_order", Dynamic_Wrap(dotacraft, "BurrowOrder")) 
+    CustomGameEventManager:RegisterListener("hippogryph_ride_order", Dynamic_Wrap(dotacraft, "HippogryphRiderOrder")) 
+    CustomGameEventManager:RegisterListener("sacrifice_order", Dynamic_Wrap(dotacraft, "SacrificeOrder"))
+    CustomGameEventManager:RegisterListener("entangle_order", Dynamic_Wrap(dotacraft, "EntangleOrder"))
+    CustomGameEventManager:RegisterListener("shop_active_order", Dynamic_Wrap(dotacraft, "ShopActiveOrder")) 
+    CustomGameEventManager:RegisterListener("building_rally_order", Dynamic_Wrap(dotacraft, "OnBuildingRallyOrder"))
     
     -- Lua Modifiers
     LinkLuaModifier("modifier_hex_frog", "libraries/modifiers/modifier_hex", LUA_MODIFIER_MOTION_NONE)
@@ -585,7 +585,7 @@ end
 function dotacraft:OnGameInProgress()
     print("[DOTACRAFT] The game has officially begun")
 
-    -- Setup shops (Tavern, Mercenary, Goblin Merchant and Lab)
+    -- Setup shops (Tavern, Mercenary, Marketplace, Goblin Merchant and Lab)
     local shops = Entities:FindAllByName("*shop*")
     for k,v in pairs(shops) do
         if v.AddAbility then
@@ -929,7 +929,7 @@ function dotacraft:OnEntityKilled( event )
         print("A Hero was killed")
         
         -- add hero to tavern, this function also works out cost etc
-        unit_shops:AddHeroToTavern(killed)
+        Shops:AddHeroToTavern(killed)
         
         if Players:HasAltar(killed_playerID) then
 
