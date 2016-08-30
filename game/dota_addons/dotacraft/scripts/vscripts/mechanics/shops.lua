@@ -47,6 +47,7 @@ end
 function Shops:CreateShop(unit)
     local shopType = unit:GetKeyValue("ShopType")
     local shopIndex = unit:GetEntityIndex()
+    local shopName = unit:GetUnitName()
     local playerID = unit:GetPlayerOwnerID()
     
     -- Init tracking
@@ -57,9 +58,6 @@ function Shops:CreateShop(unit)
         self.Players[playerID] = {}
         self.Players[playerID].Items = {}
     end
-    
-    -- Create a trigger for enabling the sell option on units
-    self:CreateTrigger(unit)
 
     -- Create shop panels based on the shop type
     if shopType == "tavern" then
@@ -72,14 +70,20 @@ function Shops:CreateShop(unit)
         Shops:SetupMarketplace(unit)
     else
         if not shopType then
-            self:print("Missing \"ShopType\" KV on "..unit:GetUnitName())
+            self:print("Missing \"ShopType\" KV on "..shopName)
         else
-            self:print("Unsupported type of shop ("..shopType..") for "..unit:GetUnitName())
+            self:print("Unsupported type of shop ("..shopType..") for "..shopName)
         end
+    end
+
+    -- Create a trigger for enabling the sell option on units
+    if shopType == "team" or shopType == "marketplace" or shopName == "goblin_merchant" then
+        self:CreateTrigger(unit)
     end
 end
 
 function Shops:CreateTrigger(unit)
+    if unit:GetUnitName() ~= "tavern"
     local shopEnt = Entities:FindByName(nil, "*custom_shop") -- entity name in hammer
     if shopEnt then
         local modelName = shopEnt:GetModelName()
@@ -233,6 +237,7 @@ end
     Builds an altar/city center
     Altar/city center destroyed
     City center upgraded (special case of destroying -> building)
+    Altar tier increases/decreases (hero training start/cancel)
 ]]
 function Shops:TavernStockUpdater(itemInfo, unit)
     Timers:CreateTimer(0.1, function()
@@ -248,7 +253,7 @@ function Shops:TavernStockUpdater(itemInfo, unit)
                 -- if player cannot train more heroes and tavern wasn't previously disabled, disable it now     
                 if player and not Players:CanTrainMoreHeroes(playerID) then
                     CustomGameEventManager:Send_ServerToPlayer(player, "shops_remove_content", {Index = self.TavernID, Shop = itemInfo}) 
-                    self:print("Remove neutral heroes panels from player="..tostring(playerID))
+                    self:print("Remove neutral heroes panels from player "..playerID)
                     return
                 end
                 
