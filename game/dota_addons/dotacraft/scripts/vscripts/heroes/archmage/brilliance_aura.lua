@@ -70,3 +70,7 @@ end
 function modifier_brilliance_aura_buff:IsPurgable()
     return false
 end
+
+function modifier_brilliance_aura_buff:GetTexture()
+    return "archmage_brilliance_aura"
+end

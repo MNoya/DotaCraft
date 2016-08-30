@@ -74,3 +74,7 @@ end
 function modifier_endurance_aura_buff:IsPurgable()
     return false
 end
+
+function modifier_endurance_aura_buff:GetTexture()
+    return "tauren_chieftain_endurance_aura"
+end

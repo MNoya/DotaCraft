@@ -82,3 +82,7 @@ end
 function modifier_trueshot_aura_buff:IsPurgable()
     return false
 end
+
+function modifier_trueshot_aura_buff:GetTexture()
+    return "potm_trueshot_aura"
+end

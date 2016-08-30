@@ -78,3 +78,7 @@ end
 function modifier_devotion_aura_buff:IsPurgable()
     return false
 end
+
+function modifier_devotion_aura_buff:GetTexture()
+    return "paladin_devotion_aura"
+end

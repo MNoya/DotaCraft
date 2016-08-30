@@ -5,11 +5,7 @@ LinkLuaModifier("modifier_command_aura", "items/auras/command", LUA_MODIFIER_MOT
 LinkLuaModifier("modifier_command_aura_buff", "items/auras/command", LUA_MODIFIER_MOTION_NONE)
 
 function item_warsong_battle_drums:GetIntrinsicModifierName()
-    if self:GetCaster():HasModifier("modifier_command_aura") then
-        return ""
-    else
-        return "modifier_command_aura"
-    end
+    return "modifier_command_aura"
 end
 
 --------------------------------------------------------------------------------
