@@ -51,18 +51,17 @@
 
         "ApplyModifier"
         {
-            "ModifierName"  "modifier_windwalk"
+            "ModifierName"  "modifier_windwalk_fade_time"
             "Target"        "CASTER"
-            "Duration"      "%duration"
+            "Duration"      "0.5"
         }
     }
 
     "Modifiers"
     {
-        "modifier_windwalk"
+        "modifier_windwalk_fade_time"
         {
-            "Duration"          "%duration"
-
+            "IsHidden"  "1"
             "OnCreated"
             {
                 "ApplyModifier"
@@ -71,6 +70,30 @@
                     "Target"        "TARGET"
                 }
             }
+
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"      "%bonus_movespeed"
+            }
+            
+            "States"
+            {
+                "MODIFIER_STATE_NO_UNIT_COLLISION"  "MODIFIER_STATE_VALUE_ENABLED"
+            }
+
+            "OnDestroy"
+            {
+                "ApplyModifier"
+                {
+                    "ModifierName"  "modifier_windwalk"
+                    "Target"        "TARGET"
+                }
+            }
+        }
+
+        "modifier_windwalk"
+        {
+            "Duration"          "%duration"
 
             "OnDestroy"
             {
