@@ -922,7 +922,14 @@ function dotacraft:OnEntityKilled( event )
     end
 
     -- Remove dead units from selection group
-    PlayerResource:RemoveFromSelection(killed_playerID, killed)
+    if PlayerResource:IsUnitSelected(killed_playerID, killed) then
+        print(TableCount(PlayerResource:GetSelectedEntities(killed_playerID)))
+        if TableCount(PlayerResource:GetSelectedEntities(killed_playerID)) == 1 then
+            PlayerResource:NewSelection(killed_playerID, PlayerResource:GetDefaultSelectionEntity(killed_playerID))
+        else
+            PlayerResource:RemoveFromSelection(killed_playerID, killed)
+        end
+    end
 
     -- Hero Killed
     if killed:IsRealHero() and killed_playerID ~= -1 then

@@ -83,7 +83,6 @@ function Shops:CreateShop(unit)
 end
 
 function Shops:CreateTrigger(unit)
-    if unit:GetUnitName() ~= "tavern"
     local shopEnt = Entities:FindByName(nil, "*custom_shop") -- entity name in hammer
     if shopEnt then
         local modelName = shopEnt:GetModelName()
