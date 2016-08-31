@@ -24,6 +24,7 @@ function NeutralAI:Start( unit )
 
     unit.state = AI_STATE_IDLE
     unit.spawnPos = unit:GetAbsOrigin()
+    unit.spawnFacing = unit:GetForwardVector()
     Timers:CreateTimer(0.03, function() unit.spawnPos = unit:GetAbsOrigin() end)
     unit.acquireRange = unit:GetAcquisitionRange()
     unit.aggroRange = 200 --Range an enemy unit has to be for the group to go from IDLE to AGGRESIVE
@@ -76,8 +77,14 @@ end
 function NeutralAI:IdleThink()
     local unit = self.unit
 
+    -- Keep original facing
+    if unit:GetForwardVector() ~= unit.spawnFacing then
+        unit:MoveToPosition(unit.spawnPos + unit.spawnFacing)
+        return 0.1
+    end
+
     -- Sleep
-    if not GameRules:IsDaytime() then
+    if not GameRules:IsDaytime() and not unit:IsMoving() then
         ApplyModifier(unit, "modifier_neutral_sleep")
         unit.state = AI_STATE_SLEEPING
         return
@@ -157,6 +164,7 @@ function NeutralAI:AggressiveThink()
             if range_to_current_target > unit:GetAttackRange() and range_to_current_target > range_to_closest_target then
                 unit:MoveToTargetToAttack(target)
                 unit.aggroTarget = target
+                return
             end
         else    
             -- Can't attack the current target and there aren't more targets close
@@ -164,7 +172,15 @@ function NeutralAI:AggressiveThink()
                 unit:MoveToPosition( unit.spawnPos )
                 unit.state = AI_STATE_RETURNING
                 unit.aggroTarget = nil
+                return
             end
+        end
+    end
+
+    if not unit:GetAggroTarget() and unit:IsIdle() then
+        if target then
+            unit:MoveToTargetToAttack(target)
+            unit.aggroTarget = target
         end
     end
 end
