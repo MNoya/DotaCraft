@@ -1,4 +1,4 @@
-SELECTION_VERSION = "1.01"
+SELECTION_VERSION = "1.02"
 
 --[[
     Lua-controlled Selection Library by Noya
@@ -40,6 +40,7 @@ SELECTION_VERSION = "1.01"
     
     * Redirects the selection of the main hero to another entity of choice
         PlayerResource:SetDefaultSelectionEntity(playerID, unit)
+        PlayerResource:GetDefaultSelectionEntity(playerID)
     
     * Redirects the selection of any entity to another entity of choice
         hero:SetSelectionOverride(unit)
@@ -122,8 +123,13 @@ function CDOTA_PlayerResource:SetDefaultSelectionEntity(playerID, unit)
     local entIndex = type(unit)=="number" and unit or unit:GetEntityIndex()
     local hero = self:GetSelectedHeroEntity(playerID)
     if hero then
+        Selection.overrides[playerID] = unit
         hero:SetSelectionOverride(unit)
     end
+end
+
+function CDOTA_PlayerResource:GetDefaultSelectionEntity(playerID)
+    return Selection.overrides[playerID] or self:GetSelectedHeroEntity(playerID)
 end
 
 function CDOTA_BaseNPC:SetSelectionOverride(reselect_unit)
@@ -155,7 +161,8 @@ if not Selection then
 end
 
 function Selection:Init()
-    Selection.entities = {} --Stores the selected entities of each playerID
+    Selection.entities = {}  --Stores the selected entities of each playerID
+    Selection.overrides = {} --Stores an override selection of each playerID
     CustomGameEventManager:RegisterListener("selection_update", Dynamic_Wrap(Selection, 'OnUpdate'))
 end
 
