@@ -20,6 +20,20 @@ function modifier_disease_cloud_aura:OnCreated()
     end
 end
 
+function modifier_disease_cloud_aura:OnDestroy()
+    if IsServer() then
+        local unit = self:GetParent()
+        if unit:GetUnitName() == "undead_abomination" then
+            local disease_cloud_dummy = CreateUnitByName("dummy_unit_disease_cloud", unit:GetAbsOrigin(), false, nil, nil, unit:GetTeamNumber())
+            local explosion = ParticleManager:CreateParticle("particles/custom/undead/rot_recipient.vpcf",PATTACH_ABSORIGIN_FOLLOW,disease_cloud_dummy)
+            Timers:CreateTimer(1, function() ParticleManager:DestroyParticle(explosion,true) end)
+            Timers:CreateTimer(10, function()
+                UTIL_Remove(disease_cloud_dummy)
+            end)
+        end
+    end
+end
+
 function modifier_disease_cloud_aura:IsAura()
     return true
 end
@@ -45,7 +59,7 @@ function modifier_disease_cloud_aura:GetAuraSearchTeam()
 end
 
 function modifier_disease_cloud_aura:GetAuraEntityReject(target)
-    return IsCustomBuilding(target) or target:IsWard() or target:IsMechanical()
+    return IsCustomBuilding(target) or target:IsWard() or target:IsMechanical() or IsUndead(target)
 end
 
 function modifier_disease_cloud_aura:GetAuraSearchType()
@@ -53,7 +67,7 @@ function modifier_disease_cloud_aura:GetAuraSearchType()
 end
 
 function modifier_disease_cloud_aura:GetAuraDuration()
-    return 128
+    return 120
 end
 
 --------------------------------------------------------------------------------
