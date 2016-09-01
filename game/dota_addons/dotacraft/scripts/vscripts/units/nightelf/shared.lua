@@ -86,10 +86,11 @@ function ShadowMeldRemove( event )
             end
             return
         end
-    else
-        caster:RemoveModifierByName("modifier_shadow_meld_active")
-        caster:RemoveModifierByName("modifier_shadow_meld")
-        caster:RemoveModifierByName("modifier_invisibility")
+    end
+    caster:RemoveModifierByName("modifier_shadow_meld_active")
+    caster:RemoveModifierByName("modifier_shadow_meld")
+    caster:RemoveModifierByName("modifier_invisibility")
+    if not ability:IsItem() then
         ToggleOff(ability)
     end
 end
