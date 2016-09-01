@@ -2073,7 +2073,11 @@
 	                "ApplyModifier"
 	                {
 	                    "ModifierName"  "modifier_windwalk"
-	                    "Target"        "TARGET"
+	                    "Target"
+	                    {
+	                        "Center"    "TARGET"
+	                        "Flags"     "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	                    }
 	                }
 	            }
 	        }
@@ -12508,7 +12512,7 @@
 		            "RemoveModifier"
 		            {
 		                "ModifierName"  "modifier_human_invisibility"
-		                "Target"        "TARGET"
+		                "Target"        "ATTACKER"
 		            }
 		        }
 	
@@ -12517,7 +12521,7 @@
 		            "RemoveModifier"
 		            {
 		                "ModifierName"  "modifier_human_invisibility"
-		                "Target"        "TARGET"
+		                "Target"        "UNIT"
 		            }
 		        }
 		    }

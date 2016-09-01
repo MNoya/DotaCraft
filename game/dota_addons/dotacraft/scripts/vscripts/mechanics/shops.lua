@@ -601,7 +601,7 @@ function FindShopAbleUnit(shop, playerID, unit_types)
 
         -- Check for creature units with inventory
         for k,unit in pairs(units) do
-            if unit:IsAlive() and unit:GetPlayerOwnerID() == playerID and not IsCustomBuilding(unit) and unit:HasInventory() then
+            if unit:IsAlive() and unit:GetPlayerOwnerID() == playerID and not IsCustomBuilding(unit) and unit:HasInventory() and not unit:IsIllusion() then
                 return unit
             end
         end
@@ -609,7 +609,7 @@ function FindShopAbleUnit(shop, playerID, unit_types)
         -- For npc-selling buildings, check any unit
         if shop:GetKeyValue("SellsNPCs") or shop:GetKeyValue("SellsHeroes") then
             for k,unit in pairs(units) do
-                if unit:IsAlive() and unit:GetPlayerOwnerID() == playerID then
+                if unit:IsAlive() and unit:GetPlayerOwnerID() == playerID and not unit:IsIllusion() then
                     return unit
                 end
             end

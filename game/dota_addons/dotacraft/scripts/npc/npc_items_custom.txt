@@ -3373,20 +3373,23 @@
 				"Target"		"CASTER"
 				"Duration"		"%duration"
 			}
+	
+			"SpendCharge"
+			{}
 		}
 	
 		"Modifiers"
 		{
 		    "modifier_invisibility_potion"
 		    {
+		    	"TextureName"		"item_potion_of_invisibility"
 		        "IsPurgable"        "1"
-		
 		        "OnCreated"
 		        {
 		            "ApplyModifier"
 		            {
 		                "ModifierName"  "modifier_invisibility"
-		                "Target"        "TARGET"
+		                "Target"        "CASTER"
 		            }
 		        }
 	
@@ -3395,7 +3398,7 @@
 		            "RemoveModifier"
 		            {
 		                "ModifierName"  "modifier_invisibility"
-		                "Target"        "TARGET"
+		                "Target"        "CASTER"
 		            }
 		        }
 	
@@ -3403,8 +3406,8 @@
 		        {
 		            "RemoveModifier"
 		            {
-		                "ModifierName"  "modifier_human_invisibility"
-		                "Target"        "TARGET"
+		                "ModifierName"  "modifier_invisibility_potion"
+		                "Target"        "CASTER"
 		            }
 		        }
 	
@@ -3412,8 +3415,8 @@
 		        {
 		            "RemoveModifier"
 		            {
-		                "ModifierName"  "modifier_human_invisibility"
-		                "Target"        "TARGET"
+		                "ModifierName"  "modifier_invisibility_potion"
+		                "Target"        "CASTER"
 		            }
 		        }
 		    }

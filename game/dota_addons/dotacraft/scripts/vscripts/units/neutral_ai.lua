@@ -168,7 +168,7 @@ function NeutralAI:AggressiveThink()
             end
         else    
             -- Can't attack the current target and there aren't more targets close
-            if not UnitCanAttackTarget(unit, unit.aggroTarget) or unit.aggroTarget:HasModifier("modifier_invisible") or unit:GetRangeToUnit(unit.aggroTarget) > unit.leashRange then
+            if not UnitCanAttackTarget(unit, unit.aggroTarget) or unit.aggroTarget:IsInvisible() or unit:GetRangeToUnit(unit.aggroTarget) > unit.leashRange then
                 unit:MoveToPosition( unit.spawnPos )
                 unit.state = AI_STATE_RETURNING
                 unit.aggroTarget = nil
