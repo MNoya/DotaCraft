@@ -50,7 +50,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
     end
 
     -- Don't need this.
-    if order_type == DOTA_UNIT_ORDER_RADAR then return end
+    if order_type == DOTA_UNIT_ORDER_RADAR or order_type == DOTA_UNIT_ORDER_GLYPH then return end
 
     -- Redirect move-to-target to move-to-position in flying units, to prevent clumping issues
     if order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET and unit and unit:HasFlyMovementCapability() then
