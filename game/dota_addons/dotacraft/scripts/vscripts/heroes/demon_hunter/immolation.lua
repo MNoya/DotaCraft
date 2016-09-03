@@ -123,7 +123,7 @@ function modifier_immolation_aura:GetAuraSearchTeam()
 end
 
 function modifier_immolation_aura:GetAuraEntityReject(target)
-    return IsCustomBuilding(target) or target:HasFlyMovementCapability() or target:IsMechanical()
+    return self:GetParent():IsInvisible() or IsCustomBuilding(target) or target:HasFlyMovementCapability() or target:IsMechanical()
 end
 
 function modifier_immolation_aura:GetAuraSearchType()
