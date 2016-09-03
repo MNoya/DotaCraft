@@ -48,7 +48,7 @@ function ShadowMeldThink( event )
         end
 
         -- If idle on night time, passively apply the fade out
-        if caster:IsIdle() and not caster:GetAttackTarget() and not caster:IsStunned() and not caster:HasModifier("modifier_shadow_meld") and not caster:HasModifier("modifier_mounted_archer") then
+        if caster:IsIdle() and not caster:GetAttackTarget() and not caster:IsStunned() and not IsChanneling(caster) and not caster:HasModifier("modifier_shadow_meld") and not caster:HasModifier("modifier_mounted_archer") then
             ability:ApplyDataDrivenModifier(caster, caster, "modifier_shadow_meld", {})
         end
     else
