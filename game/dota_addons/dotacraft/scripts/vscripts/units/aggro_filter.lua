@@ -61,11 +61,12 @@ end
 
 -- Run away from the attacker
 function Flee( unit, attacker )
-    local unit_origin = unit:GetAbsOrigin()
-    local target_origin = attacker:GetAbsOrigin() 
-    local flee_position = unit_origin + (unit_origin - target_origin):Normalized() * 200
-
-    unit:MoveToPosition(flee_position)
+    if not unit:IsMoving() then
+        local unit_origin = unit:GetAbsOrigin()
+        local target_origin = attacker:GetAbsOrigin()
+        local flee_position = unit_origin + (unit_origin - target_origin):Normalized() * 200
+        unit:MoveToPosition(flee_position)
+    end
 end
 
 ------------------------------------------------------------------------------------

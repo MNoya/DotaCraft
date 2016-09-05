@@ -41,6 +41,19 @@ function NeutralAI:Start( unit )
     unit:SetIdleAcquire(false)
     unit:SetAcquisitionRange(0)
 
+    function unit:Attack(target)
+        unit:MoveToTargetToAttack(target)
+        unit.state = AI_STATE_AGGRESSIVE
+        unit.aggroTarget = target
+    end
+
+    function unit:Return()
+        unit:MoveToPosition(unit.spawnPos)
+        unit.state = AI_STATE_RETURNING
+        unit.aggroTarget = nil
+        --print("[NeutralAI] "..unit.id.." stopped at "..math.floor(distanceFromSpawn).. " ("..unit.leashRange.." leash range)")
+    end
+
     -- Check ability AI block
     unit.ai_abilities = {}
     for i=0,15 do
@@ -83,6 +96,16 @@ function NeutralAI:IdleThink()
         return 0.1
     end
 
+    -- Check if the unit has walked outside its leash range (in case of fleeing)
+    local distanceFromSpawn = (unit.spawnPos - unit:GetAbsOrigin()):Length2D()
+    if unit:GetHealthPercent() < 100 then
+        print(distanceFromSpawn)
+    end
+    if distanceFromSpawn > unit.leashRange then
+        unit:Return()
+        return
+    end
+
     -- Sleep
     if not GameRules:IsDaytime() and not unit:IsMoving() then
         ApplyModifier(unit, "modifier_neutral_sleep")
@@ -97,9 +120,7 @@ function NeutralAI:IdleThink()
         for _,v in pairs(unit.allies) do
             if IsValidAlive(v) then
                 if v.state == AI_STATE_IDLE then
-                    v:MoveToTargetToAttack(target)
-                    v.aggroTarget = target
-                    v.state = AI_STATE_AGGRESSIVE
+                    v:Attack(target)
                 end
             end
         end    
@@ -122,12 +143,9 @@ function NeutralAI:AggressiveThink()
     local unit = self.unit
 
     -- Check if the unit has walked outside its leash range
-    local distanceFromSpawn = ( unit.spawnPos - unit:GetAbsOrigin() ):Length2D()
-    if distanceFromSpawn >= unit.leashRange then
-        unit:MoveToPosition( unit.spawnPos )
-        unit.state = AI_STATE_RETURNING
-        unit.aggroTarget = nil
-        --print("[NeutralAI] "..unit.id.." stopped at "..math.floor(distanceFromSpawn).. " ("..unit.leashRange.." leash range)")
+    local distanceFromSpawn = (unit.spawnPos - unit:GetAbsOrigin()):Length2D()
+    if distanceFromSpawn > unit.leashRange then
+        unit:Return()
         return
     end
 
@@ -146,12 +164,9 @@ function NeutralAI:AggressiveThink()
     if not IsValidAlive(unit.aggroTarget) then
         -- If there is no other valid target, return
         if not target then
-            unit:MoveToPosition( unit.spawnPos )
-            unit.state = AI_STATE_RETURNING
-            unit.aggroTarget = nil    
+            unit:Return()
         else
-            unit:MoveToTargetToAttack(target)
-            unit.aggroTarget = target
+            unit:Attack(target)
         end
     
     -- If the current aggro target is still valid
@@ -162,16 +177,13 @@ function NeutralAI:AggressiveThink()
 
             -- If the range to the current target exceeds the attack range of the attacker, and there is a possible target closer to it, attack that one instead
             if range_to_current_target > unit:GetAttackRange() and range_to_current_target > range_to_closest_target then
-                unit:MoveToTargetToAttack(target)
-                unit.aggroTarget = target
+                unit:Attack(target)
                 return
             end
         else    
             -- Can't attack the current target and there aren't more targets close
             if not UnitCanAttackTarget(unit, unit.aggroTarget) or unit.aggroTarget:IsInvisible() or unit:GetRangeToUnit(unit.aggroTarget) > unit.leashRange then
-                unit:MoveToPosition( unit.spawnPos )
-                unit.state = AI_STATE_RETURNING
-                unit.aggroTarget = nil
+                unit:Return()
                 return
             end
         end
@@ -179,8 +191,7 @@ function NeutralAI:AggressiveThink()
 
     if not unit:GetAggroTarget() and unit:IsIdle() then
         if target then
-            unit:MoveToTargetToAttack(target)
-            unit.aggroTarget = target
+            unit:Attack(target)
         end
     end
 end
@@ -189,11 +200,13 @@ function NeutralAI:ReturningThink()
     local unit = self.unit
 
     --Check if the AI unit has reached its spawn location yet
-    if ( unit.spawnPos - unit:GetAbsOrigin() ):Length2D() < 10 then
+    if (unit.spawnPos - unit:GetAbsOrigin()):Length2D() < 10 then
         --Go into the idle state
         unit.state = AI_STATE_IDLE
         ApplyModifier(unit, "modifier_neutral_idle_aggro")
         return
+    else
+        unit:MoveToPosition(unit.spawnPos)
     end
 end
 
