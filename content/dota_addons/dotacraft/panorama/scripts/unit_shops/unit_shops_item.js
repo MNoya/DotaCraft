@@ -78,10 +78,10 @@ function Setup_Panel(){
     GameEvents.Subscribe("shop_update_stock", Update_Central);
     
     var itemName = Root.ItemName
-    if (itemName.substring(0,6) == "item_")
-        itemName = itemName.substring(6)
+    if (itemName.substring(0,5) == "item_")
+        itemName = itemName.substring(5)
     
-    var image_path = "url('file://{images}/items/"+Root.ItemName+".png');"
+    var image_path = "url('file://{images}/items/"+itemName+".png');"
     $("#ItemImage").style["background-image"] = image_path 
     
     $("#GoldCost").text = Root.ItemInfo.GoldCost;  
@@ -99,7 +99,10 @@ function Setup_Panel(){
     else
         $("#FoodPanel").visible = false;
     
-    $("#ItemName").text = $.Localize(Root.ItemName);
+    if ($.Localize(Root.ItemName) != Root.ItemName)
+        $("#ItemName").text = $.Localize(Root.ItemName)
+    else
+        $("#ItemName").text = $.Localize("DOTA_Tooltip_ability_"+Root.ItemName);
     
     if(Root.ItemInfo.RequiredTier==9000){
         $("#RequiredTier").text = "You need to upgrade your main building"
