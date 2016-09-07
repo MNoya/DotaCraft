@@ -6,7 +6,7 @@ function TeleportationStart(event)
     -- If no target handle, it was ground targeted
     local playerID = caster:GetPlayerOwnerID()
     if not target or selfTarget then
-        target = Players:FindClosestFriendlyUnit(playerID, point, function(unit) return not unit:IsFlyingUnit() end)
+        target = Players:FindClosestFriendlyUnit(playerID, point, function(unit) return unit ~= caster and not unit:IsFlyingUnit() end)
     end
 
     local ability = event.ability

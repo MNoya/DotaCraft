@@ -681,7 +681,7 @@ function Players:FindClosestUnit(playerID, position, filterFunction)
     end
 
     for _,hero in pairs(heroes) do
-        if IsValidAlive(hero) then
+        if IsValidAlive(hero) and filterFunction(hero) then
             local this_distance = (position - hero:GetAbsOrigin()):Length2D()
             if this_distance < distance then
                 distance = this_distance
@@ -690,12 +690,12 @@ function Players:FindClosestUnit(playerID, position, filterFunction)
         end
     end
 
-    for _,structures in pairs(structures) do
-        if IsValidAlive(structures) then
-            local this_distance = (position - structures:GetAbsOrigin()):Length2D()
+    for _,structure in pairs(structures) do
+        if IsValidAlive(structure) and filterFunction(structure) then
+            local this_distance = (position - structure:GetAbsOrigin()):Length2D()
             if this_distance < distance then
                 distance = this_distance
-                closest = structures
+                closest = structure
             end
         end
     end

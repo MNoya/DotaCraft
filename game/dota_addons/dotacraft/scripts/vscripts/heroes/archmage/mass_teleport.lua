@@ -6,7 +6,7 @@ function MassTeleportStart( event )
 	local radius = ability:GetSpecialValueFor("radius")
 	local target = event.target
     if not target then
-        target = Players:FindClosestFriendlyUnit(playerID, event.target_points[1], function(unit) return not unit:IsFlyingUnit() end)
+        target = Players:FindClosestFriendlyUnit(playerID, event.target_points[1], function(unit) return unit ~= caster and not unit:IsFlyingUnit() end)
     end
 	
 	ability.teleport_target = target
