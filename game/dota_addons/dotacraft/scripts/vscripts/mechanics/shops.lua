@@ -141,8 +141,9 @@ function Shops:SetupMarketplace(unit)
         itemInfo.GoldCost = GetKeyValue(name, "ItemCost") or 0
         itemInfo.LumberCost = GetKeyValue(name, "LumberCost") or 0
         itemInfo.FoodCost = 0
-        itemInfo.RestockRate = 0
+        itemInfo.RestockRate = 1
         itemInfo.StockStartDelay = 0
+        Shops:StockUpdater(itemInfo, marketplace)
 
         -- Store the item on tables
         marketplace.itemList[name] = true
@@ -218,7 +219,7 @@ function Shops:GenerateItemTableForShop(unit)
             itemInfo.GoldCost = grTable[itemName]["ItemCost"] or grTable[itemName]["GoldCost"] or 0
             itemInfo.LumberCost = grTable[itemName]["LumberCost"] or 0
             itemInfo.FoodCost = grTable[itemName]["FoodCost"] or 0
-            itemInfo.RestockRate = grTable[itemName]["StockTime"] or 0
+            itemInfo.RestockRate = grTable[itemName]["StockTime"] or 1
             itemInfo.StockStartDelay = grTable[itemName]["StockStartDelay"] or 0
             self:StockUpdater(itemInfo, unit)
         end
@@ -269,8 +270,8 @@ function Shops:TavernStockUpdater(itemInfo, unit)
 end
 
 function Shops:StockUpdater(itemInfo, unit)
-    local UnitID = unit:GetEntityIndex()
-    local team = unit:GetTeam()
+    local entIndex = unit:GetEntityIndex()
+    local bUpdateStock = unit:GetKeyValue("ShopType") == "global" or unit:GetKeyValue("ShopType") == "marketplace"
     Timers:CreateTimer(1, function()
         local playerID = unit:GetPlayerOwnerID()    
         local tier = Players:GetTier(playerID)
@@ -282,8 +283,8 @@ function Shops:StockUpdater(itemInfo, unit)
         end
 
         self:Stock_Management(itemInfo)
-        if PlayerResource:IsValidPlayer(playerID) or unit:GetKeyValue("ShopType") == "global" then
-            CustomGameEventManager:Send_ServerToAllClients("shop_update_stock", {Index = UnitID, Item = itemInfo, Tier=tier})      
+        if PlayerResource:IsValidPlayer(playerID) or bUpdateStock then
+            CustomGameEventManager:Send_ServerToAllClients("shop_update_stock", {Index = entIndex, Item = itemInfo, Tier=tier})      
         end
         return 1
     end)

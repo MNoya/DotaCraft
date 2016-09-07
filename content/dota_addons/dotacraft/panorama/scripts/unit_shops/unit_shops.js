@@ -109,8 +109,7 @@ function DeletePanel(args){
     if(panel == null){
         panel = container.FindChildTraverse(itemName)   
     }
-    panel.RemoveAndDeleteChildren();
-    panel.DeleteAsync(0.01);
+    panel.DeleteAsync(0);
 }
 
 function Open_Shop(args) {
@@ -169,15 +168,13 @@ function Delete_Shop_Content(args){
     var Shop = $("#"+args.Index)
     
     var bChildCount = Shop.GetChildCount()
-    $.Msg("killing tavern")
     // loop and delete all the children
     for(i = 0; i < bChildCount; i++){
         var child = Shop.GetChild(i)
         $.Msg(child)
         if(!child.Revive){
             if(child != null && child.id.indexOf(LocalPlayerID.toString())){
-                child.RemoveAndDeleteChildren();
-                child.DeleteAsync(0.01);
+                child.DeleteAsync(0);
             }
         };
     }

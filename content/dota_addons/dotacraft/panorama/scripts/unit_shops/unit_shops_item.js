@@ -31,7 +31,7 @@ function Buy_Item(){
     var EnoughLumber = PlayerTables.HasEnoughLumber(LocalPlayerID, Root.ItemInfo.LumberCost);
     var EnoughGold = PlayerTables.HasEnoughGold(LocalPlayerID, Root.ItemInfo.GoldCost);
 
-    var bAllowedToPurchase =  EnoughLumber && EnoughGold && EnoughStock && EnoughFood;
+    var bAllowedToPurchase = EnoughLumber && EnoughGold && EnoughStock && EnoughFood;
 
     if(bAllowedToPurchase) {
         if(Root.ItemInfo != 0)
