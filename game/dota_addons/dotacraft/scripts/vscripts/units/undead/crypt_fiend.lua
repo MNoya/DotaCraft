@@ -75,6 +75,8 @@ function Web_AutoCast(keys)
     local ability = keys.ability
     local radius = ability:GetCastRange()+caster:GetHullRadius()
     
+    if caster.state == AI_STATE_IDLE or caster.state == AI_STATE_SLEEPING then return end
+
     if ability:GetAutoCastState() and ability:IsActivated() and ability:IsFullyCastable() and not caster:IsMoving() then
         local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)                   
         for k,unit in pairs(units) do

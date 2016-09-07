@@ -71,6 +71,8 @@ function CurseAutocast(keys)
     local autocast_radius = ability:GetCastRange()
     local modifier_name = "modifier_undead_curse"
     
+    if caster.state == AI_STATE_IDLE or caster.state == AI_STATE_SLEEPING then return end
+    
     if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() and not IsChanneling(caster) then
         local target
         local enemies = FindEnemiesInRadius(caster, autocast_radius)

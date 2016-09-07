@@ -5,6 +5,8 @@ function SlowAutocast( event )
 	local autocast_radius = ability:GetCastRange()
 	local modifier_name = "modifier_human_slow"
 
+	if caster.state == AI_STATE_IDLE or caster.state == AI_STATE_SLEEPING then return end
+
 	-- Get if the ability is on autocast mode and cast the ability on a valid target
 	if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
 		-- Find enemy targets in radius

@@ -10,6 +10,8 @@ function FrostArmorAutocast( event )
 	local target = event.target -- victim of the attack
 	local ability = event.ability
 
+	if caster.state == AI_STATE_IDLE or caster.state == AI_STATE_SLEEPING then return end
+
 	-- Name of the modifier to avoid casting the spell on targets that were already buffed
 	local modifier = "modifier_frost_armor"
 

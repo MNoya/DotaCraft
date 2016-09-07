@@ -20,6 +20,8 @@ function FaerieFireAutocast(event)
     local autocast_radius = ability:GetCastRange()
     local modifier_name = "modifier_faerie_fire"
     
+    if caster.state == AI_STATE_IDLE or caster.state == AI_STATE_SLEEPING then return end
+
     if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() then
         local target
         local enemies = FindEnemiesInRadius(caster, autocast_radius)

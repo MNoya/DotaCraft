@@ -54,6 +54,18 @@ function NeutralAI:Start( unit )
         --print("[NeutralAI] "..unit.id.." stopped at "..math.floor(distanceFromSpawn).. " ("..unit.leashRange.." leash range)")
     end
 
+    function unit:Sleep()
+        unit:Stop()
+        ApplyModifier(unit, "modifier_neutral_sleep")
+        unit.state = AI_STATE_SLEEPING
+    end
+
+    function unit:Idle()
+        unit.state = AI_STATE_IDLE
+        unit:RemoveModifierByName("modifier_neutral_sleep")
+        ApplyModifier(unit, "modifier_neutral_idle_aggro")
+    end
+
     -- Check ability AI block
     unit.ai_abilities = {}
     for i=0,15 do
@@ -108,8 +120,7 @@ function NeutralAI:IdleThink()
 
     -- Sleep
     if not GameRules:IsDaytime() and not unit:IsMoving() then
-        ApplyModifier(unit, "modifier_neutral_sleep")
-        unit.state = AI_STATE_SLEEPING
+        unit:Sleep()
         return
     end
 
@@ -133,8 +144,7 @@ function NeutralAI:SleepThink()
 
     -- Wake up
     if GameRules:IsDaytime() then
-        unit:RemoveModifierByName("modifier_neutral_sleep")
-        unit.state = AI_STATE_IDLE
+        unit:Idle()
         return
     end
 end
@@ -201,9 +211,7 @@ function NeutralAI:ReturningThink()
 
     --Check if the AI unit has reached its spawn location yet
     if (unit.spawnPos - unit:GetAbsOrigin()):Length2D() < 10 then
-        --Go into the idle state
-        unit.state = AI_STATE_IDLE
-        ApplyModifier(unit, "modifier_neutral_idle_aggro")
+        unit:Idle()
         return
     else
         unit:MoveToPosition(unit.spawnPos)

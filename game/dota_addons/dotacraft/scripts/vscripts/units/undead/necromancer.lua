@@ -49,6 +49,8 @@ function RaiseDead_AutoCast(keys)
 	local ability = keys.ability
 	local playerID = caster:GetPlayerOwnerID()
 	
+	if caster.state == AI_STATE_IDLE or caster.state == AI_STATE_SLEEPING then return end
+
 	if ability:GetAutoCastState() and ability:IsFullyCastable() and not caster:IsMoving() and Corpses:AreAnyInRadius(playerID, caster:GetAbsOrigin(), ability:GetCastRange()) then
 		caster:CastAbilityNoTarget(ability,playerID)
 	end	
