@@ -6,7 +6,9 @@
     
     "ItemCost"                      "300"
     "ItemQuality"                   "common"
-    
+    "ItemInitialCharges"            "1"
+    "ItemPermanent"                 "0"
+
     "OnSpellStart"
     {
         "SpendCharge" {}

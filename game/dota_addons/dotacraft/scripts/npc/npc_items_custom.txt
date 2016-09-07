@@ -3217,7 +3217,7 @@
 	"item_replenishment_potion"
 	{
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_replenishment_potion"
+		"AbilityTextureName"			"item_potion_of_invulnerability"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -3233,7 +3233,7 @@
 		"ItemSellable"                  "1"
 		"ItemDroppable"                 "1"
 	
-		"ItemCost"						"1200"
+		"ItemCost"						"150"
 		"ItemShopTags"					"common"
 		"ItemQuality"					"common"
 		"ItemStackable"					"1"
@@ -3975,7 +3975,9 @@
 	    
 	    "ItemCost"                      "300"
 	    "ItemQuality"                   "common"
-	    
+	    "ItemInitialCharges"            "1"
+	    "ItemPermanent"                 "0"
+	
 	    "OnSpellStart"
 	    {
 	        "SpendCharge" {}

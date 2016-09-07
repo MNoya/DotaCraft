@@ -2,10 +2,28 @@ function Retrain( event )
     local hero = event.caster
     local level = hero:GetLevel()
 
+    hero:Stop()
+    local modifiers = hero:FindAllModifiers()
     for i=0,15 do
         local ability = hero:GetAbilityByIndex(i)
         if ability and ability:GetLevel() > 0 then
+            if ability:GetAutoCastState() then
+                ability:ToggleAutoCast()
+            end
+            if ability:GetToggleState() then
+                ability:ToggleAbility()
+            end
+            for _,modifier in pairs(modifiers) do
+                if modifier and modifier:GetAbility() == ability then
+                    modifier.markedToDestroy = true
+                end
+            end
             ability:SetLevel(0)
+        end
+    end
+    for _,modifier in pairs(modifiers) do
+        if modifier.markedToDestroy then
+            modifier:Destroy()
         end
     end
 
