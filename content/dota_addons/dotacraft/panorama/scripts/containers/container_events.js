@@ -58,7 +58,7 @@ Containers.RegisterEventHandler("DefaultContextMenu", function(evt){
   $.DispatchEvent( "DOTAHideAbilityTooltip", evt.itemPanel );
 
   var bControllable = Entities.IsControllableByPlayer( evt.unit, Game.GetLocalPlayerID() );
-  var bSellable = Items.IsSellable( m_Item ) && Items.CanBeSoldByLocalPlayer( m_Item );
+  var bSellable = Items.IsSellable( m_Item )// && Items.CanBeSoldByLocalPlayer( m_Item );
   var bDisassemble = Items.IsDisassemblable( m_Item ) && bControllable;
   var bAlertable = Items.IsAlertableItem( m_Item ); 
   var bShowInShop = Items.IsPurchasable( m_Item );

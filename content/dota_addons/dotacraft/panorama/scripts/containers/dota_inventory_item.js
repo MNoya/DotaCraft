@@ -139,7 +139,7 @@ function RightClickItem()
 
 	var bSlotInStash = IsInStash();
 	var bControllable = Entities.IsControllableByPlayer( m_QueryUnit, Game.GetLocalPlayerID() );
-	var bSellable = Items.IsSellable( m_Item ) && Items.CanBeSoldByLocalPlayer( m_Item );
+	var bSellable = Items.IsSellable( m_Item )// && Items.CanBeSoldByLocalPlayer( m_Item );
 	var bDisassemble = Items.IsDisassemblable( m_Item ) && bControllable && !bSlotInStash;
 	var bAlertable = Items.IsAlertableItem( m_Item );
 	var bShowInShop = Items.IsPurchasable( m_Item );
