@@ -7,341 +7,347 @@
 
 "item_build_tree_of_life"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_tree_of_life"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_tree_of_life"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"120.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "120.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"BuilderInside"					"1"	//bool
-	"ConsumesBuilder"				"1" //bool
+    "BuilderInside"                 "1" //bool
+    "ConsumesBuilder"               "1" //bool
 
-	"ModelRotation"					"90.0"
+    "ModelRotation"                 "90.0"
 
-	"UnitName"						"nightelf_tree_of_life"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"340"
-	// End of BuildingHelper info
+    "UnitName"                      "nightelf_tree_of_life"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "340"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"120.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"340"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"185"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "120.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "340"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "185"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"		"nightelf_tree_of_life"
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"      "nightelf_tree_of_life"
+        }
+    }
 }
 
 "item_build_moon_well"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_moon_well"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_moon_well"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"50.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "50.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"BuilderInside"					"1"	//bool
+    "BuilderInside"                 "1" //bool
 
-	"UnitName"						"nightelf_moon_well"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"180"
-	// End of BuildingHelper info
+    "UnitName"                      "nightelf_moon_well"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "180"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"50.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"180"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"40"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "50.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "180"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "40"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"  "nightelf_moon_well"
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"  "nightelf_moon_well"
+        }
+    }
 }
 
 "item_build_altar_of_elders"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_altar_of_elders"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_altar_of_elders"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"60.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "60.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"BuilderInside"					"1"	//bool
+    "BuilderInside"                 "1" //bool
 
-	"UnitName"						"nightelf_altar_of_elders"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"180"
-	// End of BuildingHelper info
+    "UnitName"                      "nightelf_altar_of_elders"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "180"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"60.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"180"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"50"
-		}
-	}
-	
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"  "nightelf_altar_of_elders"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "60.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "180"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "50"
+        }
+    }
+    
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"  "nightelf_altar_of_elders"
+        }
+    }
 }
 
 "item_build_ancient_of_wonders"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_ancient_of_wonders"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_ancient_of_wonders"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"60.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "60.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"BuilderInside"					"1"	//bool
-	"ConsumesBuilder"				"1" //bool
+    "BuilderInside"                 "1" //bool
+    "ConsumesBuilder"               "1" //bool
 
-	"ModelRotation"					"90.0"
+    "ModelRotation"                 "90.0"
 
-	"UnitName"						"nightelf_ancient_of_wonders"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"90"
-	// End of BuildingHelper info
+    "UnitName"                      "nightelf_ancient_of_wonders"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "90"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"60.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"90"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"30"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "60.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "90"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "30"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"  "nightelf_ancient_of_wonders"
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"  "nightelf_ancient_of_wonders"
+        }
+    }
 }
 
 "item_build_hunters_hall"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_hunters_hall"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_hunters_hall"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"60.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "60.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"BuilderInside"					"1"	//bool
+    "BuilderInside"                 "1" //bool
 
-	"ModelRotation"					"90.0"
+    "ModelRotation"                 "90.0"
 
-	"UnitName"						"nightelf_hunters_hall"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"210"
-	// End of BuildingHelper info
+    "UnitName"                      "nightelf_hunters_hall"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "210"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"60.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"210"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"100"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "60.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "210"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "100"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"  "nightelf_hunters_hall"
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"  "nightelf_hunters_hall"
+        }
+    }
 }
 
 "item_build_ancient_of_war"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_ancient_of_war"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_ancient_of_war"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"60.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "60.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"BuilderInside"					"1"	//bool
-	"ConsumesBuilder"				"1" //bool
+    "BuilderInside"                 "1" //bool
+    "ConsumesBuilder"               "1" //bool
 
-	"ModelRotation"					"90.0"
+    "ModelRotation"                 "90.0"
 
-	"UnitName"						"nightelf_ancient_of_war"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"150"
-	// End of BuildingHelper info
+    "UnitName"                      "nightelf_ancient_of_war"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "150"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"60.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"150"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"60"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "60.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "150"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "60"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"  "nightelf_ancient_of_war"
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"  "nightelf_ancient_of_war"
+        }
+    }
 }

@@ -1,333 +1,339 @@
 "item_build_town_hall"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_town_hall"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_town_hall"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"180.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "180.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"RequiresRepair"				"1"
+    "RequiresRepair"                "1"
 
-	"UnitName"						"human_town_hall"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"385"
-	// End of BuildingHelper info
+    "UnitName"                      "human_town_hall"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "385"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"180.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"385"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"205"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "180.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "385"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "205"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"		"human_town_hall"
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"      "human_town_hall"
+        }
+    }
 }
 
 "item_build_farm"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_farm"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_farm"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"35.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "35.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"ModelRotation"					"225"
-	"RequiresRepair"				"1"
+    "ModelRotation"                 "225"
+    "RequiresRepair"                "1"
 
-	"UnitName"						"human_farm"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"80"
-	// End of BuildingHelper info
+    "UnitName"                      "human_farm"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "80"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"35.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"80"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"20"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "35.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "80"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "20"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"  "human_farm"
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"  "human_farm"
+        }
+    }
 }
 
 "item_build_altar_of_kings"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_altar_of_kings"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_altar_of_kings"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"60.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "60.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"RequiresRepair"				"1"
+    "RequiresRepair"                "1"
 
-	"ModelRotation"					"90.0"
+    "ModelRotation"                 "90.0"
 
-	"UnitName"						"human_altar_of_kings"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"180"
-	// End of BuildingHelper info
+    "UnitName"                      "human_altar_of_kings"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "180"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"60.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"180"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"50"
-		}
-	}
-	
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"  "human_altar_of_kings"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "60.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "180"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "50"
+        }
+    }
+    
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"  "human_altar_of_kings"
+        }
+    }
 }
 
 "item_build_lumber_mill"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_lumber_mill"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_lumber_mill"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"60.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "60.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"RequiresRepair"				"1"
+    "RequiresRepair"                "1"
 
-	"UnitName"						"human_lumber_mill"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"120"
-	// End of BuildingHelper info
+    "UnitName"                      "human_lumber_mill"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "120"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"60.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"120"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
-		}
-	}
-	
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"  "human_lumber_mill"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "60.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "120"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+    }
+    
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"  "human_lumber_mill"
+        }
+    }
 }
 
 
 "item_build_arcane_vault"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_arcane_vault"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_arcane_vault"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"60.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "60.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"RequiresRepair"				"1"
+    "RequiresRepair"                "1"
 
-	"UnitName"						"human_arcane_vault"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"130"
-	// End of BuildingHelper info
+    "UnitName"                      "human_arcane_vault"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "130"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"60.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"130"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"30"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "60.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "130"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "30"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"  "human_arcane_vault"
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"  "human_arcane_vault"
+        }
+    }
 }
 
 "item_build_scout_tower"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_scout_tower"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_scout_tower"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"25.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "25.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"RequiresRepair"				"1"
+    "RequiresRepair"                "1"
 
-	"UnitName"						"human_scout_tower"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"30"
-	// End of BuildingHelper info
+    "UnitName"                      "human_scout_tower"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "30"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"25.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"30"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"20"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "25.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "30"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "20"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"  "human_scout_tower"
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"  "human_scout_tower"
+        }
+    }
 }

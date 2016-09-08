@@ -6,282 +6,287 @@
 
 "item_build_great_hall"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_great_hall"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_great_hall"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"150.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "150.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"BuilderInside"					"1"	//bool
+    "BuilderInside"                 "1" //bool
 
-	"UnitName"						"orc_great_hall"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"385"
-	// End of BuildingHelper info
+    "UnitName"                      "orc_great_hall"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "385"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"150.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"385"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"185"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "150.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "385"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "185"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"		"orc_great_hall"
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"      "orc_great_hall"
+        }
+    }
 }
 
 "item_build_burrow"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_burrow"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_burrow"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"50.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "50.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"BuilderInside"					"1"	//bool
+    "BuilderInside"                 "1" //bool
 
-	"UnitName"						"orc_burrow"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"160"
-	// End of BuildingHelper info
+    "UnitName"                      "orc_burrow"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "160"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"50.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"160"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"40"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "50.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "160"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "40"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"  "orc_burrow"
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"  "orc_burrow"
+        }
+    }
 }
 
 "item_build_altar_of_storms"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_altar_of_storms"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_altar_of_storms"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"60.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "60.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"BuilderInside"					"1"	//bool
+    "BuilderInside"                 "1" //bool
 
-	"ModelRotation"					"135.0"
+    "ModelRotation"                 "135.0"
 
-	"UnitName"						"orc_altar_of_storms"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"180"
-	// End of BuildingHelper info
+    "UnitName"                      "orc_altar_of_storms"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "180"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"60.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"180"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"50"
-		}
-	}
-	
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"  "orc_altar_of_storms"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "60.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "180"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "50"
+        }
+    }
+    
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"  "orc_altar_of_storms"
+        }
+    }
 }
 
 "item_build_war_mill"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_war_mill"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_war_mill"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"70.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "70.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"BuilderInside"					"1"	//bool
+    "BuilderInside"                 "1" //bool
 
-	"ModelRotation"					"135.0"
+    "ModelRotation"                 "135.0"
 
-	"UnitName"						"orc_war_mill"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"205"
-	// End of BuildingHelper info
+    "UnitName"                      "orc_war_mill"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "205"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"70.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"205"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"0"
-		}
-	}
-	
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"  "orc_war_mill"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "70.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "205"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "0"
+        }
+    }
+    
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"  "orc_war_mill"
+        }
+    }
 }
 
 
 "item_build_voodoo_lounge"
 {
-	"BaseClass"             		"item_datadriven"
-	"AbilityTextureName"			"item_build_voodoo_lounge"
-	"MaxLevel" 						"1"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_build_voodoo_lounge"
+    "MaxLevel"                      "1"
 
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
-	"ItemDroppable" 				"0"
-	"ItemPurchasable" 				"0"
+    "ItemSellable"                  "0"
+    "ItemDroppable"                 "0"
+    "ItemPurchasable"               "0"
 
-	// BuildingHelper info
-	"Building"						"1" //bool
-	"BuildTime"						"60.0"
-	"AbilityCastRange"				"200"
-	"Scale"							"0" //bool
-	"PlayerCanControl"				"1" //bool
+    // BuildingHelper info
+    "Building"                      "1" //bool
+    "BuildTime"                     "60.0"
+    "AbilityCastRange"              "200"
+    "Scale"                         "0" //bool
+    "PlayerCanControl"              "1" //bool
 
-	"BuilderInside"					"1"	//bool
+    "BuilderInside"                 "1" //bool
 
-	"ModelRotation"					"135.0"
+    "ModelRotation"                 "135.0"
 
-	"UnitName"						"orc_voodoo_lounge"
-	"AbilityCooldown"				"0"
-	"AbilityGoldCost"				"130"
-	// End of BuildingHelper info
+    "UnitName"                      "orc_voodoo_lounge"
+    "AbilityCooldown"               "0"
+    "AbilityGoldCost"               "130"
+    // End of BuildingHelper info
 
-	"AbilitySpecial"
-	{
-		"01"
-		{
-			"var_type"				"FIELD_FLOAT"
-			"build_time"			"60.0"
-		}
-		"02"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"gold_cost"				"130"
-		}
-		"03"
-		{
-			"var_type"				"FIELD_INTEGER"
-			"lumber_cost"			"30"
-		}
-	}
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "build_time"            "60.0"
+        }
+        "02"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "gold_cost"             "130"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lumber_cost"           "30"
+        }
+    }
 
-	"OnSpellStart"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"units/builder.lua"
-			"Function"		"Build"
-			"ItemUnitName"  "orc_voodoo_lounge"
-		}
-	}
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "units/builder.lua"
+            "Function"      "Build"
+            "ItemUnitName"  "orc_voodoo_lounge"
+        }
+    }
 }
