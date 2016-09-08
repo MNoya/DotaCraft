@@ -157,6 +157,8 @@ function dotacraft:InitGameMode()
     -- Panorama Developer setting
     CustomNetTables:SetTableValue("dotacraft_settings","developer",{value=IsInToolsMode()})
 
+    Containers:UsePanoramaInventory(true)
+
     print('[DOTACRAFT] Done loading dotacraft gamemode!')
 end
 

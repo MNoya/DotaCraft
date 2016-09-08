@@ -26,8 +26,6 @@ function GetMouseTarget()
 // Handle Right Button events
 function OnRightButtonPressed()
 {
-    $.Msg("OnRightButtonPressed")
-
     var iPlayerID = Players.GetLocalPlayer()
     var selectedEntities = Players.GetSelectedEntities( iPlayerID )
     var mainSelected = Players.GetLocalPlayerPortraitUnit() 
@@ -224,7 +222,7 @@ function OnLeftButtonPressed() {
     var mainSelected = Players.GetLocalPlayerPortraitUnit() 
     var mainSelectedName = Entities.GetUnitName( mainSelected )
     var targetIndex = GetMouseTarget()
-    
+
     Hide_All_Shops()
 
     if (targetIndex)
@@ -405,7 +403,7 @@ function RotateTimerRight() {
 }
 
 // Main mouse event callback
-GameUI.SetMouseCallback( function(eventName, arg ) {
+GameUI.SetMouseCallback(function(eventName, arg) {
     var CONSUME_EVENT = true
     var CONTINUE_PROCESSING_EVENT = false
     var LEFT_CLICK = (arg === 0)
