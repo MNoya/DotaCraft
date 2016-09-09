@@ -342,6 +342,14 @@ function IsCustomShop( unit )
     return unit:HasAbility("ability_shop")
 end
 
+function CDOTA_BaseNPC:CanSellToTarget( unit )
+    return IsCustomShop(unit) and (unit:GetTeamNumber() == DOTA_TEAM_NEUTRALS or not self:IsOpposingTeam(unit)) and not unit:SellsUnits()
+end
+
+function CDOTA_BaseNPC:SellsUnits()
+    return self:GetKeyValue("SellsNPCs") or self:GetKeyValue("SellsHeroes")
+end
+
 function CDOTA_BaseNPC:IsMechanical()
     return self:GetUnitLabel():match("mechanical")
 end

@@ -608,7 +608,7 @@ function FindShopAbleUnit(shop, playerID, unit_types)
         end
 
         -- For npc-selling buildings, check any unit
-        if shop:GetKeyValue("SellsNPCs") or shop:GetKeyValue("SellsHeroes") then
+        if shop:SellsUnits() then
             for k,unit in pairs(units) do
                 if unit:IsAlive() and unit:GetPlayerOwnerID() == playerID and not unit:IsIllusion() then
                     return unit

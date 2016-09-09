@@ -1534,7 +1534,7 @@ function Containers:OnDragWorld(playerID, container, unit, item, slot, position,
         unit:Stop()
       end,
     }
-  elseif IsValidEntity(entity) and entity:GetClassname() == "ent_dota_shop" and item:IsSellable() then
+  elseif IsValidEntity(entity) and (entity:GetClassname() == "ent_dota_shop" or unit:CanSellToTarget(entity)) and item:IsSellable() then
     ExecuteOrderFromTable({
       UnitIndex=   unit:GetEntityIndex(),
       OrderType=   DOTA_UNIT_ORDER_MOVE_TO_TARGET,
