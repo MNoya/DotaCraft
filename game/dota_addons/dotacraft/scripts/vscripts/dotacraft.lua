@@ -1003,7 +1003,7 @@ function dotacraft:OnEntityKilled( event )
 
         if killed:GetUnitName() == "haunted_gold_mine" then
             if IsValidEntity(killed.sigil) then
-                killed.sigil:RemoveSelf()
+                UTIL_Remove(killed.sigil)
             end
         end
 

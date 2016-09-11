@@ -259,6 +259,9 @@ function ShowGoldMine( event )
     BuildingHelper:BlockGridSquares(8, 0, building:GetAbsOrigin(), "GoldMine")
     building:AddNoDraw()
     mine.building_on_top = nil
+    if IsValidEntity(building.sigil) then
+        UTIL_Remove(building.sigil)
+    end
 
     print("Removed Haunted Gold Mine successfully")
 end
