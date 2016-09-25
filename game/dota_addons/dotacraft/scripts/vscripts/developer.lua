@@ -173,16 +173,18 @@ function dotacraft:GiveItem(playerID, itemName, num)
             return
         end
 
-        for i=1,num do
-            local new_item = CreateItem(itemName, nil, nil)
-            if selected:IsRealHero() then
-                selected:AddItem(new_item)
-            else
-                local pos = selected:GetAbsOrigin()+RandomVector(200)
-                CreateItemOnPositionSync(pos,new_item)
-                new_item:LaunchLoot(false, 200, 0.75,pos)
+        PrecacheItemByNameAsync(itemName,function() 
+            for i=1,num do
+                local new_item = CreateItem(itemName, nil, nil)
+                if selected:IsRealHero() then
+                    selected:AddItem(new_item)
+                else
+                    local pos = selected:GetAbsOrigin()+RandomVector(200)
+                    CreateItemOnPositionSync(pos,new_item)
+                    new_item:LaunchLoot(false, 200, 0.75,pos)
+                end
             end
-        end
+        end)
     end
 end
 
