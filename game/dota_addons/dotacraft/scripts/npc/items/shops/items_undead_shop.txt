@@ -95,10 +95,10 @@
 
     // Shops
     "ItemCost"                      "50"
-    "StockMax"                  "2" 
-    "StockTime"                 "60"
-    "StockInitial"              "2"
-    "RequiresTier"              "1"
+    "StockMax"                      "2" 
+    "StockTime"                     "60"
+    "StockInitial"                  "2"
+    "RequiresTier"                  "1"
 
     "AbilitySpecial"
     {
@@ -111,7 +111,7 @@
 
     "precache"
     {
-        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_undying.vsndevts"
     }
     
     "OnSpellStart"
@@ -121,12 +121,6 @@
             "ScriptFile"    "items/sacrificial_skull.lua"
             "Function"      "MakeBlight"
             "Target"        "POINT"
-        }
-
-        "FireSound"
-        {
-            "EffectName"    "Hero_Nightstalker.Trickling_Fear"
-            "Target"        "CASTER"
         }
 
         "SpendCharge" 

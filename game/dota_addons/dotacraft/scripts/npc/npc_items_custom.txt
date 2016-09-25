@@ -17511,6 +17511,7 @@
 	    "precache"
 	    {
 	        "particle"  "particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
 	    }
 	
 	    "OnSpellStart"
@@ -17521,6 +17522,13 @@
 	            "EffectAttachType"  "follow_origin"
 	            "Target"            "CASTER"
 	        }
+	
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Luna.Eclipse.Cast"
+	            "Target"        "CASTER"
+	        }
+	
 	        "RunScript"
 	        {
 	            "ScriptFile"    "items/moonstone.lua"
@@ -20884,10 +20892,10 @@
 	
 	    // Shops
 	    "ItemCost"                      "50"
-	    "StockMax"                  "2" 
-	    "StockTime"                 "60"
-	    "StockInitial"              "2"
-	    "RequiresTier"              "1"
+	    "StockMax"                      "2" 
+	    "StockTime"                     "60"
+	    "StockInitial"                  "2"
+	    "RequiresTier"                  "1"
 	
 	    "AbilitySpecial"
 	    {
@@ -20900,7 +20908,7 @@
 	
 	    "precache"
 	    {
-	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_undying.vsndevts"
 	    }
 	    
 	    "OnSpellStart"
@@ -20910,12 +20918,6 @@
 	            "ScriptFile"    "items/sacrificial_skull.lua"
 	            "Function"      "MakeBlight"
 	            "Target"        "POINT"
-	        }
-	
-	        "FireSound"
-	        {
-	            "EffectName"    "Hero_Nightstalker.Trickling_Fear"
-	            "Target"        "CASTER"
 	        }
 	
 	        "SpendCharge" 

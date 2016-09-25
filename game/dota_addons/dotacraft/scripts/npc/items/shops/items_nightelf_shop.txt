@@ -42,6 +42,7 @@
     "precache"
     {
         "particle"  "particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
     }
 
     "OnSpellStart"
@@ -52,6 +53,13 @@
             "EffectAttachType"  "follow_origin"
             "Target"            "CASTER"
         }
+
+        "FireSound"
+        {
+            "EffectName"    "Hero_Luna.Eclipse.Cast"
+            "Target"        "CASTER"
+        }
+
         "RunScript"
         {
             "ScriptFile"    "items/moonstone.lua"
