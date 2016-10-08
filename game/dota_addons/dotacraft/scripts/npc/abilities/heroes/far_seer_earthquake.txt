@@ -9,11 +9,12 @@
     "MaxLevel"                      "1"
     "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
 
-    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
     "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
     "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
     "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
-    "AbilityCastAnimation"          "ACT_DOTA_STATIC_STORM" //Channelled abilities don't seem to use this during cast point
+    "AbilityCastAnimation"          "ACT_DOTA_STATIC_STORM"
+    "AnimationPlaybackRate"         "0.8"
     
     "TargetsAllowed"                "ground"
 
@@ -57,15 +58,6 @@
         }
     }
 
-    "OnAbilityPhaseStart"
-    {
-        "ApplyModifier"
-        {
-            "ModifierName"  "modifier_earthquake_channelling"
-            "Target"        "CASTER"
-        }
-    }
-
     "OnSpellStart"
     {
         "RunScript"
@@ -82,46 +74,6 @@
         {
             "ScriptFile"    "heroes/far_seer/earthquake.lua"
             "Function"      "EarthquakeEnd"
-        }
-
-        "RemoveModifier"
-        {
-            "ModifierName"  "modifier_earthquake_channelling"
-            "Target"        "CASTER"
-        }
-    }
-
-    "Modifiers"
-    {
-        "modifier_earthquake_channelling"
-        {
-            "IsHidden"              "1"
-            "OnCreated"
-            {
-                "RunScript"
-                {
-                    "ScriptFile"    "heroes/far_seer/earthquake.lua"
-                    "Function"      "StartChannelingAnimation"
-                }
-            }
-
-            "OnOrder"
-            {
-                "RemoveModifier"
-                {
-                    "ModifierName"  "modifier_earthquake_channelling"
-                    "Target"        "CASTER"
-                }
-            }
-
-            "OnDestroy"
-            {
-                "RunScript"
-                {
-                    "ScriptFile"    "heroes/far_seer/earthquake.lua"
-                    "Function"      "StopChannelingAnimation"
-                }
-            }
         }
     }
 }
