@@ -606,30 +606,22 @@ function Players:GetRace( playerID )
     return hero:GetRace()
 end
 
-function Players:FindHighestLevelCityCenter(unit)
-    local playerID = unit:GetPlayerOwnerID()
-    local position = unit:GetAbsOrigin()
+function Players:FindHighestLevelCityCenter(playerID)
     local buildings = Players:GetStructures(playerID)
     local level = 0 --Priority to the highest level city center
-    local distance = math.huge
-    local closest_building
+    local highest_building
 
     for _,building in pairs(buildings) do
         if IsValidAlive(building) and IsCityCenter(building) and not building:IsUnderConstruction() and building:GetLevel() > level then
-            level = building:GetLevel()
-            local this_distance = (position - building:GetAbsOrigin()):Length2D()
-            if this_distance < distance then
-                distance = this_distance
-                closest_building = building
-            end
+            highest_building = building
         end
     end
-    return closest_building
+    return highest_building
 end
 
 function Players:FindClosestCityCenter(playerID, position)
     local structures = Players:GetStructures(playerID)
-    local distance = math.huge
+    local distance = math.huge --Priority to the closest city center
     local closest_building
 
     for _,building in pairs(structures) do

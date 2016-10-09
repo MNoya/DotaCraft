@@ -15,8 +15,8 @@ function TeleportStart( event )
         end
     end
 
-    -- If no target handle, it was ground targeted
-    -- If self-targeted, find the greatest town hall level of the player
+    -- If no target handle, it was ground targeted, find the closest allied city center to that point
+    -- If self-targeted, find the highest level center of the player
     local playerID = caster:GetPlayerOwnerID()
     if not target then
         target = Players:FindClosestFriendlyCityCenter(playerID, point)
