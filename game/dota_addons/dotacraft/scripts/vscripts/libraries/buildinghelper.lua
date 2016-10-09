@@ -1114,7 +1114,7 @@ function BuildingHelper:StartBuilding(builder)
 
     ------------------------------------------------------------------
     -- Build Behaviours
-    --  RequiresRepair: If set to 1 it will place the building and not update its health nor send the OnConstructionCompleted callback until its fully healed
+    --  RequiresRepair: If set to 1 it will place the building and not update its health nor send the OnConstructionCompleted callback until it's fully healed
     --  BuilderInside: Puts the builder unselectable/invulnerable/nohealthbar inside the building in construction
     --  ConsumesBuilder: Kills the builder after the construction is done
     local bRequiresRepair = buildingTable:GetVal("RequiresRepair", "bool")
@@ -1132,6 +1132,15 @@ function BuildingHelper:StartBuilding(builder)
     -- Start construction
     if callbacks.onConstructionStarted then
         callbacks.onConstructionStarted(building)
+    end
+
+    -- If it's a charged item, remove the item when there are no charges left
+    local ability = buildingTable:GetVal("AbilityHandle")
+    if ability:GetKeyValue("ItemInitialCharges") then
+        local charges = ability:GetCurrentCharges()
+        if charges == 0 and not BuildingHelper:HasQueuedWork(builder, ability) then
+            ability:RemoveSelf()
+        end
     end
 
     -- buildTime can be overriden in the construction start callback
@@ -1401,7 +1410,7 @@ function BuildingHelper:StartRepair(builder, target)
     target:AddNewModifier(target, repair_ability, "modifier_repairing", {})
     target:SetModifierStackCount("modifier_repairing", target, getTableCount(target.units_repairing))
 
-    -- If its an unfinished building, keep track of how much does it require to mark as finished
+    -- If it's an unfinished building, keep track of how much does it require to mark as finished
     if underConstruction and not target.missingHealthToComplete then
         target.missingHealthToComplete = target:GetHealthDeficit()
     end
@@ -1486,7 +1495,7 @@ function BuildingHelper:StartRepair(builder, target)
 
             local buildCostFactor = costRatio + powerBuildCost*(builderCount-1)
 
-            -- Don't expend resources for the first unit repairing a building if its a construction
+            -- Don't expend resources for the first unit repairing a building if it's a construction
             if underConstruction then
                 if builderCount == 1 then
                     buildCostFactor = 0
@@ -1981,6 +1990,15 @@ function BuildingHelper:AddToQueue(builder, location, bQueued)
     -- Position chosen is initially valid, send callback to spend gold
     callbacks.onBuildingPosChosen(location)
 
+    -- If it's a charged item, queuing removes a charge
+    local ability = buildingTable:GetVal("AbilityHandle")
+    if ability:GetKeyValue("ItemInitialCharges") then
+        local charges = ability:GetCurrentCharges()
+        if charges > 0 then
+            ability:SetCurrentCharges(charges-1)
+        end        
+    end
+
     -- Self placement doesn't make ghost particles on the placement area
     if builder:GetUnitName() == buildingName then
         -- Never queued
@@ -2297,6 +2315,25 @@ function BuildingHelper:PrintQueue(builder)
     BuildingHelper:print("------------------------------------")
 end
 
+function BuildingHelper:HasQueuedWork(builder, optionalAbilityHandle)
+    local buildingQueue = builder.buildingQueue
+    local nQueued = buildingQueue and getTableCount(buildingQueue) or 0
+    if nQueued > 0 then
+        if optionalAbilityHandle then
+            -- check the list and match handles
+            for _,values in pairs(buildingQueue) do
+                if values.buildingTable.AbilityHandle == optionalAbilityHandle then
+                    return true
+                end
+            end
+        else
+            return true
+        end
+    else
+        return false
+    end
+end
+
 -- Toggles fast building/repairing cheat
 function BuildingHelper:WarpTen(bEnabled)
     if bEnabled == nil then -- Toggle
@@ -2479,7 +2516,7 @@ end
 -- Returns "BlockPathingSize" kv of a unit handle or unit name
 function BuildingHelper:GetBlockPathingSize(unit)
     local unitTable = (type(unit) == "table") and unit:GetKeyValue() or GetUnitKV(unit)
-    return unitTable["BlockPathingSize"]
+    return unitTable["BlockPathingSize"] or 0
 end
 
 function BuildingHelper:HideBuilder(unit, location, building)

@@ -43,33 +43,42 @@ function Build( event )
             return false
         end
 
-           -- Blight check
-           if string.match(building_name, "undead") and building_name ~= "undead_necropolis" then
-               local bHasBlight = BuildingHelper:PositionHasBlight(vPos)
-               BuildingHelper:print("Blight check for "..building_name..":", bHasBlight)
-               if not bHasBlight then
-                   SendErrorMessage(playerID, "#error_must_build_on_blight")
-                   return false
-               end
+       -- Blight check
+       if string.match(building_name, "undead") and building_name ~= "undead_necropolis" then
+           local bHasBlight = BuildingHelper:PositionHasBlight(vPos)
+           BuildingHelper:print("Blight check for "..building_name..":", bHasBlight)
+           if not bHasBlight then
+               SendErrorMessage(playerID, "#error_must_build_on_blight")
+               return false
            end
+       end
 
-            -- Proximity to gold mine check for Human/Orc: Main Buildings can be as close as 768 towards the center of the Gold Mine.
-            if HasGoldMineDistanceRestriction(building_name) then
-                local nearby_mine = Entities:FindAllByNameWithin("*gold_mine", vPos, 768)
-                if #nearby_mine > 0 then
-                    SendErrorMessage(caster:GetPlayerOwnerID(), "#error_too_close_to_goldmine")
-                    return false
-                end
-           end
-
-            -- If not enough resources to queue, stop
-            if not Players:HasEnoughGold( playerID, gold_cost ) then
+        -- Proximity to gold mine check for Human/Orc: Main Buildings can be as close as 768 towards the center of the Gold Mine.
+        if HasGoldMineDistanceRestriction(building_name) then
+            local nearby_mine = Entities:FindAllByNameWithin("*gold_mine", vPos, 768)
+            if #nearby_mine > 0 then
+                SendErrorMessage(caster:GetPlayerOwnerID(), "#error_too_close_to_goldmine")
                 return false
             end
+       end
 
-            if not Players:HasEnoughLumber( playerID, lumber_cost ) then
+        -- If not enough resources to queue, stop
+        if not Players:HasEnoughGold( playerID, gold_cost ) then
+            return false
+        end
+
+        if not Players:HasEnoughLumber( playerID, lumber_cost ) then
+            return false
+        end
+
+        -- Don't let a charged item be queued without charges
+        if ability:GetKeyValue("ItemInitialCharges") then
+            local charges = ability:GetCurrentCharges()
+            if charges and charges == 0 then
+                SendErrorMessage(playerID, "#error_cant_queue")
                 return false
             end
+        end
 
         return true
     end)
@@ -129,6 +138,9 @@ function Build( event )
 
             -- Refund resources for this cancelled work
             if work.refund then
+                if ability:GetKeyValue("ItemInitialCharges") then
+                    ability:SetCurrentCharges(ability:GetCurrentCharges()+1)
+                end
                 Players:ModifyGold(playerID, gold_cost)
                 Players:ModifyLumber(playerID, lumber_cost)
             end
@@ -149,17 +161,6 @@ function Build( event )
         if unit:RenderTeamColor() then
             local color = dotacraft:ColorForTeam(teamNumber)
             unit:SetRenderColor(color[1], color[2], color[3])
-        end
-
-        -- If it's an item-ability and has charges, remove a charge or remove the item if no charges left
-        if ability.GetCurrentCharges and not ability:IsPermanent() then
-            local charges = ability:GetCurrentCharges()
-            charges = charges-1
-            if charges == 0 then
-                ability:RemoveSelf()
-            else
-                ability:SetCurrentCharges(charges)
-            end
         end
 
         -- Move allied units away from the building place
