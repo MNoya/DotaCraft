@@ -9,7 +9,7 @@ function SummonInFront(event)
     local particleName = event.Particle
     local duration = event.Duration
 
-    local unit = CreateUnitByName(unitName,point,true,caster,caster,caster:GetTeamNumber())
+    local unit = CreateUnitByName(unitName,position,true,caster,caster,caster:GetTeamNumber())
     unit:SetControllableByPlayer(caster:GetPlayerOwnerID(), true)
     unit:SetForwardVector(fv)
     unit:AddNewModifier(caster, nil, "modifier_kill", {duration = duration})

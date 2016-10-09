@@ -117,20 +117,12 @@ function modifier_healing_ward:CheckState()
     return { [MODIFIER_STATE_MAGIC_IMMUNE] = true }
 end
 
-function modifier_healing_ward:IsAura()
-    return true
-end
-
-function modifier_healing_ward:IsHidden()
-    return true
-end
-
-function modifier_healing_ward:IsPurgable()
-    return false
-end
+function modifier_healing_ward:IsAura() return true end
+function modifier_healing_ward:IsHidden() return true end
+function modifier_healing_ward:IsPurgable() return false end
 
 function modifier_healing_ward:GetAuraRadius()
-    return self:GetAbility():GetSpecialValueFor("radius")
+    return 500
 end
 
 function modifier_healing_ward:GetModifierAura()
@@ -142,7 +134,7 @@ function modifier_healing_ward:GetAuraSearchTeam()
 end
 
 function modifier_healing_ward:GetAuraEntityReject(target)
-    return IsCustomBuilding(target) or target:IsMechanical() or target:IsWard() 
+    return target == self:GetParent() or IsCustomBuilding(target) or target:IsMechanical() or target:IsWard() 
 end
 
 function modifier_healing_ward:GetAuraSearchType()
@@ -150,7 +142,7 @@ function modifier_healing_ward:GetAuraSearchType()
 end
 
 function modifier_healing_ward:GetAuraDuration()
-    return 0.5
+    return 0.1
 end
 
 --------------------------------------------------------------------------------
@@ -162,11 +154,15 @@ function modifier_healing_ward_buff:DeclareFunctions()
 end
 
 function modifier_healing_ward_buff:GetModifierHealthRegenPercentage()
-    return self:GetAbility():GetSpecialValueFor("regeneration")
+    return 2
 end
 
 function modifier_healing_ward_buff:GetEffectName()
     return "particles/units/heroes/hero_juggernaut/juggernaut_ward_heal.vpcf"
+end
+
+function modifier_healing_ward_buff:GetTexture()
+    return "item_healing_wards"
 end
 
 function modifier_healing_ward_buff:GetEffectAttachType()

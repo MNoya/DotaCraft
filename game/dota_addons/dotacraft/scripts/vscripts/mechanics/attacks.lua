@@ -108,7 +108,7 @@ end
 
 -- Don't aggro a neutral if its not a direct order or is idle/sleeping
 function ShouldAggroNeutral( unit, target )
-    if IsNeutralUnit(target) or target:IsNightmared() then
+    if IsNeutralUnit(target) or (target.IsNightmared and target:IsNightmared()) then
         if unit.attack_target_order == target or target.state == AI_STATE_AGGRESSIVE or target.state == AI_STATE_RETURNING then
             return true
         end

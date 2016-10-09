@@ -315,14 +315,14 @@
     }
 }
 
-"item_tome_of_knowledge" //+1 all
+"item_tome_of_knowledge_wc3" //+1 all
 {
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
     "BaseClass"                     "item_datadriven"
-    "AbilityTextureName"            "item_tome_of_knowledge"
+    "AbilityTextureName"            "item_tome_of_knowledge_wc3"
     
     "Model"                         "models/props_debris/merchant_debris_book001.vmdl"
-    "Effect"                        "particles/econ/courier/courier_roshan_frost/courier_roshan_frost_ambient.vpcf"
+    "Effect"                        "particles/econ/courier/courier_trail_03/courier_trail_03.vpcf"
     
     "ItemPermanent"                 "0"
     "ItemInitialCharges"            "1"

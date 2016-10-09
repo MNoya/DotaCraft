@@ -17,7 +17,7 @@ function item_wand_of_mana_stealing:OnSpellStart()
         PopupMana(caster, mana_stolen)
     end
 
-    local charges = caster:GetCurrentCharges()
+    local charges = self:GetCurrentCharges()
     if charges > 1 then
         self:SetCurrentCharges(charges-1)
     else
