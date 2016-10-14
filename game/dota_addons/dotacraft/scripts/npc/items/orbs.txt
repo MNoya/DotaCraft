@@ -87,7 +87,7 @@
 
             "Properties"
             {
-                "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"      "%bonus_damage"
+                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"      "%bonus_damage"
             }
 
             "Orb"
@@ -211,7 +211,7 @@
 
             "Properties"
             {
-                "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"      "%bonus_damage"
+                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"      "%bonus_damage"
             }
 
             "Orb"
@@ -347,7 +347,7 @@
 
             "Properties"
             {
-                "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"      "%bonus_damage"
+                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"      "%bonus_damage"
             }
 
             "Orb"
@@ -488,7 +488,7 @@
 
             "Properties"
             {
-                "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"      "%bonus_damage"
+                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"      "%bonus_damage"
             }
 
             "Orb"
@@ -605,7 +605,7 @@
 
             "Properties"
             {
-                "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"      "%bonus_damage"
+                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"      "%bonus_damage"
             }
 
             "Orb"
@@ -734,6 +734,11 @@
                     "Function"      "OrbAirCheck"
                 }
             }
+
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"      "%bonus_damage"
+            }
             
             "OnOrbImpact"
             {
@@ -762,7 +767,7 @@
             {
                 "SpawnUnit"
                 {
-                    "UnitName"      "npc_black_arrow_minion_1"
+                    "UnitName"      "undead_black_arrow_minion_1"
                     "UnitCount"     "1"
                     "SpawnRadius"   "1"
                     "Duration"      "%duration"
