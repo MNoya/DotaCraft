@@ -339,7 +339,7 @@ function IsAltar( unit )
 end
 
 function IsCustomShop( unit )
-    return unit:HasAbility("ability_shop")
+    return unit.HasAbility and unit:HasAbility("ability_shop")
 end
 
 function CDOTA_BaseNPC:CanSellToTarget( unit )

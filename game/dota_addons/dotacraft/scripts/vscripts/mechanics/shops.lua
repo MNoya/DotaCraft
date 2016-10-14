@@ -415,7 +415,7 @@ function Shops:BuyItem(data)
     if bEnoughSlots then
         EmitSoundOnClient("General.Buy", player)
         if isUnitItem then
-            Player:CreateMercenary(playerID, shopID, itemName)
+            Players:CreateMercenary(playerID, shopID, itemName)
         else
             buyer:AddItem(CreateItem(itemName, nil, nil))
 

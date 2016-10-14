@@ -766,6 +766,8 @@ function Players:CreateMercenary(playerID, shopID, unitName)
     -- Add to player table
     Players:AddUnit(playerID, mercenary)
 
+    PlayerResource:AddToSelection(playerID, mercenary)
+
     Scores:IncrementMercenariesHired(playerID)
 end
 
