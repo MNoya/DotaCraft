@@ -6,7 +6,6 @@ function Reincarnation( event )
     local caster = event.caster
     local attacker = event.attacker
     local ability = event.ability
-    local cooldown = ability:GetCooldown(ability:GetLevel() - 1)
     local casterHP = caster:GetHealth()
     
     if casterHP == 0 and ability:IsCooldownReady() then
@@ -14,7 +13,7 @@ function Reincarnation( event )
         local reincarnate_time = ability:GetLevelSpecialValueFor("reincarnate_time", ability:GetLevel() - 1)
         
         -- Start cooldown on the passive
-        ability:StartCooldown(cooldown)
+        ability:StartCooldown(ability:GetCooldown(ability:GetLevel() - 1))
 
         -- Kill, counts as death for the player but doesn't count the kill for the killer unit
         caster.reincarnating = true -- Filter OnEntityKilled
@@ -26,7 +25,6 @@ function Reincarnation( event )
         caster.ReincarnateParticle = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN_FOLLOW, caster )
         ParticleManager:SetParticleControl(caster.ReincarnateParticle, 0, respawnPosition)
         ParticleManager:SetParticleControl(caster.ReincarnateParticle, 1, Vector(500,0,0))
-        ParticleManager:SetParticleControl(caster.ReincarnateParticle, 1, Vector(500,500,0))
 
         -- Grave and rock particles
         -- The parent "particles/units/heroes/hero_skeletonking/skeleton_king_death.vpcf" misses the grave model

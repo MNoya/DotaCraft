@@ -881,10 +881,6 @@ function dotacraft:OnEntityKilled( event )
         attacker = EntIndexToHScript(event.entindex_attacker)
     end
 
-    -- Safeguard
-    if killed.reincarnating then return end
-    if killed.upgraded then return end
-
     -- Killed credentials
     local killed_player = killed:GetPlayerOwner()
     local killed_playerID = killed:GetPlayerOwnerID()
@@ -905,6 +901,10 @@ function dotacraft:OnEntityKilled( event )
             end)
         end
     end
+
+     -- Safeguard
+    if killed.reincarnating then return end
+    if killed.upgraded then return end
 
     -- Don't leave corpses if the target was killed by an aoe splash
     if IsValidEntity(attacker) and attacker:HasArtilleryAttack() and LeavesCorpse(killed) then

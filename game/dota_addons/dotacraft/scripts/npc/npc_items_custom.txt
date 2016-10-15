@@ -210,14 +210,13 @@
 	// Aegis
 	"item_ankh_of_reincarnation"
 	{
-	    "BaseClass"                     "item_aegis"
+	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	    "AbilityTextureName"            "item_ankh_of_reincarnation"
 	    "Model"                         "models/props_gameplay/aegis.vmdl"
 	    
 	    "ItemCost"                      "450"
 	    "ItemQuality"                   "artifact"
-	    "ItemDeclarations"              "DECLARE_PURCHASES_IN_SPEECH"
 	
 	    "AbilitySpecial"
 	    {
@@ -226,15 +225,23 @@
 	            "var_type"              "FIELD_FLOAT"
 	            "reincarnate_time"      "3.0"
 	        }
-	        "02"
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_ankh_reincarnation"
 	        {
-	            "var_type"              "FIELD_FLOAT"
-	            "disappear_time"        "100000.0"
-	        }
-	        "03"
-	        {
-	            "var_type"              "FIELD_INTEGER"
-	            "disappear_time_minutes_tooltip" "1000"
+	            "Passive"   "1"
+	            "IsHidden"  "1"
+	
+	            "OnTakeDamage"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"        "items/ankh.lua"
+	                    "Function"          "Reincarnation"
+	                }
+	            }
 	        }
 	    }
 	}
