@@ -11,5 +11,9 @@ function Reveal(event)
     ParticleManager:SetParticleControl( fxIndex, 0, point )
     ParticleManager:SetParticleControl( fxIndex, 1, Vector(reveal_radius,0,reveal_radius) )
 
-    ability:CreateVisibilityNode(point, reveal_radius, duration)
+    AddFOWViewer(caster:GetTeamNumber(),point,reveal_radius,duration,false)
+
+    local dummy = CreateUnitByName("npc_dota_thinker", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+    EmitSoundOnLocationForAllies(point,"DOTA_Item.DustOfAppearance.Activate",dummy)
+    Timers:CreateTimer(5, function() UTIL_Remove(dummy) end)
 end
