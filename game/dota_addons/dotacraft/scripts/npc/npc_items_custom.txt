@@ -17670,8 +17670,23 @@
 	    {
 	        "modifier_anti_magic_potion"
 	        {
-	            "EffectName"        "particles/items_fx/black_king_bar_avatar.vpcf"
-	            "EffectAttachType"  "follow_origin"
+	            "OnCreated"
+	            {
+	                "AttachEffect"
+	                {
+	                    "Target"            "CASTER"
+	                    "EffectName"        "particles/items_fx/black_king_bar_avatar.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                }
+	            }
+	
+	            "EffectName"            "particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
+	            "EffectAttachType"      "follow_origin"
+	
+	            "StatusEffectName"      "particles/status_fx/status_effect_chemical_rage.vpcf"
+	            "StatusEffectPriority"  "5"
+	
+	            "TextureName"       "item_anti_magic_potion"
 	
 	            "States"
 	            {
