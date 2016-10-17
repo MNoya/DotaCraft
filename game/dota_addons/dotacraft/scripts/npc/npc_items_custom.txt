@@ -1738,11 +1738,6 @@
 	
 	    "OnSpellStart"
 	    {
-	        "FireSound"
-	        {
-	            "EffectName"    "DOTA_Item.DustOfAppearance.Activate"
-	            "Target"        "TARGET"
-	        }
 	        "RunScript"
 	        {
 	            "ScriptFile"    "items/crystal_ball.lua"
@@ -4747,7 +4742,7 @@
 			"FireEffect"
 			{
 				"Target" 			"CASTER"
-				"EffectName"		"particles/items2_fx/mekanism.vpcf"
+				"EffectName"		"particles/items_fx/arcane_boots.vpcf"
 				"EffectAttachType" 	"follow_origin"
 			}
 			"ActOnTargets"
@@ -4767,6 +4762,13 @@
 						"ScriptFile"	"items/mana.lua"
 						"Function"		"GiveMana"
 						"mana_amount"	"%mana_restored"
+					}
+	
+					"FireEffect"
+					{
+					    "EffectName"        "particles/items_fx/arcane_boots_recipient.vpcf"
+					    "EffectAttachType"  "follow_origin"
+					    "Target"            "TARGET"
 					}
 				}
 			}
@@ -4801,6 +4803,12 @@
 		"ItemQuality"					"common"
 		"ItemPermanent"					"0"
 		"ItemInitialCharges"            "1"
+	
+		"precache"
+		{
+		    "particle"  "particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
+		    "soundfile" "soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
+		}
 		
 		"AbilitySpecial"
 		{
@@ -4821,9 +4829,27 @@
 			}
 		}
 	
+		"precache"
+		{
+		    "particle"  "particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf"
+		    "particle" 	"particles/units/heroes/hero_lycan/lycan_howl_buff.vpcf"
+		    "soundfile" "soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"
+		}
+	
 		"OnSpellStart"
 		{
-			//TODO: Add cast fx
+			"FireEffect"
+			{
+			    "EffectName"        "particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf"
+			    "EffectAttachType"  "follow_origin"
+			    "Target"            "CASTER"
+			}
+	
+			"FireSound"
+			{
+			    "EffectName"    "Hero_Lycan.Howl"
+			    "Target"        "CASTER"
+			}
 	
 			"ApplyModifier"
 			{
@@ -4848,10 +4874,11 @@
 			"modifier_scroll_of_protection"
 			{
 				"IsPurgable"	"1"
-				
-				// TODO: Add fx	
-				//"EffectName"		"particle_name"
-				//"EffectAttachType"	"follow_origin"
+	
+				"EffectName"		"particles/custom/items/protection_buff.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	
+				"TextureName"		"item_scroll_of_protection"
 		
 				"Properties"
 				{
@@ -4902,7 +4929,18 @@
 	
 		"OnSpellStart"
 		{
-			//TODO: Add cast fx
+			"FireEffect"
+			{
+			    "EffectName"        "particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
+			    "EffectAttachType"  "follow_origin"
+			    "Target"            "CASTER"
+			}
+	
+			"FireSound"
+			{
+			    "EffectName"    "Hero_Sven.WarCry"
+			    "Target"        "CASTER"
+			}
 	
 			"ApplyModifier"
 			{
@@ -4928,9 +4966,10 @@
 			{
 				"IsPurgable"	"1"
 	
-				// TODO: Add fx	
-				//"EffectName"		"particle_name"
-				//"EffectAttachType"	"follow_origin"
+				"EffectName"		"particles/units/heroes/hero_lycan/lycan_howl_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"TextureName"		"item_scroll_of_the_beast"
 		
 				"Properties"
 				{
