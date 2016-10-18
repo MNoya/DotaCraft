@@ -30,10 +30,12 @@ function TeleportationStart(event)
 
     local target_modifier = target:FindModifierByNameAndCaster("modifier_staff_of_teleportation_target", caster)
     local target_particle = ParticleManager:CreateParticle("particles/items2_fx/teleport_end.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+
     ParticleManager:SetParticleControl(target_particle, 0, target:GetAbsOrigin())
-    ParticleManager:SetParticleControl(target_particle, 1, target:GetAbsOrigin())
+    ParticleManager:SetParticleControlEnt(target_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
     ParticleManager:SetParticleControl(target_particle, 2, color)
-    ParticleManager:SetParticleControl(target_particle, 4, target:GetAbsOrigin())
+    ParticleManager:SetParticleControlEnt(target_particle, 4, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+
     target_modifier:AddParticle(target_particle, false, false, 1, false, false)
 end
 
@@ -55,6 +57,7 @@ function TeleportationSuccess(event)
     ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_test_of_faith.vpcf", PATTACH_ABSORIGIN, caster)
 
     caster:FindClearSpace(target:GetAbsOrigin())
+    target:AddNewModifier(target,ability,"modifier_phased",{duration=0.03})
 
     ability.target = nil
 end
