@@ -591,6 +591,11 @@
             "Function"      "UnequipOrb"
         }
     }
+
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_ancient_apparition/ancient_apparition_chilling_touch_buff.vpcf"
+    }
         
     // Item Info
     //-------------------------------------------------------------------------------------------------------------
@@ -602,6 +607,9 @@
         {
             "Passive"               "1"
             "IsHidden"              "1"
+
+            "EffectName"            "particles/units/heroes/hero_ancient_apparition/ancient_apparition_chilling_touch_buff.vpcf"
+            "EffectAttachType"      "follow_origin"
 
             "Properties"
             {
