@@ -12,11 +12,13 @@ end
 function UnequipOrb( event )
     local caster = event.caster
     if caster:IsRealHero() then
-        if not caster:HasModifier("modifier_demon_form") then
-            caster:SetAttacksEnabled(caster.original_attack)
-        end
         caster.hasOrb = caster.hasOrb - 1
-        if caster.hasOrb == 0 then caster.hasOrb = false end
+        if caster.hasOrb == 0 then
+            if not caster:HasModifier("modifier_demon_form") then
+                caster:SetAttacksEnabled(caster.original_attack)
+            end
+            caster.hasOrb = false
+        end
     end
 end
 
