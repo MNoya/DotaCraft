@@ -207,6 +207,170 @@
 	    }
 	}
 	
+	"item_ice_shard"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_ice_shard"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"    
+	    
+	    "AbilityCooldown"               "20"
+	    "ItemCost"                      "700"
+	    "ItemQuality"                   "epic"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "1"
+	
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_death.vpcf"
+	    }
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "180"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "SpendCharge" {}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/summons.lua"
+	            "Function"      "SummonInFront"
+	            "Unit"          "neutral_ice_revenant"
+	            "Distance"      "100"
+	            "Duration"      "%duration"
+	            "Particle"      "particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_death.vpcf"
+	        }
+	    }
+	}
+	
+	"item_demonic_figurine"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_demonic_figurine"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"    
+	    
+	    "AbilityCooldown"               "20"
+	    "ItemCost"                      "700"
+	    "ItemQuality"                   "epic"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "1"
+	
+	    "precache"
+	    {
+	        "particle"              "particles/units/heroes/hero_doom_bringer/doom_weapon_blur.vpcf"
+	        "particle"              "particles/units/heroes/hero_doom_bringer/doom_weapon_blurb.vpcf"
+	        "particle"              "particles/units/heroes/hero_doom_bringer/doom_weapon_blur_hyhy.vpcf"
+	    }
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "180"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "SpendCharge" {}
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/summons.lua"
+	            "Function"      "DemonicFigurine"
+	        }
+	    }
+	}
+	
+	//Calls an Infernal down from the sky, dealing 50 damage and stunning enemy land units for 4 seconds in an area. The Infernal lasts 180 seconds.
+	"item_inferno_stone"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_inferno_stone"
+	    
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+	
+	    "AbilityCooldown"               "20"
+	    "AbilityCastRange"              "900"
+	    "ItemCost"                      "700"
+	    "ItemQuality"                   "epic"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "1"
+	
+	    "TargetsAllowed"                "ground,organic"
+	
+	    "AbilityDamage"                 "50"
+	
+	    "AOERadius"                     "250"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "radius"                "250"
+	        }
+	        "02"
+	        {   
+	            "var_type"              "FIELD_FLOAT"
+	            "infernal_duration"     "180"
+	        }
+	        "03"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "stun_hero_duration"    "2"
+	        }
+	        "04"
+	        {
+	            "var_type"              "FIELD_FLOAT"
+	            "stun_creep_duration"   "4"
+	        }
+	    }
+	
+	    "precache"
+	    {
+	        "particle"  "particles/custom/warlock_rain_of_chaos_start.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/dread_lord/inferno.lua"
+	            "Function"      "SpawnInferno"
+	            "Target"        "POINT"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_inferno_stun"
+	        {
+	            "TextureName"   "item_inferno_stone"
+	            "IsDebuff"  "1"
+	            "States"
+	            {
+	                "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"         
+	            }
+	            "OverrideAnimation" "ACT_DOTA_DISABLED"
+	            "EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
+	            "EffectAttachType"  "follow_overhead"
+	        }
+	    }
+	}
+	
 	// Aegis
 	"item_ankh_of_reincarnation"
 	{
@@ -1367,6 +1531,76 @@
 	        }
 	    }
 	}
+	
+	"item_mask_of_death"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_mask_of_death"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	
+	    "ItemCost"                      "1000"
+	    "ItemQuality"                   "artifact"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "lifesteal_percent"     "50"
+	        }
+	    }
+	
+	    "OnEquip"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/orbs.lua"
+	            "Function"      "EquipOrb"
+	        }
+	    }
+	
+	    "OnUnequip"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/orbs.lua"
+	            "Function"      "UnequipOrb"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_mask_of_death"
+	        {
+	            "Passive"       "1"
+	            "IsHidden"      "1"
+	            "Orb"
+	            {
+	                "Priority"          "DOTA_ORB_PRIORITY_ABILITY"
+	                "ProjectileName"    "particles/custom/items/lifesteal.vpcf"
+	            }
+	
+	            "OnOrbImpact"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "items/orbs.lua"
+	                    "Function"      "Lifesteal"
+	                }
+	            }
+	
+	            "OnAttackLanded"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "items/orbs.lua"
+	                    "Function"      "MaskOfDeathAttack"
+	                    "Damage"        "%attack_damage"
+	                }
+	            }
+	        }
+	    }
+	}
 	// Permanent Active Items
 	
 	// Self teleport to target allied building or unit
@@ -1729,6 +1963,8 @@
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 	    "AbilityCooldown"               "60"
 	    "AoERadius"                     "900"
+	
+	    "ItemCost"                      "500"
 	    
 	    "AbilitySpecial"
 	    {
@@ -1796,6 +2032,76 @@
 	                    "Duration"      "0.50"
 	                }           
 	            }       
+	        }
+	    }
+	}
+	
+	"kelens_dagger_of_escape"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "kelens_dagger_of_escape"
+	
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT"
+	    "AbilityCooldown"               "60"
+	
+	    "ItemCost"                      "800"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"          "FIELD_INTEGER"
+	            "blink_range"       "1200"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/blink.lua"
+	            "Function"      "Blink"
+	            "Target"        "POINT"
+	        }
+	    }
+	}
+	
+	"item_amulet_of_the_wild"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_amulet_of_the_wild"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"    
+	    
+	    "AbilityCooldown"               "180"
+	    "ItemCost"                      "700"
+	    "ItemQuality"                   "epic"
+	    "ItemStackable"                 "0"
+	    "ItemPermanent"                 "1"
+	
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
+	    }
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "duration"              "180"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "items/summons.lua"
+	            "Function"      "SummonInFront"
+	            "Unit"          "neutral_furbolg"
+	            "Distance"      "100"
+	            "Duration"      "%duration"
+	            "Particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
 	        }
 	    }
 	}
@@ -2123,6 +2429,39 @@
 	    "Modifiers"
 	    {
 	        "modifier_claws_of_attack_12"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+	            
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"        "%bonus_damage"
+	            }
+	        }
+	    }
+	}
+	"item_claws_of_attack_15"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"            "item_claws_of_attack_15"
+	    
+	    "ItemCost"                      "800"
+	    "ItemQuality"                   "common"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_damage"          "15"
+	        }
+	    }
+	    
+	    "Modifiers"
+	    {
+	        "modifier_claws_of_attack_15"
 	        {
 	            "Passive"           "1"
 	            "IsHidden"          "1"
@@ -2547,10 +2886,10 @@
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	    "AbilityTextureName"            "item_rop"
+	    "AbilityTextureName"            "item_ring_of_protection_2"
 	    
 	    "ItemCost"                      "125"
-	    "ItemQuality"                   "common"
+	    "ItemQuality"                   "component"
 	
 	    "AbilitySpecial"
 	    {
@@ -2579,7 +2918,7 @@
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	    "AbilityTextureName"            "item_rop"
+	    "AbilityTextureName"            "item_ring_of_protection_3"
 	    
 	    "ItemCost"                      "300"
 	    "ItemQuality"                   "common"
@@ -2611,10 +2950,10 @@
 	{
 	    "BaseClass"                     "item_datadriven"
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	    "AbilityTextureName"            "item_rop_4"
+	    "AbilityTextureName"            "item_ring_of_protection_4"
 	    
 	    "ItemCost"                      "600"
-	    "ItemQuality"                   "common"
+	    "ItemQuality"                   "rare"
 	
 	    "AbilitySpecial"
 	    {
@@ -2632,6 +2971,38 @@
 	            "Passive"           "1"
 	            "IsHidden"          "1"
 	            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+	            }
+	        }
+	    }
+	}
+	"item_ring_of_protection_5"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"            "item_ring_of_protection_5"
+	    
+	    "ItemCost"                      "800"
+	    "ItemQuality"                   "epic"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_armor"           "5"
+	        }
+	    }
+	    
+	    "Modifiers"
+	    {
+	        "modifier_ring_of_protection"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"  
 	            "Properties"
 	            {
 	                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
@@ -2918,6 +3289,42 @@
 	            {
 	                "MODIFIER_PROPERTY_STATS_AGILITY_BONUS"         "%bonus_agility"
 	                "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"       "%bonus_intellect"
+	            }
+	        }
+	    }
+	}
+	
+	"item_crown_of_kings_5"
+	{
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"            "item_crown_of_kings_5"
+	    
+	    "ItemCost"                      "1000"
+	    "ItemQuality"                   "epic"
+	
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"              "FIELD_INTEGER"
+	            "bonus_all_stats"       "5"
+	        }
+	    }
+	    
+	    "Modifiers"
+	    {
+	        "modifier_crown_of_kings"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+	            
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"        "%bonus_all_stats"
+	                "MODIFIER_PROPERTY_STATS_AGILITY_BONUS"         "%bonus_all_stats"
+	                "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"       "%bonus_all_stats"
 	            }
 	        }
 	    }
@@ -4054,6 +4461,38 @@
 	    }
 	}
 	
+	"item_tome_of_power" //Gives the Hero an experience level.
+	{
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+	    "BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "item_tome_of_experience"
+	    
+	    "Model"                         "models/props_debris/merchant_debris_book001.vmdl"
+	    "Effect"                        "particles/econ/courier/courier_axolotl_ambient/courier_axolotl_ambient.vpcf"
+	    
+	    "ItemPermanent"                 "0"
+	    "ItemInitialCharges"            "1"
+	
+	    "ItemCost"                      "1250"
+	    
+	    "ItemCastOnPickup"              "1"
+	    "OnSpellStart"
+	    {
+	        "SpendCharge" 
+	        {}
+	        "RunScript"
+	        {
+	            "ScriptFile"            "items/tomes.lua"
+	            "Function"              "Power"
+	        }
+	        "FireSound"
+	        {
+	            "EffectName"            "DOTA_Item.Refresher.Activate"
+	            "Target"                "CASTER"
+	        }    
+	    }
+	}
+	
 	"item_manual_of_health" //50hp
 	{
 	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
@@ -4837,25 +5276,18 @@
 			}
 		}
 	
-		"precache"
-		{
-		    "particle"  "particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf"
-		    "particle" 	"particles/units/heroes/hero_lycan/lycan_howl_buff.vpcf"
-		    "soundfile" "soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"
-		}
-	
 		"OnSpellStart"
 		{
 			"FireEffect"
 			{
-			    "EffectName"        "particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf"
+			    "EffectName"        "particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
 			    "EffectAttachType"  "follow_origin"
 			    "Target"            "CASTER"
 			}
 	
 			"FireSound"
 			{
-			    "EffectName"    "Hero_Lycan.Howl"
+			    "EffectName"    "Hero_Sven.WarCry"
 			    "Target"        "CASTER"
 			}
 	
@@ -4935,18 +5367,25 @@
 			}
 		}
 	
+		"precache"
+		{
+		    "particle"  "particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf"
+		    "particle" 	"particles/units/heroes/hero_lycan/lycan_howl_buff.vpcf"
+		    "soundfile" "soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"
+		}
+	
 		"OnSpellStart"
 		{
 			"FireEffect"
 			{
-			    "EffectName"        "particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
+			    "EffectName"        "particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf"
 			    "EffectAttachType"  "follow_origin"
 			    "Target"            "CASTER"
 			}
 	
 			"FireSound"
 			{
-			    "EffectName"    "Hero_Sven.WarCry"
+			    "EffectName"    "Hero_Lycan.Howl"
 			    "Target"        "CASTER"
 			}
 	
@@ -4985,6 +5424,211 @@
 				}
 			}
 		}
+	}
+	
+	"scroll_of_animate_dead" //Animates the dead to fight for you.
+	{
+		"BaseClass"                     "item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"            "scroll_of_animate_dead"
+	
+		"AbilityCooldown"               "60"
+		"AbilityManaCost"               "0"
+		"AbilityCastRange"				"900"
+			
+		"Model"							"models/props_gameplay/tpscroll01.vmdl"
+		"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+		
+		"ItemCost"                      "700"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
+		"ItemQuality"					"epic"
+		"ItemPermanent"					"0"
+		"ItemInitialCharges"            "1"
+	
+	    "RequiresCorpsesAround"         "900"
+	
+	    "precache"
+	    {
+	        "particle"  "particles/custom/abaddon_death_coil_explosion.vpcf"
+	        "particle"  "particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+	        "particle"  "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_explode.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "duration"                  "40"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "radius"                    "900"
+	        }
+	        "03"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "max_units_resurrected"     "6"
+	        }       
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"        "Hero_Abaddon.AphoticShield.Cast"
+	            "Target"            "CASTER"
+	        }
+	
+	        "FireEffect"
+	        {
+	            "EffectName"        "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_explode.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	            "Target"            "CASTER"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/death_knight/animate_dead.lua"
+	            "Function"      "AnimateDead"
+	        }
+	
+	        "SpendCharge" {}     
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_animate_dead"
+	        {
+	        	"TextureName"	"death_knight_animate_dead"
+	            "OnCreated"
+	            {   
+	                "AttachEffect"
+	                {
+	                    "EffectName"        "particles/custom/abaddon_death_coil_explosion.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                    "Target"            "TARGET"
+	
+	                    "ControlPointEntities"
+	                    {
+	                        "TARGET"    "attach_origin" // Control Point 0
+	                        "TARGET"    "attach_origin" // Control Point 1
+	                    }
+	                }
+	            }
+	
+	            "StatusEffectName"          "particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+	            "StatusEffectPriority"      "15"
+	
+	            "States"
+	            {
+	                "MODIFIER_STATE_INVULNERABLE"   "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_ATTACK_IMMUNE"  "MODIFIER_STATE_VALUE_ENABLED"
+	                "MODIFIER_STATE_DOMINATED"      "MODIFIER_STATE_VALUE_ENABLED"
+	            }
+	        }
+	    }
+	}
+	
+	"scroll_of_resurrection"
+	{
+		"BaseClass"                     "item_datadriven"
+	    "AbilityTextureName"            "scroll_of_resurrection"
+	    "MaxLevel"                      "1"
+	    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
+	    
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_BASIC"
+	
+	    "AbilityCooldown"               "60"
+		"AbilityManaCost"               "0"
+		"AbilityCastRange"				"900"
+			
+		"Model"							"models/props_gameplay/tpscroll01.vmdl"
+		"Effect" 						"particles/generic_gameplay/dropped_item.vpcf"
+		
+		"ItemCost"                      "700"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"		
+		"ItemQuality"					"epic"
+		"ItemPermanent"					"0"
+		"ItemInitialCharges"            "1"
+	
+	    "RequiresAlliedCorpsesAround"   "900"
+	
+	    "precache"
+	    {
+	        "particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
+	        "particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+	    }
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "radius"                    "900"
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "max_units_resurrected"     "6"
+	        }       
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Omniknight.GuardianAngel.Cast"
+	            "Target"        "CASTER"
+	        }
+	
+	        "RunScript"
+	        {
+	            "ScriptFile"    "heroes/paladin/resurrection.lua"
+	            "Function"      "Resurrection"
+	        }
+	
+	        "SpendCharge" {}    
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_resurrection"
+	        {
+	        	"TextureName"	"paladin_resurrection"
+	            "OnCreated"
+	            {
+	                "ApplyModifier"
+	                {
+	                    "ModifierName"  "modifier_resurrection_fx"
+	                    "Target"        "TARGET"
+	                }
+	            }
+	        }
+	
+	        "modifier_resurrection_fx"
+	        {
+	            "IsHidden"      "1"
+	            "Duration"      "0.5"
+	            "OnCreated"
+	            {
+	                "AttachEffect"
+	                {
+	                    "Target"            "TARGET"
+	                    "EffectName"        "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+	                    "EffectAttachType"  "follow_origin"
+	                    "EffectRadius"      "100"
+	                }
+	            }
+	        }
+	    }
 	}
 	"item_building_cancel"
 	{

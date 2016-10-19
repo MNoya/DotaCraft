@@ -99,6 +99,39 @@
         }
     }
 }
+"item_claws_of_attack_15"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_claws_of_attack_15"
+    
+    "ItemCost"                      "800"
+    "ItemQuality"                   "common"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_damage"          "15"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_claws_of_attack_15"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"        "%bonus_damage"
+            }
+        }
+    }
+}
 
 "item_gauntlets_of_ogre_strength_3"
 {
@@ -511,10 +544,10 @@
 {
     "BaseClass"                     "item_datadriven"
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-    "AbilityTextureName"            "item_rop"
+    "AbilityTextureName"            "item_ring_of_protection_2"
     
     "ItemCost"                      "125"
-    "ItemQuality"                   "common"
+    "ItemQuality"                   "component"
 
     "AbilitySpecial"
     {
@@ -543,7 +576,7 @@
 {
     "BaseClass"                     "item_datadriven"
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-    "AbilityTextureName"            "item_rop"
+    "AbilityTextureName"            "item_ring_of_protection_3"
     
     "ItemCost"                      "300"
     "ItemQuality"                   "common"
@@ -575,10 +608,10 @@
 {
     "BaseClass"                     "item_datadriven"
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-    "AbilityTextureName"            "item_rop_4"
+    "AbilityTextureName"            "item_ring_of_protection_4"
     
     "ItemCost"                      "600"
-    "ItemQuality"                   "common"
+    "ItemQuality"                   "rare"
 
     "AbilitySpecial"
     {
@@ -596,6 +629,38 @@
             "Passive"           "1"
             "IsHidden"          "1"
             "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
+            }
+        }
+    }
+}
+"item_ring_of_protection_5"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_ring_of_protection_5"
+    
+    "ItemCost"                      "800"
+    "ItemQuality"                   "epic"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_armor"           "5"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_ring_of_protection"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"  
             "Properties"
             {
                 "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%bonus_armor"
@@ -882,6 +947,42 @@
             {
                 "MODIFIER_PROPERTY_STATS_AGILITY_BONUS"         "%bonus_agility"
                 "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"       "%bonus_intellect"
+            }
+        }
+    }
+}
+
+"item_crown_of_kings_5"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityTextureName"            "item_crown_of_kings_5"
+    
+    "ItemCost"                      "1000"
+    "ItemQuality"                   "epic"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "bonus_all_stats"       "5"
+        }
+    }
+    
+    "Modifiers"
+    {
+        "modifier_crown_of_kings"
+        {
+            "Passive"           "1"
+            "IsHidden"          "1"
+            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE"
+            
+            "Properties"
+            {
+                "MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"        "%bonus_all_stats"
+                "MODIFIER_PROPERTY_STATS_AGILITY_BONUS"         "%bonus_all_stats"
+                "MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"       "%bonus_all_stats"
             }
         }
     }

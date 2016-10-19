@@ -68,3 +68,22 @@ function OrbAirCheck( event )
         attacker:SetAttackCapability(attacker.original_attack_type)
     end
 end
+
+function Lifesteal(event)
+    local target = event.target
+    if not IsCustomBuilding(target) and not target:IsMechanical() and not target:IsWard() then
+        local attacker = event.attacker
+        local ability = event.ability
+        local damage = attacker.attack_damage
+        if attacker.attack_damage and attacker.attack_damage > 0 then
+            local lifesteal = ability:GetSpecialValueFor("lifesteal_percent") * attacker.attack_damage * 0.01
+            attacker:Heal(lifesteal,ability)
+            local particle = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, attacker)
+            ParticleManager:SetParticleControlEnt(particle, 0, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)
+        end
+    end
+end
+
+function MaskOfDeathAttack(event)
+    event.attacker.attack_damage = event.Damage
+end

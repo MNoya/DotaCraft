@@ -43,3 +43,13 @@ function Experience(event)
     local xp = event.ability:GetSpecialValueFor("bonus_xp")
     hero:AddExperience(xp,0,false,false)
 end
+
+function Power(event)
+    local hero = event.caster
+    local level = hero:GetLevel()
+    if level < 10 then
+        local previousXP = XP_PER_LEVEL_TABLE[level] or 0
+        local xp = XP_PER_LEVEL_TABLE[level+1] - previousXP
+        hero:AddExperience(xp,0,false,false)
+    end
+end

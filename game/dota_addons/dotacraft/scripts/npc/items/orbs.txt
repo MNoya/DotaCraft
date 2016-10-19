@@ -798,3 +798,73 @@
         }
     }
 }
+
+"item_mask_of_death"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_mask_of_death"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+    "ItemCost"                      "1000"
+    "ItemQuality"                   "artifact"
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "lifesteal_percent"     "50"
+        }
+    }
+
+    "OnEquip"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "items/orbs.lua"
+            "Function"      "EquipOrb"
+        }
+    }
+
+    "OnUnequip"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "items/orbs.lua"
+            "Function"      "UnequipOrb"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_mask_of_death"
+        {
+            "Passive"       "1"
+            "IsHidden"      "1"
+            "Orb"
+            {
+                "Priority"          "DOTA_ORB_PRIORITY_ABILITY"
+                "ProjectileName"    "particles/custom/items/lifesteal.vpcf"
+            }
+
+            "OnOrbImpact"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "items/orbs.lua"
+                    "Function"      "Lifesteal"
+                }
+            }
+
+            "OnAttackLanded"
+            {
+                "RunScript"
+                {
+                    "ScriptFile"    "items/orbs.lua"
+                    "Function"      "MaskOfDeathAttack"
+                    "Damage"        "%attack_damage"
+                }
+            }
+        }
+    }
+}

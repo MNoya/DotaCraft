@@ -360,6 +360,8 @@
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
     "AbilityCooldown"               "60"
     "AoERadius"                     "900"
+
+    "ItemCost"                      "500"
     
     "AbilitySpecial"
     {
@@ -427,6 +429,76 @@
                     "Duration"      "0.50"
                 }           
             }       
+        }
+    }
+}
+
+"kelens_dagger_of_escape"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "kelens_dagger_of_escape"
+
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT"
+    "AbilityCooldown"               "60"
+
+    "ItemCost"                      "800"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"          "FIELD_INTEGER"
+            "blink_range"       "1200"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "items/blink.lua"
+            "Function"      "Blink"
+            "Target"        "POINT"
+        }
+    }
+}
+
+"item_amulet_of_the_wild"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_amulet_of_the_wild"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"    
+    
+    "AbilityCooldown"               "180"
+    "ItemCost"                      "700"
+    "ItemQuality"                   "epic"
+    "ItemStackable"                 "0"
+    "ItemPermanent"                 "1"
+
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
+    }
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "duration"              "180"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "items/summons.lua"
+            "Function"      "SummonInFront"
+            "Unit"          "neutral_furbolg"
+            "Distance"      "100"
+            "Duration"      "%duration"
+            "Particle"      "particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf"
         }
     }
 }

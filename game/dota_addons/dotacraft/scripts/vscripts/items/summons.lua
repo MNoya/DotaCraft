@@ -9,14 +9,19 @@ function SummonInFront(event)
     local particleName = event.Particle
     local duration = event.Duration
 
-    local unit = CreateUnitByName(unitName,position,true,caster,caster,caster:GetTeamNumber())
-    unit:SetControllableByPlayer(caster:GetPlayerOwnerID(), true)
-    unit:SetForwardVector(fv)
-    unit:AddNewModifier(caster, nil, "modifier_kill", {duration = duration})
-    unit:AddNewModifier(caster, nil, "modifier_summoned", {})
-    unit.no_corpse = true
+    local unit = caster:CreateSummon(unitName, position, duration)
 
     if particleName then
         ParticleManager:CreateParticle(particleName,PATTACH_ABSORIGIN_FOLLOW,unit)
     end
+end
+
+function DemonicFigurine(event)
+    local caster = event.caster
+    local position = caster:GetAbsOrigin() + caster:GetForwardVector() * 200
+    local duration = event.ability:GetSpecialValueFor("duration")
+    local doom_guard = caster:CreateSummon("undead_doom_guard", position, duration)
+    ParticleManager:CreateParticle("particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf", PATTACH_ABSORIGIN_FOLLOW, doom_guard)
+    ParticleManager:CreateParticle("particles/econ/items/doom/doom_f2p_death_effect/doom_bringer_f2p_death.vpcf", PATTACH_ABSORIGIN_FOLLOW, doom_guard)
+    doom_guard:EmitSound("Hero_DoomBringer.LvlDeath")
 end

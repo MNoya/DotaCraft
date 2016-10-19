@@ -65,6 +65,38 @@
     }
 }
 
+"item_tome_of_power" //Gives the Hero an experience level.
+{
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_tome_of_experience"
+    
+    "Model"                         "models/props_debris/merchant_debris_book001.vmdl"
+    "Effect"                        "particles/econ/courier/courier_axolotl_ambient/courier_axolotl_ambient.vpcf"
+    
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "ItemCost"                      "1250"
+    
+    "ItemCastOnPickup"              "1"
+    "OnSpellStart"
+    {
+        "SpendCharge" 
+        {}
+        "RunScript"
+        {
+            "ScriptFile"            "items/tomes.lua"
+            "Function"              "Power"
+        }
+        "FireSound"
+        {
+            "EffectName"            "DOTA_Item.Refresher.Activate"
+            "Target"                "CASTER"
+        }    
+    }
+}
+
 "item_manual_of_health" //50hp
 {
     "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"

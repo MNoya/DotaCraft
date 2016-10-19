@@ -2,6 +2,7 @@
 //Furbolg - item_talisman_of_the_wild
 //Red Drake - item_red_drake_egg
 //Fel Stalker - item_spiked_collar
+//Ice Revenant - item_ice_shard
 //Rest are covered elsewhere
 
 //=================================================================================
@@ -318,4 +319,92 @@
     
     // Creature Data
     //----------------------------------------------------------------
+}
+
+//=================================================================================
+// Creature: Ice Revenant
+// Description: "Heavy melee unit with Vampiric Aura. Can cast Frost Nova."
+//=================================================================================
+"neutral_ice_revenant"
+{
+    // General
+    //----------------------------------------------------------------
+    "BaseClass"                 "npc_dota_creature"
+    "Model"                     "models/heroes/razor/razor.vmdl"
+    "ModelScale"                "1"
+    "Level"                     "8"
+    "BoundsHullName"            "DOTA_HULL_SIZE_HERO"
+    "HealthBarOffset"           "280"
+    "ConsideredHero"            "1"
+
+    "FormationRank"             "0"
+    "AttacksEnabled"            "ground"
+    "LeavesCorpse"              "0"
+    
+    // Abilities
+    //----------------------------------------------------------------
+    "Ability1"                  "neutral_frost_nova"   //Reference: ACvp
+    "Ability2"                  "neutral_vampiric_aura"   //Reference: ACfn
+    
+    // Armor
+    //----------------------------------------------------------------
+    "ArmorPhysical"             "4"
+    "MagicalResistance"         "0"
+    
+    // Attack
+    //----------------------------------------------------------------
+    "AttackCapabilities"        "DOTA_UNIT_CAP_MELEE_ATTACK"
+    "AttackDamageMin"           "49.0"
+    "AttackDamageMax"           "55.0"
+    "AttackDamageType"          "DAMAGE_TYPE_ArmorPhysical"
+    "AttackRate"                "1.35"
+    "AttackAnimationPoint"      "0.6"
+    "AttackAcquisitionRange"    "500"
+    "AttackRange"               "128"
+    
+    // Bounty
+    //----------------------------------------------------------------
+    "BountyGoldMin"             "76.0"
+    "BountyGoldMax"             "88.0"
+    
+    // Gold and Lumber
+    //----------------------------------------------------------------
+    "GoldCost"                  "480"
+    "LumberCost"                "120"
+    
+    // Movement
+    //----------------------------------------------------------------
+    "MovementCapabilities"      "DOTA_UNIT_CAP_MOVE_GROUND"
+    "MovementSpeed"             "270"
+    "MovementTurnRate"          "0.6"
+    
+    // Status
+    //----------------------------------------------------------------
+    "StatusHealth"              "1100"
+    "StatusHealthRegen"         "1"
+    "StatusMana"                "500"
+    "StatusManaRegen"           "500"
+    
+    // Vision
+    //----------------------------------------------------------------
+    "VisionDaytimeRange"        "1400"
+    "VisionNighttimeRange"      "800"
+    
+    // Attack Damage types
+    //----------------------------------------------------------------
+    "AttackType"                "chaos"
+    "ArmorType"                 "heavy"
+
+    "Creature"
+    {
+        "AttachWearables" // Compact of the Guardian Construct
+        {
+            "1" { "ItemDef" "8960" } // Helm of the Guardian Construct
+            "2" { "ItemDef" "8969" } // Whip of the Guardian Construct
+            "3" { "ItemDef" "8967" } // Skirt of the Guardian Construct
+            "4" { "ItemDef" "8959" } // Chestplate of the Guardian Construct
+            "5" { "ItemDef" "8968" } // Bracers of the Guardian Construct
+            "6" { "ItemDef" "513" } // Razor's Ambient Effects
+        }
+    }
 }

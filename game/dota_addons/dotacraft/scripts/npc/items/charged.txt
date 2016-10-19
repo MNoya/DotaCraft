@@ -195,6 +195,170 @@
     }
 }
 
+"item_ice_shard"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_ice_shard"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"    
+    
+    "AbilityCooldown"               "20"
+    "ItemCost"                      "700"
+    "ItemQuality"                   "epic"
+    "ItemStackable"                 "0"
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "precache"
+    {
+        "particle"  "particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_death.vpcf"
+    }
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "duration"              "180"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "SpendCharge" {}
+        "RunScript"
+        {
+            "ScriptFile"    "items/summons.lua"
+            "Function"      "SummonInFront"
+            "Unit"          "neutral_ice_revenant"
+            "Distance"      "100"
+            "Duration"      "%duration"
+            "Particle"      "particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_death.vpcf"
+        }
+    }
+}
+
+"item_demonic_figurine"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_demonic_figurine"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"    
+    
+    "AbilityCooldown"               "20"
+    "ItemCost"                      "700"
+    "ItemQuality"                   "epic"
+    "ItemStackable"                 "0"
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "precache"
+    {
+        "particle"              "particles/units/heroes/hero_doom_bringer/doom_weapon_blur.vpcf"
+        "particle"              "particles/units/heroes/hero_doom_bringer/doom_weapon_blurb.vpcf"
+        "particle"              "particles/units/heroes/hero_doom_bringer/doom_weapon_blur_hyhy.vpcf"
+    }
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "duration"              "180"
+        }
+    }
+
+    "OnSpellStart"
+    {
+        "SpendCharge" {}
+        "RunScript"
+        {
+            "ScriptFile"    "items/summons.lua"
+            "Function"      "DemonicFigurine"
+        }
+    }
+}
+
+//Calls an Infernal down from the sky, dealing 50 damage and stunning enemy land units for 4 seconds in an area. The Infernal lasts 180 seconds.
+"item_inferno_stone"
+{
+    "BaseClass"                     "item_datadriven"
+    "AbilityTextureName"            "item_inferno_stone"
+    
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+
+    "AbilityCooldown"               "20"
+    "AbilityCastRange"              "900"
+    "ItemCost"                      "700"
+    "ItemQuality"                   "epic"
+    "ItemStackable"                 "0"
+    "ItemPermanent"                 "0"
+    "ItemInitialCharges"            "1"
+
+    "TargetsAllowed"                "ground,organic"
+
+    "AbilityDamage"                 "50"
+
+    "AOERadius"                     "250"
+
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"              "FIELD_INTEGER"
+            "radius"                "250"
+        }
+        "02"
+        {   
+            "var_type"              "FIELD_FLOAT"
+            "infernal_duration"     "180"
+        }
+        "03"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "stun_hero_duration"    "2"
+        }
+        "04"
+        {
+            "var_type"              "FIELD_FLOAT"
+            "stun_creep_duration"   "4"
+        }
+    }
+
+    "precache"
+    {
+        "particle"  "particles/custom/warlock_rain_of_chaos_start.vpcf"
+        "soundfile" "soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
+    }
+
+    "OnSpellStart"
+    {
+        "RunScript"
+        {
+            "ScriptFile"    "heroes/dread_lord/inferno.lua"
+            "Function"      "SpawnInferno"
+            "Target"        "POINT"
+        }
+    }
+
+    "Modifiers"
+    {
+        "modifier_inferno_stun"
+        {
+            "TextureName"   "item_inferno_stone"
+            "IsDebuff"  "1"
+            "States"
+            {
+                "MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"         
+            }
+            "OverrideAnimation" "ACT_DOTA_DISABLED"
+            "EffectName"        "particles/generic_gameplay/generic_stunned.vpcf"
+            "EffectAttachType"  "follow_overhead"
+        }
+    }
+}
+
 // Aegis
 "item_ankh_of_reincarnation"
 {
