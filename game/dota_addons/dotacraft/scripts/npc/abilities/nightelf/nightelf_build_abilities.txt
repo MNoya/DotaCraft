@@ -16,24 +16,6 @@
 
 // nightelf_entangled_gold_mine - Ability through Tree of Life/Ages/Eternity
 
-
-// This ability fills the peasant slot with undroppable build items
-"build_nightelf_items"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	"MaxLevel" 						"1"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/items.lua"
-			"Function"		"GiveNightElfBuildingItems"
-		}
-	}
-}
-
 "nightelf_build_ancient_of_lore_disabled"
 {
 	"BaseClass"             		"ability_datadriven"

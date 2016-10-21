@@ -20,24 +20,6 @@
 // human_workshop - Ability, requires Keep and Blacksmith
 // human_gryphon_aviary - Ability, requires Keep and Lumber Mill
 
-
-// This ability fills the peasant slot with undroppable build items
-"build_human_items"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	"MaxLevel" 						"1"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/items.lua"
-			"Function"		"GiveHumanBuildingItems"
-		}
-	}
-}
-
 "human_build_barracks"
 {
 	"BaseClass"             		"ability_datadriven"

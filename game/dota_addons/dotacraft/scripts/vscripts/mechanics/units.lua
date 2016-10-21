@@ -80,6 +80,15 @@ function Units:Init( unit )
     
     Timers:CreateTimer(0.03, function()
         if not IsValidAlive(unit) then return end
+
+        -- Builder items
+        if bBuilder and not unit:HasModifier("modifier_kill") then
+            local owner = unit:GetOwner()
+            local items = Units:GetBuilderItemsForRace(unit:GetRace())
+            for _,itemName in pairs(items) do
+                unit:AddItem(CreateItem(itemName, owner, unit))
+            end
+        end
         
         -- Flying Height Z control
         if unit:GetKeyValue("MovementCapabilities") == "DOTA_UNIT_CAP_MOVE_FLY" then
@@ -163,6 +172,10 @@ end
 
 function Units:GetNumInitialBuildersForRace(raceName)
     return Units.Races[raceName]["BuilderCount"]
+end
+
+function Units:GetBuilderItemsForRace(raceName)
+    return Units.Races[raceName]["BuilderItems"]
 end
 
 -- Returns Int

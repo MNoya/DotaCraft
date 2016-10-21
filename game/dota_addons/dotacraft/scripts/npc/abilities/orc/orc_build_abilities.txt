@@ -14,23 +14,6 @@
 // orc_vodoo_lounge - No requirements
 // orc_war_mill - No requirements
 
-// This ability fills the peasant slot with undroppable build items
-"build_orc_items"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	"MaxLevel" 						"1"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/items.lua"
-			"Function"		"GiveOrcBuildingItems"
-		}
-	}
-}
-
 "orc_build_barracks"
 {
 	"BaseClass"             		"ability_datadriven"

@@ -110,9 +110,6 @@ function NeutralAI:IdleThink()
 
     -- Check if the unit has walked outside its leash range (in case of fleeing)
     local distanceFromSpawn = (unit.spawnPos - unit:GetAbsOrigin()):Length2D()
-    if unit:GetHealthPercent() < 100 then
-        print(distanceFromSpawn)
-    end
     if distanceFromSpawn > unit.leashRange then
         unit:Return()
         return

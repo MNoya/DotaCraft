@@ -4641,78 +4641,11 @@
 	
 	    "OnSpellStart"
 	    {
-	        "FireSound"
+	        "RunScript"
 	        {
-	            "EffectName"            "Hero_Warlock.RainOfChaos_buildup"
-	            "Target"                "CASTER"
-	        }
-	
-	        "SpawnUnit"
-	        {
-	            "Target"                "POINT"
-	            "UnitName"              "undead_inferno"
-	            "UnitCount"             "1"
-	            "Duration"              "180"
-	            "OnSpawn"
-	            {
-	                "RunScript"
-	                {
-	                    "ScriptFile"    "heroes/dread_lord/inferno.lua"
-	                    "Function"      "RenderInferno"
-	                }
-	
-	                "FireEffect"
-	                {
-	                    "EffectName"        "particles/custom/warlock_rain_of_chaos_start.vpcf"
-	                    "EffectAttachType"  "follow_origin"
-	                    "Target"            "TARGET"
-	                }   
-	            }
-	        }
-	
-	        "DestroyTrees"
-	        {
-	            "Target"    "POINT"
-	            "Radius"    "%radius"
-	        }
-	
-	        "ApplyModifier"
-	        {
-	            "ModifierName"    "modifier_inferno_stun"
-	            "Target"
-	            {
-	                "Center"    "POINT"
-	                "Radius"    "%radius"
-	                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-	                "Types"     "DOTA_UNIT_TARGET_HERO"
-	            }
-	            "Duration"      "%stun_hero_duration"
-	        }
-	
-	        "ApplyModifier"
-	        {
-	            "ModifierName"    "modifier_inferno_stun"
-	            "Target"
-	            {
-	                "Center"    "POINT"
-	                "Radius"    "%radius"
-	                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-	                "Types"     "DOTA_UNIT_TARGET_BASIC"
-	            }
-	            "Duration"      "%stun_creep_duration"
-	        }
-	
-	        "Damage"
-	        {
-	            "Type"      "DAMAGE_TYPE_MAGICAL"
-	            "Damage"    "%AbilityDamage"
-	            "Target"
-	            {
-	                "Center"    "POINT"
-	                "Radius"    "%radius"
-	                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-	                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	            }
+	            "ScriptFile"    "heroes/dread_lord/inferno.lua"
+	            "Function"      "SpawnInferno"
+	            "Target"        "POINT"
 	        }
 	    }
 	
@@ -8079,14 +8012,14 @@
 	            "Duration"      "0.5"
 	            "OnCreated"
 	            {
-	                "FireEffect"
+	                "AttachEffect"
 	                {
 	                    "Target"            "TARGET"
 	                    "EffectName"        "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
 	                    "EffectAttachType"  "follow_origin"
 	                    "EffectRadius"      "100"
 	                }
-	            }   
+	            }
 	        }
 	    }
 	}
@@ -18336,24 +18269,6 @@
 	// human_arcane_sanctum - Ability, requires Keep
 	// human_workshop - Ability, requires Keep and Blacksmith
 	// human_gryphon_aviary - Ability, requires Keep and Lumber Mill
-	
-	
-	// This ability fills the peasant slot with undroppable build items
-	"build_human_items"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"MaxLevel" 						"1"
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/items.lua"
-				"Function"		"GiveHumanBuildingItems"
-			}
-		}
-	}
 	
 	"human_build_barracks"
 	{
@@ -30323,6 +30238,32 @@
 	                    "Function"   "Web_AutoCast"
 	                }
 	            }
+	        }
+	    }
+	}
+	
+	"neutral_vampiric_aura"
+	{
+	    "BaseClass"                     "ability_lua"
+	    "ScriptFile"                    "items/auras/vampiric.lua"
+	    "AbilityTextureName"            "dread_lord_vampiric_aura"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+	    "MaxLevel"                      "1"
+	
+	    "AbilityCastRange"              "900"
+	    
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "lifesteal"     "15"
+	        }
+	        "02"
+	        {
+	            "var_type"      "FIELD_INTEGER"
+	            "radius"        "900"
 	        }
 	    }
 	}
@@ -43751,24 +43692,6 @@
 	
 	// nightelf_entangled_gold_mine - Ability through Tree of Life/Ages/Eternity
 	
-	
-	// This ability fills the peasant slot with undroppable build items
-	"build_nightelf_items"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"MaxLevel" 						"1"
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/items.lua"
-				"Function"		"GiveNightElfBuildingItems"
-			}
-		}
-	}
-	
 	"nightelf_build_ancient_of_lore_disabled"
 	{
 		"BaseClass"             		"ability_datadriven"
@@ -54708,23 +54631,6 @@
 	// orc_altar_of_storms - No requirements
 	// orc_vodoo_lounge - No requirements
 	// orc_war_mill - No requirements
-	
-	// This ability fills the peasant slot with undroppable build items
-	"build_orc_items"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"MaxLevel" 						"1"
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/items.lua"
-				"Function"		"GiveOrcBuildingItems"
-			}
-		}
-	}
 	
 	"orc_build_barracks"
 	{
@@ -66226,23 +66132,6 @@
 		// undead_nerubian_tower - Upgrade
 		// undead_spirit_tower - Upgrade, Requires undead_graveyard
 	// undead_tomb_of_relics - No requirements
-	
-	// This ability fills the peasant slot with undroppable build items
-	"build_undead_items"
-	{
-		"BaseClass"             		"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"MaxLevel" 						"1"
-	
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"buildings/items.lua"
-				"Function"		"GiveUndeadBuildingItems"
-			}
-		}
-	}
 	
 	"undead_build_crypt"
 	{

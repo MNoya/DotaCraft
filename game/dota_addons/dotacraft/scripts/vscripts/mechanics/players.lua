@@ -750,6 +750,10 @@ function Players:GetNumInitialBuilders(playerID)
     return Units:GetNumInitialBuildersForRace(Players:GetRace(playerID))
 end
 
+function Players:GetBuilderItems(playerID)
+    return Units:GetBuilderItemsForRace(Players:GetRace(playerID))
+end
+
 ---------------------------------------------------------------
 
 function Players:CreateMercenary(playerID, shopID, unitName)

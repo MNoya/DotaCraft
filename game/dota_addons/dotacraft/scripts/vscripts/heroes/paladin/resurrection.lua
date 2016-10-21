@@ -41,7 +41,10 @@ function Resurrection( event )
         -- The corpse has a unit_name associated.
         local position = corpse:GetAbsOrigin()
         local resurrected = CreateUnitByName(corpse.unit_name, position, true, hero, hero, team)
-        local pID = corpse.playerID and PlayerResource:IsValidPlayerID(corpse.playerID) or playerID -- Units of other friendly players should belong to those players
+        local pID = corpse.playerID
+        if not pID or not PlayerResource:IsValidPlayerID(corpse.playerID) then
+            pID = playerID -- Units of other friendly players should belong to those players
+        end
         resurrected:SetControllableByPlayer(pID, true)
         resurrected:SetOwner(hero)
         resurrected:SetForwardVector(corpse:GetForwardVector())

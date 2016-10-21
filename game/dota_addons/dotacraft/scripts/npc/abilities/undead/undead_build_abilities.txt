@@ -17,23 +17,6 @@
 	// undead_spirit_tower - Upgrade, Requires undead_graveyard
 // undead_tomb_of_relics - No requirements
 
-// This ability fills the peasant slot with undroppable build items
-"build_undead_items"
-{
-	"BaseClass"             		"ability_datadriven"
-	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-	"MaxLevel" 						"1"
-
-	"OnUpgrade"
-	{
-		"RunScript"
-		{
-			"ScriptFile"	"buildings/items.lua"
-			"Function"		"GiveUndeadBuildingItems"
-		}
-	}
-}
-
 "undead_build_crypt"
 {
 	"BaseClass"             		"ability_datadriven"

@@ -911,7 +911,9 @@ function Gatherer:Init(unit)
         if unit.GatherAbility.callbacks and unit.GatherAbility.callbacks.OnCancelGather then
             unit.GatherAbility.callbacks.OnCancelGather()
         end
-        unit.GatherAbility:ToggleOff()
+        if unit.GatherAbility then
+            unit.GatherAbility:ToggleOff()
+        end
 
         if unit.ReturnAbility then
             unit.ReturnAbility:ToggleOff()
@@ -1066,6 +1068,13 @@ function Gatherer:Init(unit)
             end
         end)
     end
+end
+
+function Gatherer:Remove(unit)
+    unit:SetCanAttackTrees(false)
+    unit.GatherAbility = nil
+    unit.ReturnAbility = nil
+    unit.CancelGather = nil
 end
 
 -- Goes through the structures of the player checking for the closest valid resource deposit of this type

@@ -28,6 +28,9 @@ function AnimateDead( event )
             unit:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
             ability:ApplyDataDrivenModifier(caster, unit, "modifier_animate_dead", nil)
 
+            -- Can't gather
+            if unit:IsGatherer() then Gatherer:Remove(unit) end
+
             -- Remove non-passive abilities
             for i=0,15 do
                 local a = unit:GetAbilityByIndex(i)
