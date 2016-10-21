@@ -58,78 +58,11 @@
 
     "OnSpellStart"
     {
-        "FireSound"
+        "RunScript"
         {
-            "EffectName"            "Hero_Warlock.RainOfChaos_buildup"
-            "Target"                "CASTER"
-        }
-
-        "SpawnUnit"
-        {
-            "Target"                "POINT"
-            "UnitName"              "undead_inferno"
-            "UnitCount"             "1"
-            "Duration"              "180"
-            "OnSpawn"
-            {
-                "RunScript"
-                {
-                    "ScriptFile"    "heroes/dread_lord/inferno.lua"
-                    "Function"      "RenderInferno"
-                }
-
-                "FireEffect"
-                {
-                    "EffectName"        "particles/custom/warlock_rain_of_chaos_start.vpcf"
-                    "EffectAttachType"  "follow_origin"
-                    "Target"            "TARGET"
-                }   
-            }
-        }
-
-        "DestroyTrees"
-        {
-            "Target"    "POINT"
-            "Radius"    "%radius"
-        }
-
-        "ApplyModifier"
-        {
-            "ModifierName"    "modifier_inferno_stun"
-            "Target"
-            {
-                "Center"    "POINT"
-                "Radius"    "%radius"
-                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                "Types"     "DOTA_UNIT_TARGET_HERO"
-            }
-            "Duration"      "%stun_hero_duration"
-        }
-
-        "ApplyModifier"
-        {
-            "ModifierName"    "modifier_inferno_stun"
-            "Target"
-            {
-                "Center"    "POINT"
-                "Radius"    "%radius"
-                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                "Types"     "DOTA_UNIT_TARGET_BASIC"
-            }
-            "Duration"      "%stun_creep_duration"
-        }
-
-        "Damage"
-        {
-            "Type"      "DAMAGE_TYPE_MAGICAL"
-            "Damage"    "%AbilityDamage"
-            "Target"
-            {
-                "Center"    "POINT"
-                "Radius"    "%radius"
-                "Teams"     "DOTA_UNIT_TARGET_TEAM_ENEMY"
-                "Types"     "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-            }
+            "ScriptFile"    "heroes/dread_lord/inferno.lua"
+            "Function"      "SpawnInferno"
+            "Target"        "POINT"
         }
     }
 
