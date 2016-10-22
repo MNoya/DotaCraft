@@ -6346,3 +6346,29 @@
         }
     }
 }
+
+"neutral_vampiric_aura"
+{
+    "BaseClass"                     "ability_lua"
+    "ScriptFile"                    "items/auras/vampiric.lua"
+    "AbilityTextureName"            "dread_lord_vampiric_aura"
+    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+    "MaxLevel"                      "1"
+
+    "AbilityCastRange"              "900"
+    
+    "AbilitySpecial"
+    {
+        "01"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "lifesteal"     "15"
+        }
+        "02"
+        {
+            "var_type"      "FIELD_INTEGER"
+            "radius"        "900"
+        }
+    }
+}
