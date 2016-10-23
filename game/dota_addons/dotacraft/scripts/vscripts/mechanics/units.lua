@@ -873,6 +873,26 @@ function CDOTA_BaseNPC_Creature:UpgradeWearables(wearable_type, level)
                 end
             end
         end
+
+        local particle_table = unit_table["particles"]
+        if particle_table then
+            local sub_particle_table = particle_table[tostring(level)]
+            if sub_particle_table then
+                local model = sub_particle_table['attach_model']
+                local target = self
+                if model then target = GetWearable(target, model) end                
+                for particle_name,particle_data in pairs(sub_particle_table) do
+                    local particle = ParticleManager:CreateParticle(particle_name,PATTACH_CUSTOMORIGIN,target)
+                    for cp,v in pairs(particle_data['control_points']) do
+                        if v['attach_type'] == "point_follow" then
+                            ParticleManager:SetParticleControlEnt(particle, tonumber(cp), target, PATTACH_POINT_FOLLOW, v['attachment'], target:GetAbsOrigin(), false)
+                        else
+                            ParticleManager:SetParticleControl(particle,tonumber(cp),target:GetAbsOrigin())
+                        end
+                    end
+                end
+            end
+        end
     end
 end
 

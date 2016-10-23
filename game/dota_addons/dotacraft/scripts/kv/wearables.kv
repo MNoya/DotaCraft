@@ -153,6 +153,104 @@
 		}
 	}
 
+	"human_sorceress"
+	{
+		// Default -> Regime of the Enthaleen Dragon -> Arcana/Immortal Mix
+		"training"
+		{
+			"1" //Arms
+			{
+				"0"	"models/heroes/lina/lina_arms.vmdl"
+				"1" "models/items/lina/scales_of_the_burning_dragon_arms/scales_of_the_burning_dragon_arms.vmdl"
+				"2" "models/items/lina/bewitching_flame_arms/bewitching_flame_arms.vmdl"
+			}
+
+			"2" //Belt
+			{
+				"0"	"models/heroes/lina/lina_belt.vmdl"
+				"1" "models/items/lina/scales_of_the_burning_dragon_belt/scales_of_the_burning_dragon_belt.vmdl"
+				"2" "models/items/lina/bewitching_flame_belt/bewitching_flame_belt.vmdl"
+			}
+
+			"3" //Head
+			{
+				"0"	"models/heroes/lina/lina_head.vmdl"
+				"1" "models/items/lina/scales_of_the_burning_dragon_head/scales_of_the_burning_dragon_head.vmdl"
+				"2" "models/items/lina/origins_flamehair/origins_flamehair.vmdl"
+			}
+
+			"4" //Neck
+			{
+				"0"	"models/heroes/lina/lina_neck.vmdl"
+				"1" "models/items/lina/scales_of_the_burning_dragon_neck/scales_of_the_burning_dragon_neck.vmdl"
+				"2" "models/items/lina/lina_immortal_ii/mesh/lina_immortal_ii.vmdl"
+			}
+		}
+
+		"particles"
+		{
+			"2"
+			{
+				"particles/econ/items/lina/lina_bewitching_flame/lina_bewitching_flame_ambient.vpcf"
+				{
+					"control_points"
+					{
+						"0"
+						{
+							"attach_type"		"absorigin_follow"
+						}
+					}
+				}
+
+				"particles/econ/items/lina/lina_head_headflame/lina_headflame.vpcf"
+				{
+					"control_points"
+					{
+						"0"
+						{
+							"attach_type"		"point_follow"
+							"attachment"		"attach_head"
+						}
+					}
+				}
+
+				"particles/econ/items/lina/lina_head_headflame/lina_flame_hand_dual_headflame.vpcf"
+				{
+					"control_points"
+					{
+						"0"
+						{
+							"attach_type"		"point_follow"
+							"attachment"		"attach_attack1"
+						}
+						"1"
+						{
+							"attach_type"		"point_follow"
+							"attachment"		"attach_attack2"
+						}
+					}
+				}
+
+				"particles/econ/items/lina/lina_ti6/lina_ti6_ambient.vpcf"
+				{
+					"attach_model"		"models/items/lina/lina_immortal_ii/mesh/lina_immortal_ii.vmdl"
+					"control_points"
+					{
+						"0"
+						{
+							"attach_type"		"absorigin_follow"
+						}
+						"1"
+						{
+							"attach_type"		"point_follow"
+							"attachment"		"attach_neck"
+						}
+					}
+				}
+			}
+		}
+	}
+
 	"human_spell_breaker"
 	{
 		// Default -> Silence Mix -> Aeol Drias ->  Whisper of the Tribunal

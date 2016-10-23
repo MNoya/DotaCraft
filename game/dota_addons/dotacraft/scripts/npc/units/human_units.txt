@@ -583,6 +583,14 @@
     "GameSoundsFile"           "soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
 
 	"AttacksEnabled"			"ground,air"
+
+	"precache"
+	{
+	    "particle" "particles/econ/items/lina/lina_bewitching_flame/lina_bewitching_flame_ambient.vpcf"
+		"particle" "particles/econ/items/lina/lina_head_headflame/lina_headflame.vpcf"
+		"particle" "particles/econ/items/lina/lina_head_headflame/lina_flame_hand_dual_headflame.vpcf"
+		"particle" "particles/econ/items/lina/lina_ti6/lina_ti6_ambient.vpcf"
+	}
 	
 	// Research
 	"Upgrades"
@@ -592,10 +600,9 @@
 
 	// Abilities
 	//----------------------------------------------------------------
-	"Ability1"					"lina_arcana"
-	"Ability2"					"human_slow"
-	"Ability3"					"human_invisibility_disabled"
-	"Ability4"					"human_polymorph_disabled"
+	"Ability1"					"human_slow"
+	"Ability2"					"human_invisibility_disabled"
+	"Ability3"					"human_polymorph_disabled"
 	"Ability10"					"human_backpack_disabled"
 	
 	// Armor
@@ -669,13 +676,14 @@
 		"ManaGain"					"100"
 		"HPGain"					"40"
 		
-		"AttachWearables"
-		{
-			"Wearable1"		{	"ItemDef"		"4794"		} //"Fiery Soul of the Slayer"
-			"Wearable2"		{	"ItemDef"		"6339"		} //"Fire Lotus Belt"
-			"Wearable3" 	{	"ItemDef"		"5941"		} //"Wings of the Ember Crane"
-			"Wearable4"		{	"ItemDef"		"4756"		} //"Arc of the Solar Divine"
-		}
+		"AttachWearables" // Default npc_dota_hero_lina
+        {
+            "1" { "ItemDef" "320" } // Lina's Sleeves
+            "2" { "ItemDef" "318" } // Lina's Jewelry
+            "3" { "ItemDef" "321" } // Lina's Dress
+            "4" { "ItemDef" "504" } // Lina's Ambient Effects
+            "5" { "ItemDef" "319" } // Lina's Hair
+        }
 	}
 }
 
