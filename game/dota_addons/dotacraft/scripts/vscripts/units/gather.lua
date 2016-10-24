@@ -73,6 +73,8 @@ function Gather( event )
             end)
         else
             caster:StartGesture(ACT_DOTA_ATTACK)
+            -- Hit particle
+            tree:DamageParticle()
         end
     end)
 
@@ -85,13 +87,13 @@ function Gather( event )
     end)
 
     event:OnTreeDamaged(function(tree)
-        --Gatherer:print("OnTreeDamaged: "..tree.health)
-        caster:StartGesture(ACT_DOTA_ATTACK)
+        Gatherer:print("OnTreeDamaged: "..tree.health)
+        if caster:CanCarryMoreLumber() then
+            caster:StartGesture(ACT_DOTA_ATTACK)
+        end
 
         -- Hit particle
-        local particleName = "particles/custom/tree_pine_01_destruction.vpcf"
-        local particle = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, caster)
-        ParticleManager:SetParticleControl(particle, 0, tree:GetAbsOrigin())
+        tree:DamageParticle()
 
         -- Peasant backpack create
     end)

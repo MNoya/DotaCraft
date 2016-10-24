@@ -6,13 +6,6 @@ if not Gatherer then
 end
 
 --[[ TODO:
-Fix whatever happens that makes them get stuck and never able to gather again. Gather sometimes not continuing, stuck modifier/can't return 0.
-Repro
-    1. Target a tree
-    2. Target the same with another builder
-    3. Wait for tree cut
-    If the tree was cut on the way back, on resume gather, the other builders wont acquire a new one
-
 Fix attempting bad tree getting "stuck" with a timer while moving to gather
 Shouldnt hardcode gold_mine on-top building names in the filter
 Make a Built-In ExtractionBuilding system
@@ -20,7 +13,6 @@ Wait for building on top construction then go inside right after
 Make it possible to work without a GatherAbility
 Even though builders have no collision while gathering, find an empty point near the tree to path to
 Wisps got order stuck going to gold mine
-Skip the extra attack animation while the builder is going back to return
 ]]
 
 function Gatherer:start()
@@ -1112,6 +1104,9 @@ function Gatherer:DamageTree(unit, tree, value)
     unit.gatherer_state = "gathering_lumber"
     local lumber_gain = math.min(tree.health, value)
     tree.health = tree.health - value
+
+    -- Increment lumber_gathered stacks
+    unit:SetCarriedResourceStacks("lumber", unit.lumber_gathered + lumber_gain)
     
     if tree.health <= 0 then
         tree:CutDown(unit:GetTeamNumber())
@@ -1119,9 +1114,6 @@ function Gatherer:DamageTree(unit, tree, value)
     else
         unit.GatherAbility.callbacks.OnTreeDamaged(tree)
     end
-        
-    -- Increment lumber_gathered stacks
-    unit:SetCarriedResourceStacks("lumber", unit.lumber_gathered + lumber_gain)
 
     return lumber_gain
 end
@@ -1524,6 +1516,12 @@ end
 -- Defined on DeterminePathableTrees() and updated on tree_cut
 function CDOTA_MapTree:IsPathable()
     return self.pathable == true
+end
+
+function CDOTA_MapTree:DamageParticle()
+    local particleName = "particles/custom/tree_pine_01_destruction.vpcf"
+    local particle = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, nil)
+    ParticleManager:SetParticleControl(particle, 0, self:GetAbsOrigin())
 end
 
 -- Defined on DetermineForests()
