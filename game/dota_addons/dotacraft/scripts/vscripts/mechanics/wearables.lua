@@ -70,8 +70,12 @@ function PrecacheWearables( context )
     for k1,unit_table in pairs(hats) do
         for k2,sub_table in pairs(unit_table) do
             for k3,wearables in pairs(sub_table) do
-                for k4,model in pairs (wearables) do
-                    PrecacheModel(model, context)
+                for k4,v in pairs (wearables) do
+                    if type(v) == "string" and v ~= "" then
+                        PrecacheResource("particle", v, context)
+                    else
+                        PrecacheModel(model, context)
+                    end
                 end
             end
         end
