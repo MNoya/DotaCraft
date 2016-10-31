@@ -45,6 +45,7 @@ function SummonByName(event)
         end
     end
     caster.summoned = {}
+    caster.allies = caster.allies or {}
     
     -- Gets 2 points facing a distance away from the caster origin and separated from each other at 30 degrees left and right
     local positions = {}
@@ -55,5 +56,17 @@ function SummonByName(event)
     for i=1,2 do
         caster.summoned[i] = caster:CreateSummon(unitName, positions[i], duration)
         ParticleManager:CreateParticle("particles/units/heroes/hero_lycan/lycan_summon_wolves_spawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster.summoned[i])
+    end
+
+    for i=1,2 do
+        caster.summoned[i].allies = {}
+        for k,v in pairs(caster.allies) do
+            if IsValidAlive(v) then
+                if v.allies then
+                    table.insert(v.allies, caster.summoned[i])
+                end
+                table.insert(caster.summoned[i].allies, v)
+            end
+        end
     end
 end
