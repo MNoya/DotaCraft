@@ -30,12 +30,16 @@ function NeutralAI:Start( unit )
     unit.aggroRange = 200 --Range an enemy unit has to be for the group to go from IDLE to AGGRESIVE
     unit.leashRange = unit.acquireRange * 2 --Range from spawnPos to go from AGGRESIVE to RETURNING
     unit.campCenter = FindCreepCampCenter(unit)
-    if not unit.campCenter then
-        print("[NeutralAI] Error: Cant find minimap_ entity nearby "..unit:GetUnitName())
-        unit.allies = {unit}
-    else
-        unit.allies = FindAllUnitsAroundPoint(unit, unit.campCenter, 1000)
-    end
+    Timers:CreateTimer(0.03, function()
+        if not unit.campCenter then
+            if not unit.allies then -- allies of summons are set on the summoning ability
+                print("[NeutralAI] Error: Cant find minimap_ entity nearby "..unit:GetUnitName())
+                unit.allies = {unit}
+            end
+        else
+            unit.allies = FindAllUnitsAroundPoint(unit, unit.campCenter, 1000)
+        end
+    end)
 
     -- Disable normal ways of acquisition
     unit:SetIdleAcquire(false)
@@ -66,6 +70,11 @@ function NeutralAI:Start( unit )
         ApplyModifier(unit, "modifier_neutral_idle_aggro")
     end
 
+    function unit:IsFacingSpawnForward()
+        local diff = unit:GetForwardVector()-unit.spawnFacing
+        return math.abs(diff.x) < 0.01 and math.abs(diff.y) < 0.01
+    end
+
     -- Check ability AI block
     unit.ai_abilities = {}
     for i=0,15 do
@@ -81,7 +90,7 @@ function NeutralAI:Start( unit )
     if #unit.ai_abilities == 0 then unit.ai_abilities = nil end
 
     -- Start thinking
-    Timers:CreateTimer(function()
+    Timers:CreateTimer(0.1, function()
         return ai:GlobalThink()
     end)
 
@@ -103,21 +112,14 @@ function NeutralAI:IdleThink()
     local unit = self.unit
 
     -- Keep original facing
-    if unit:GetForwardVector() ~= unit.spawnFacing then
+    if not unit:IsFacingSpawnForward() then
         unit:MoveToPosition(unit.spawnPos + unit.spawnFacing)
-        return 0.1
     end
 
     -- Check if the unit has walked outside its leash range (in case of fleeing)
     local distanceFromSpawn = (unit.spawnPos - unit:GetAbsOrigin()):Length2D()
     if distanceFromSpawn > unit.leashRange then
         unit:Return()
-        return
-    end
-
-    -- Sleep
-    if not GameRules:IsDaytime() and not unit:IsMoving() then
-        unit:Sleep()
         return
     end
 
@@ -132,6 +134,12 @@ function NeutralAI:IdleThink()
                 end
             end
         end    
+        return
+    end
+
+    -- Sleep
+    if not GameRules:IsDaytime() and not unit:IsMoving() then
+        unit:Sleep()
         return
     end
 end
@@ -207,7 +215,7 @@ function NeutralAI:ReturningThink()
     local unit = self.unit
 
     --Check if the AI unit has reached its spawn location yet
-    if (unit.spawnPos - unit:GetAbsOrigin()):Length2D() < 10 then
+    if (unit.spawnPos - unit:GetAbsOrigin()):Length2D() < 50 then
         unit:Idle()
         return
     else
@@ -239,6 +247,14 @@ function NeutralAI:CastOnCooldown(ability)
 
     -- No-Target abilities are used asap
     if ability:HasBehavior(DOTA_ABILITY_BEHAVIOR_NO_TARGET) then
+        if ability.ai.Check == "Summoned" and unit.summoned then
+            -- If summons are alive, wait to cast again
+            for _,summon in pairs(unit.summoned) do
+                if IsValidAlive(summon) then
+                    return
+                end
+            end
+        end
         unit:CastAbilityNoTarget(ability,-1)
         return true
     else

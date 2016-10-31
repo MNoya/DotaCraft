@@ -132,8 +132,7 @@ function WakeUp( event )
             v:RemoveModifierByName("modifier_neutral_sleep")
             v.state = AI_STATE_AGGRESSIVE
             if not IsValidAlive(v.aggroTarget) then
-                v:MoveToTargetToAttack(attacker)
-                v.aggroTarget = attacker
+                v:Attack(attacker)
             end
         end
     end
@@ -148,8 +147,7 @@ function NeutralAggro( event )
             v:RemoveModifierByName("modifier_neutral_idle_aggro")
             v.state = AI_STATE_AGGRESSIVE
             if not IsValidAlive(v.aggroTarget) then
-                v:MoveToTargetToAttack(attacker)
-                v.aggroTarget = attacker
+                v:Attack(attacker)
             end
         end
     end
