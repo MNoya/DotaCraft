@@ -13127,9 +13127,10 @@
 		"AbilityTextureName"			"human_research_flare"
 		"MaxLevel" 						"1"
 	
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_6"
 		"AbilityCastPoint"				"1"
+		"AOERadius"						"%radius"
 	
 		"AbilityCooldown"				"120.0"
 	
@@ -13144,7 +13145,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"radius"		"1800"
+				"radius"		"900"
 			}
 			"02"
 			{
