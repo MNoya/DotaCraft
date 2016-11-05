@@ -499,6 +499,16 @@ function Players:HasAltar( playerID )
     return IsValidAlive(hero.altar) and hero.altar or false
 end
 
+function Players:HasFinishedAltar( playerID )
+    local altarStructures = Players:GetAltars(playerID)
+    for _,altar in pairs(altarStructures) do
+        if IsValidEntity(altar) and not altar:IsUnderConstruction() then
+            return true
+        end
+    end
+    return false
+end
+
 function Players:GetResearchCountForPlayerRace(playerID)
     local race = Players:GetRace( playerID )
     local techCount = { human = 34, orc = 30, undead = 28, nightelf = 32 }

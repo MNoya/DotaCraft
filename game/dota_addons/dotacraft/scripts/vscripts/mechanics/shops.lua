@@ -259,7 +259,7 @@ function Shops:TavernStockUpdater(itemInfo, unit)
                 
                 self:UpdateTavern(playerID)
                 local tier = Players:GetCityLevel(playerID) or 9000
-                local hasAltar = Players:HasAltar(playerID) and true or false
+                local hasAltar = Players:HasFinishedAltar(playerID)
                 
                 CustomGameEventManager:Send_ServerToPlayer(player, "shop_update_stock", {Index = self.TavernID, Item = itemInfo, Tier=tier, Altar=hasAltar})
             end
