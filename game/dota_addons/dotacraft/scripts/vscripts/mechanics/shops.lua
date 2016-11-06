@@ -240,7 +240,7 @@ end
     Altar tier increases/decreases (hero training start/cancel)
 ]]
 function Shops:TavernStockUpdater(itemInfo, unit)
-    Timers:CreateTimer(0.1, function()
+    Timers:CreateTimer(1, function()
         local PlayerCount = PlayerResource:GetPlayerCount() - 1
         self:Stock_Management(itemInfo)
         
@@ -265,7 +265,7 @@ function Shops:TavernStockUpdater(itemInfo, unit)
             end
             
         end
-        return 0.01
+        return 1
     end)
 end
 
@@ -310,6 +310,8 @@ function Shops:Stock_Management(itemInfo)
             -- reset counter for next stock
             itemInfo.CurrentRefreshTime = 1
             self:print("Increasing stock of "..itemInfo.ItemName)
+            print(itemInfo.CurrentRefreshTime, itemInfo.RestockRate)
+            DeepPrintTable(itemInfo)
         else
             --self:print("Incrementing counter to restock")
             itemInfo.CurrentRefreshTime = itemInfo.CurrentRefreshTime + 1 -- increment the time counter
