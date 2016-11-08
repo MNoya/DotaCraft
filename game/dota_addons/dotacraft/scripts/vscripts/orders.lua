@@ -774,8 +774,8 @@ function CreateRallyFlagForBuilding( building )
     ParticleManager:SetParticleControl(particle, 15, Vector(color[1], color[2], color[3])) --Color
 
     local line = ParticleManager:CreateParticleForTeam("particles/custom/range_finder_line.vpcf", PATTACH_CUSTOMORIGIN, building, teamNumber)
-    local spawn_pos = building.initial_spawn_position or building:GetAbsOrigin()
-    spawn_pos = (spawn_pos + (origin-spawn_pos)/10)
+    local spawn_pos = GetRallySpawnPointPosition(building) or building:GetAbsOrigin()
+
     ParticleManager:SetParticleControl(line, 0, spawn_pos)
     ParticleManager:SetParticleControl(line, 1, spawn_pos)
     ParticleManager:SetParticleControl(line, 2, position)

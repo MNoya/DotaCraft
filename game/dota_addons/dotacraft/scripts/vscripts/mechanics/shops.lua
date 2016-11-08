@@ -310,8 +310,6 @@ function Shops:Stock_Management(itemInfo)
             -- reset counter for next stock
             itemInfo.CurrentRefreshTime = 1
             self:print("Increasing stock of "..itemInfo.ItemName)
-            print(itemInfo.CurrentRefreshTime, itemInfo.RestockRate)
-            DeepPrintTable(itemInfo)
         else
             --self:print("Incrementing counter to restock")
             itemInfo.CurrentRefreshTime = itemInfo.CurrentRefreshTime + 1 -- increment the time counter
