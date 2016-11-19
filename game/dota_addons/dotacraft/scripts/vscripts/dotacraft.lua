@@ -1184,6 +1184,10 @@ function dotacraft:GetMapMaxPlayers()
     return split(GetMapName(), '_')[1]
 end
 
+function dotacraft:GetTime()
+    return GameRules:GetDOTATime(false, false)
+end
+
 -- This should only be called when all teams but one are defeated
 -- Returns the first player with a building left standing
 function dotacraft:GetWinningTeam()

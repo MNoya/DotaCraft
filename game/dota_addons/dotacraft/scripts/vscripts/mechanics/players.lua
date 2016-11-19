@@ -13,6 +13,7 @@ function Players:Init( playerID, hero )
 
     hero.buildings = {} -- This keeps the name and quantity of each building
     hero.upgrades = {} -- This kees the name of all the upgrades researched, so each unit can check and upgrade itself on spawn
+    hero.build_order = {} -- Keeps the second each building was completed
 
     hero.idle_builders = {} -- Keeps indexes of idle builders to send to the panorama UI
     hero.flags = {} -- Particle flags for each building currently selected
@@ -78,6 +79,12 @@ function Players:GetBuildingTable( playerID )
     local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 
     return hero.buildings
+end
+
+function Players:GetBuildOrder( playerID )
+    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+
+    return hero.build_order
 end
 
 function Players:GetIdleBuilders( playerID )
@@ -381,6 +388,13 @@ function Players:AddStructure( playerID, building )
     buildingTable[name] = buildingTable[name] and (buildingTable[name] + 1) or 1
 
     table.insert(playerStructures, building)
+
+    -- Track build order
+    local time = math.floor(dotacraft:GetTime()+0.5)
+    if time ~= 0 then
+        local buildOrder = Players:GetBuildOrder(playerID)
+        table.insert(buildOrder, {time = time, name = name})
+    end
 
     Scores:IncrementBuildingsProduced( playerID, building )
 end
