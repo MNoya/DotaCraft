@@ -4,10 +4,10 @@ if not statInfo then
     return
 end
 
-require("statcollection/schema")
-require('statcollection/lib/statcollection')
-require('statcollection/staging')
-require('statcollection/lib/utilities')
+require('libraries/statcollection/schema')
+require('libraries/statcollection/lib/statcollection')
+require('libraries/statcollection/staging')
+require('libraries/statcollection/lib/utilities')
 
 local COLLECT_STATS = not Convars:GetBool('developer')
 local TESTING = tobool(statInfo.TESTING)
