@@ -833,9 +833,11 @@ function Players:CreateHeroFromTavern(playerID, heroName, tavernID)
         new_hero:RespawnUnit()
         
         -- Add a teleport scroll
-        local tpScroll = CreateItem("item_scroll_of_town_portal", new_hero, new_hero)
-        new_hero:AddItem(tpScroll)
-        tpScroll:SetPurchaseTime(0) --Dont refund fully
+        if Players:HeroCount( playerID ) == 0 then
+            local tpScroll = CreateItem("item_scroll_of_town_portal", new_hero, new_hero)
+            new_hero:AddItem(tpScroll)
+            tpScroll:SetPurchaseTime(0) --Dont refund fully
+        end
 
         -- Add the hero to the table of heroes acquired by the player
         Players:AddHero( playerID, new_hero )
