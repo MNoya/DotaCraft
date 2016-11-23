@@ -171,7 +171,6 @@ function Delete_Shop_Content(args){
     // loop and delete all the children
     for(i = 0; i < bChildCount; i++){
         var child = Shop.GetChild(i)
-        $.Msg(child)
         if(!child.Revive){
             if(child != null && child.id.indexOf(LocalPlayerID.toString())){
                 child.DeleteAsync(0);

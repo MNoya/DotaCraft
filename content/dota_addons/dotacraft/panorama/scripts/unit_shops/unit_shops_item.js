@@ -19,6 +19,7 @@ function Buy_Item(){
         event = "shops_tavern_buy_hero"
         
         EnoughFood = PlayerTables.HasEnoughFood(LocalPlayerID, food_cost);
+        EnoughStock = Root.ItemInfo.CurrentStock > 0;
         
     }else{ // Item
         event = "shops_buy_item";
@@ -133,21 +134,21 @@ function Update_Central(data){
     
     if(ItemValues.RestockRate != null){
         if(ItemValues.CurrentRefreshTime > 1){
-                $("#ItemMask").visible = true
-                //$.Msg(((100 / ItemValues.RestockRate) * ItemValues.CurrentRefreshTime)+"%")
-                if(ItemValues.StockStartDelay != null){
-                    if(ItemValues.StockStartDelay != 0){
-                        $("#ItemMask").style["width"] = 100 - ((100 / ItemValues.StockStartDelay) * ItemValues.CurrentRefreshTime)+"%";
-                    }else{
-                        $("#ItemMask").style["width"] = 100 - ((100 / ItemValues.RestockRate) * ItemValues.CurrentRefreshTime)+"%";
-                    };
+            $("#ItemMask").visible = true
+            //$.Msg(((100 / ItemValues.RestockRate) * ItemValues.CurrentRefreshTime)+"%")
+            if(ItemValues.StockStartDelay != null){
+                if(ItemValues.StockStartDelay != 0){
+                    $("#ItemMask").style["width"] = 100 - ((100 / ItemValues.StockStartDelay) * ItemValues.CurrentRefreshTime)+"%";
                 }else{
                     $("#ItemMask").style["width"] = 100 - ((100 / ItemValues.RestockRate) * ItemValues.CurrentRefreshTime)+"%";
                 };
+            }else{
+                $("#ItemMask").style["width"] = 100 - ((100 / ItemValues.RestockRate) * ItemValues.CurrentRefreshTime)+"%";
+            };
         }
         else{
-                $("#ItemMask").style["width"] = "0px"
-                $("#ItemMask").visible = false
+            $("#ItemMask").style["width"] = "0px"
+            $("#ItemMask").visible = false
         }
     }
     

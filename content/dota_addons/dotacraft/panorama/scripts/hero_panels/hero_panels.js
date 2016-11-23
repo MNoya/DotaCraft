@@ -4,7 +4,7 @@ var container = $("#HeroPanelsContainer");
 
 function CreateHeroPanel(data){
 	var unitEntityIndex = data.entityIndex;
-	$.Msg("Creating hero name:"+data.name+" index: "+unitEntityIndex);	
+	$.Msg("Creating hero name:"+Entities.GetUnitName(unitEntityIndex)+" index: "+unitEntityIndex);	
 
 	if( $("#"+heroPanelID) == null ){
 		var hero = $.CreatePanel ('Panel', container, heroPanelID);
