@@ -18,8 +18,8 @@ Come bug us in our IRC channel #getdotastats at GameSurge.net
 ]]
 
 -- Require libs
-require('libraries/statcollection/lib/md5')
-require('libraries/statcollection/schema')
+require('statcollection/lib/md5')
+require('statcollection/schema')
 
 -- Settings
 local statInfo = LoadKeyValues('scripts/vscripts/statcollection/settings.kv')
