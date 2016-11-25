@@ -1,8 +1,7 @@
 print ('[DOTACRAFT] dotacraft.lua' )
---[[
-    dota_launch_custom_game dotacraft echo_isles
-    dota_launch_custom_game dotacraft hills_of_glory
-]]
+
+VERSION = 0.1
+START_TIME = GetSystemDate() .. " " .. GetSystemTime()
 
 DISABLE_FOG_OF_WAR_ENTIRELY = false
 UNSEEN_FOG_ENABLED = false

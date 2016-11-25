@@ -50,7 +50,11 @@ end
 function BuildGameArray()
     local game = {}
 
-    -- Add game values here as game.someValue = GetSomeGameValue()
+    game.map = dotacraft:GetMapName()
+    game.duration = dotacraft:GetTime()
+    game.str = START_TIME
+    game.fin = END_TIME or (GetSystemDate() .. " " .. GetSystemTime())
+    game.ver = VERSION
 
     return game
 end
@@ -63,13 +67,39 @@ function BuildPlayersArray()
             if not PlayerResource:IsBroadcaster(playerID) then
 
                 local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+                local scores = Players:GetPlayerScores(playerID)
 
                 table.insert(players, {
-                    -- steamID32 required in here
                     steamID32 = PlayerResource:GetSteamAccountID(playerID),
 
-                    -- Example functions for generic stats are defined in statcollection/lib/utilities.lua
-                    -- Add player values here as someValue = GetSomePlayerValue(),
+                    -- General
+                    race = Players:GetRace(playerID),
+                    gold = Players:GetGold(playerID),
+                    lumber = Players:GetLumber(playerID),
+                    food_used = Players:GetFoodUsed(playerID),      -- Useless for the losing player
+                    food_limit = Players:GetFoodLimit(playerID),    -- Useless for the losing player
+                    build_order = Players:GetBuildOrder(playerID),  -- List of {time, name}
+
+                    -- Units
+                    units_produced = scores.units_produced
+                    units_killed = scores.units_killed
+                    buildings_produced = scores.buildings_produced
+                    buildings_razed = scores.buildings_razed
+                    largest_army = scores.largest_army
+
+                    -- Heroes
+                    heroes_used = scores.heroes_used                -- Might want to split in hero1/2/3
+                    heroes_killed = scores.heroes_killed
+                    items_obtained = scores.items_obtained
+                    mercenaries_hired = scores.mercenaries_hired
+                    experienced_gained = scores.experienced_gained
+
+                    -- Resources
+                    gold_mined = scores.gold_mined
+                    lumber_harvested = scores.lumber_harvested
+                    resource_traded = scores.resource_traded
+                    tech_percentage = scores.tech_percentage        -- Might want to save the order
+                    gold_lost_to_upkeep = scores.gold_lost_to_upkeep
                 })
             end
         end
