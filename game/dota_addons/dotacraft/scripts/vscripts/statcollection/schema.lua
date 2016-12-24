@@ -81,25 +81,25 @@ function BuildPlayersArray()
                     build_order = Players:GetBuildOrder(playerID),  -- List of {time, name}
 
                     -- Units
-                    units_produced = scores.units_produced
-                    units_killed = scores.units_killed
-                    buildings_produced = scores.buildings_produced
-                    buildings_razed = scores.buildings_razed
-                    largest_army = scores.largest_army
+                    units_produced = scores.units_produced,
+                    units_killed = scores.units_killed,
+                    buildings_produced = scores.buildings_produced,
+                    buildings_razed = scores.buildings_razed,
+                    largest_army = scores.largest_army,
 
                     -- Heroes
-                    heroes_used = scores.heroes_used                -- Might want to split in hero1/2/3
-                    heroes_killed = scores.heroes_killed
-                    items_obtained = scores.items_obtained
-                    mercenaries_hired = scores.mercenaries_hired
-                    experienced_gained = scores.experienced_gained
+                    heroes_used = scores.heroes_used,                -- Might want to split in hero1/2/3
+                    heroes_killed = scores.heroes_killed,
+                    items_obtained = scores.items_obtained,
+                    mercenaries_hired = scores.mercenaries_hired,
+                    experienced_gained = scores.experienced_gained,
 
                     -- Resources
-                    gold_mined = scores.gold_mined
-                    lumber_harvested = scores.lumber_harvested
-                    resource_traded = scores.resource_traded
-                    tech_percentage = scores.tech_percentage        -- Might want to save the order
-                    gold_lost_to_upkeep = scores.gold_lost_to_upkeep
+                    gold_mined = scores.gold_mined,
+                    lumber_harvested = scores.lumber_harvested,
+                    resource_traded = scores.resource_traded,
+                    tech_percentage = scores.tech_percentage,        -- Might want to save the order
+                    gold_lost_to_upkeep = scores.gold_lost_to_upkeep,
                 })
             end
         end

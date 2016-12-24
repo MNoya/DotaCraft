@@ -664,10 +664,11 @@ gamestates =
     [3] = "DOTA_GAMERULES_STATE_HERO_SELECTION",
     [4] = "DOTA_GAMERULES_STATE_STRATEGY_TIME",
     [5] = "DOTA_GAMERULES_STATE_TEAM_SHOWCASE",
-    [6] = "DOTA_GAMERULES_STATE_PRE_GAME",
-    [7] = "DOTA_GAMERULES_STATE_GAME_IN_PROGRESS",
-    [8] = "DOTA_GAMERULES_STATE_POST_GAME",
-    [9] = "DOTA_GAMERULES_STATE_DISCONNECT"
+    [6] = "DOTA_GAMERULES_STATE_WAIT_FOR_MAP_TO_LOAD",
+    [7] = "DOTA_GAMERULES_STATE_PRE_GAME", --deprecated
+    [8] = "DOTA_GAMERULES_STATE_GAME_IN_PROGRESS",
+    [9] = "DOTA_GAMERULES_STATE_POST_GAME",
+    [10] = "DOTA_GAMERULES_STATE_DISCONNECT"
 }
 
 -- The overall game state has changed
@@ -683,7 +684,7 @@ function dotacraft:OnGameRulesStateChange(keys)
     elseif newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
         Scores:Init() -- Start score tracking for all players
     elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
-        dotacraft:OnPreGame()
+        dotacraft:OnPreGame()  --TODO: Fix staging
     elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
         dotacraft:OnGameInProgress()
     end
