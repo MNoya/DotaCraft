@@ -77,5 +77,32 @@ GameUI.CreateErrorMessage = CreateErrorMessage;
 
 (function(){
     GameEvents.Subscribe("dotacraft_error_message", CreateErrorMessage)
+
+    // DOTAHud Hud
+	var hud = $.GetContextPanel().GetParent().GetParent().GetParent();
+
+	// Remove talent tree and backpack
+	var newUI = hud.FindChildTraverse("HUDElements").FindChildTraverse("lower_hud").FindChildTraverse("center_with_stats").FindChildTraverse("center_block");
+	newUI.FindChildTraverse("StatBranch").FindChildTraverse("StatBranchGraphics").FindChildTraverse("StatBranchChannel").style.visibility = "collapse";
+	newUI.FindChildTraverse("StatBranch").FindChildTraverse("StatBranchBG").style.visibility = "collapse";
+	newUI.FindChildTraverse("StatBranch").SetPanelEvent("onmouseover", function(){});
+	newUI.FindChildTraverse("StatBranch").SetPanelEvent("onactivate", function(){});
+	newUI.FindChildTraverse("inventory").FindChildTraverse("inventory_items").FindChildTraverse("inventory_backpack_list").style.visibility = "collapse";
+
+	// Remove Scan and Glyph
+	var glyphScanContainer = hud.FindChildTraverse("HUDElements").FindChildTraverse("lower_hud").FindChildTraverse("GlyphScanContainer");
+	glyphScanContainer.FindChildTraverse("RadarButton").style.visibility = "collapse";
+
+	// Fix side info panel
+	var gameinfo = hud.FindChildTraverse("CustomUIRoot").FindChildTraverse("CustomUIContainer_GameInfo");
+	gameinfo.FindChildTraverse("GameInfoPanel").style['margin-top'] = "0px";
+	gameinfo.FindChildTraverse("GameInfoButton").style.transform = "translateY(120px)";
+
+	// Fix gap next to abilities from ability tree
+	newUI.FindChildTraverse("StatBranch").style.visibility = "collapse";
+
+	newUI.FindChildTraverse("AbilitiesAndStatBranch").style.minWidth = "800px";
+	newUI.FindChildTraverse("center_bg").style.height = "220px";
+
     $.Msg("Expanding CustomGameUI functionality");
 })()
