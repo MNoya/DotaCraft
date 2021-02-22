@@ -79,11 +79,11 @@ function dotacraft:InitGameMode()
     -- Filters
     GameMode:SetExecuteOrderFilter( Dynamic_Wrap( dotacraft, "FilterExecuteOrder" ), self )
     GameMode:SetDamageFilter( Dynamic_Wrap( dotacraft, "FilterDamage" ), self )
-    GameMode:SetTrackingProjectileFilter( Dynamic_Wrap( dotacraft, "FilterProjectile" ), self )
+--    GameMode:SetTrackingProjectileFilter( Dynamic_Wrap( dotacraft, "FilterProjectile" ), self )
     GameMode:SetModifyExperienceFilter( Dynamic_Wrap( dotacraft, "FilterExperience" ), self )
     GameMode:SetModifyGoldFilter( Dynamic_Wrap( dotacraft, "FilterGold" ), self )
-    GameMode:SetModifierGainedFilter( Dynamic_Wrap(dotacraft, "FilterModifier"), self )
-    GameMode:SetItemAddedToInventoryFilter( Dynamic_Wrap(dotacraft, "FilterItemAdded"), self )
+--    GameMode:SetModifierGainedFilter( Dynamic_Wrap(dotacraft, "FilterModifier"), self )
+--    GameMode:SetItemAddedToInventoryFilter( Dynamic_Wrap(dotacraft, "FilterItemAdded"), self )
 
     -- Panorama listeners
     CustomGameEventManager:RegisterListener("selection_update", Dynamic_Wrap(dotacraft, 'OnPlayerSelectedEntities'))
@@ -366,6 +366,7 @@ function dotacraft:InitializePlayer( hero )
 end
 
 function dotacraft:TrackIdleWorkers( hero )
+    print("[DOTACRAFT] Track Idle Workers")
     local player = hero:GetPlayerOwner()
     local playerID = hero:GetPlayerID()
     -- Keep track of the Idle Builders and send them to the panorama UI every time the count updates
@@ -387,6 +388,7 @@ function dotacraft:TrackIdleWorkers( hero )
 end
 
 function dotacraft:AutoCastTimer(playerID)
+    print("[DOTACRAFT] Auto Cast Timer")
     Timers:CreateTimer(0.1, function()
         local selectedEntities = PlayerResource:GetSelectedEntities(playerID)
         if selectedEntities["0"] then
@@ -463,6 +465,7 @@ function CheckDoubleToggle(unit)
 end
 
 function dotacraft:InitializeResources( hero, building )
+    print("[DOTACRAFT] Initialize Resources")
     local playerID = hero:GetPlayerID()
     -- Give Initial Food
     Players:ModifyFoodLimit(playerID, GetFoodProduced(building))
@@ -473,6 +476,7 @@ function dotacraft:InitializeResources( hero, building )
 end
 
 function dotacraft:InitializeBuilders( hero, race_setup_table )
+    print("[DOTACRAFT] Initialize Builders")
     local playerID = hero:GetPlayerID()
     local units = Players:GetUnits(playerID)
 
@@ -495,6 +499,7 @@ function dotacraft:InitializeBuilders( hero, race_setup_table )
 end
 
 function dotacraft:InitializeUndead( hero, race_setup_table, building )
+    print("[DOTACRAFT] Initialize Undead")
     local playerID = hero:GetPlayerID()
     local player = hero:GetPlayerOwner()
 
@@ -533,6 +538,7 @@ function dotacraft:InitializeUndead( hero, race_setup_table, building )
 end
 
 function dotacraft:InitializeNightElf( hero, race_setup_table, building )
+    print("[DOTACRAFT] Initialize Night Elf")
     local playerID = hero:GetPlayerID()
     local player = hero:GetPlayerOwner()
 
@@ -564,6 +570,7 @@ function dotacraft:InitializeNightElf( hero, race_setup_table, building )
 end
 
 function dotacraft:InitializeTownHall( hero, position, building )
+    print("[DOTACRAFT] Initialize Town Hall")
     local player = hero:GetPlayerOwner()
     local playerID = hero:GetPlayerID()
 
@@ -664,11 +671,10 @@ gamestates =
     [3] = "DOTA_GAMERULES_STATE_HERO_SELECTION",
     [4] = "DOTA_GAMERULES_STATE_STRATEGY_TIME",
     [5] = "DOTA_GAMERULES_STATE_TEAM_SHOWCASE",
-    [6] = "DOTA_GAMERULES_STATE_WAIT_FOR_MAP_TO_LOAD",
-    [7] = "DOTA_GAMERULES_STATE_PRE_GAME", --deprecated
-    [8] = "DOTA_GAMERULES_STATE_GAME_IN_PROGRESS",
-    [9] = "DOTA_GAMERULES_STATE_POST_GAME",
-    [10] = "DOTA_GAMERULES_STATE_DISCONNECT"
+    [6] = "DOTA_GAMERULES_STATE_PRE_GAME",
+    [7] = "DOTA_GAMERULES_STATE_GAME_IN_PROGRESS",
+    [8] = "DOTA_GAMERULES_STATE_POST_GAME",
+    [9] = "DOTA_GAMERULES_STATE_DISCONNECT"
 }
 
 -- The overall game state has changed
@@ -716,6 +722,7 @@ function dotacraft:OnPreGame()
                 local hero = CreateHeroForPlayer(race, player)
                 local position = Teams:GetPositionForPlayer(playerID)
                 if position then
+                    print("Position: ", position)
                     local mine = Gatherer:GetClosestGoldMineToPosition(position)
                     local mid_point = mine:GetAbsOrigin() + (position-mine:GetAbsOrigin())/2
                     hero:SetAbsOrigin(mid_point)
@@ -756,7 +763,7 @@ end
 
 -- An NPC has spawned somewhere in game.  This includes heroes
 function dotacraft:OnNPCSpawned(keys)
-    --print("[DOTACRAFT] NPC Spawned")
+    print("[DOTACRAFT] NPC Spawned")
     --DeepPrintTable(keys)
     local npc = EntIndexToHScript(keys.entindex)
 
@@ -872,7 +879,7 @@ end
 
 -- An entity died
 function dotacraft:OnEntityKilled( event )
-    --print( '[DOTACRAFT] OnEntityKilled Called' )
+    print( '[DOTACRAFT] OnEntityKilled Called' )
 
     local killed = EntIndexToHScript(event.entindex_killed)
     local attacker
@@ -989,7 +996,6 @@ function dotacraft:OnEntityKilled( event )
     
     -- Building Killed
     if IsCustomBuilding(killed) and killed_teamNumber ~= DOTA_TEAM_NEUTRALS then
-
         -- Cleanup building tables
         Players:RemoveStructure( killed_playerID, killed )
         if not killed:HasDeathAnimation() then

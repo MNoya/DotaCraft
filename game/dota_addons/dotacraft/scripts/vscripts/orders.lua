@@ -363,7 +363,7 @@ function dotacraft:FilterExecuteOrder( filterTable )
                     -- Move to position in range of attack
                     local attackerOrigin = unit:GetAbsOrigin()
                     local targetOrigin = target:GetAbsOrigin()
-                    local maxPos = targetOrigin + (attackerOrigin-targetOrigin):Normalized() * unit:GetAttackRange()
+                    local maxPos = targetOrigin + (attackerOrigin-targetOrigin):Normalized() * unit:Script_GetAttackRange()
                     local pos = maxPos
                     if (maxPos-targetOrigin):Length2D() > (attackerOrigin-targetOrigin):Length2D() then
                         pos = attackerOrigin --stay in place if the order would move the attacker backwards

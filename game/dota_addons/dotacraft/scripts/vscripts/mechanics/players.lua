@@ -626,8 +626,11 @@ end
 
 -- Returns a string with the race of the player
 function Players:GetRace( playerID )
-    local hero = PlayerResource:GetSelectedHeroEntity(playerID)
-    return hero:GetRace()
+    local hero = PlayerResource:GetPlayer(playerID):GetAssignedHero()
+
+    if hero then
+        return hero:GetRace()
+    end
 end
 
 function Players:FindHighestLevelCityCenter(playerID)

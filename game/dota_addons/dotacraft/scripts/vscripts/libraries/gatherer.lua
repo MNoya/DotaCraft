@@ -16,6 +16,8 @@ Wisps got order stuck going to gold mine
 ]]
 
 function Gatherer:start()
+    print("Gatherer:Start()")
+--[[
     if IsInToolsMode() then
         local src = debug.getinfo(1).source
         self.gameDir = ""
@@ -27,6 +29,7 @@ function Gatherer:start()
             return
         end
     end
+--]]
 
     -- Lua modifiers
     LinkLuaModifier("modifier_attack_trees", "libraries/modifiers/modifier_attack_trees", LUA_MODIFIER_MOTION_NONE)
@@ -36,7 +39,6 @@ function Gatherer:start()
     LinkLuaModifier("modifier_gatherer_hidden", "libraries/modifiers/gatherer_modifiers", LUA_MODIFIER_MOTION_NONE)
 
     -- Game Event Listeners
-    ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(Gatherer, 'OnGameRulesStateChange'), self)
     ListenToGameEvent('npc_spawned', Dynamic_Wrap(Gatherer, 'OnNPCSpawned'), self)
     ListenToGameEvent('entity_killed', Dynamic_Wrap(Gatherer, 'OnEntityKilled'), self)
     ListenToGameEvent('tree_cut', Dynamic_Wrap(Gatherer, 'OnTreeCut'), self)
@@ -48,6 +50,7 @@ function Gatherer:start()
     self.bShouldLoadTreeMap = not IsInToolsMode() -- Always re-determine pathable trees in tools, to account for map changes.
     self.GathererUnits = {}
 
+    print("Attempt to load settings...")
     self:LoadSettings()
     self:HookBoilerplate()
 end
@@ -95,6 +98,7 @@ function Gatherer:HookBoilerplate()
 end
 
 function Gatherer:LoadSettings()
+    print("Gatherer: LOAD SETTINGS!")
     self.Settings = LoadKeyValues("scripts/kv/gatherer_settings.kv") or {}
     self.Deposits = self.Settings["deposits"]
     self.TreeRadius = self.Settings["TreeRadius"] or 50
@@ -121,14 +125,14 @@ function Gatherer:OnScriptReload()
     LoadGameKeyValues()
 end
 
-function Gatherer:OnGameRulesStateChange(event)
+ListenToGameEvent("game_rules_state_change", function()
     local newState = GameRules:State_Get()
     if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-        self:InitTrees()
+        Gatherer:InitTrees()
     elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
-        self:InitGoldMines()
+        Gatherer:InitGoldMines()
     end
-end
+end, nil)
 
 function Gatherer:OnNPCSpawned(event)
     local npc = EntIndexToHScript(event.entindex)
@@ -437,6 +441,7 @@ end
 
  -- Start tree tracking and obtain tree map
 function Gatherer:InitTrees()
+    print("Gatherer: Init Trees")
     if not self.AllTrees then
         self.AllTrees = Entities:FindAllByClassname("ent_dota_tree")
         self.TreeCount = #self.AllTrees
@@ -463,7 +468,7 @@ function Gatherer:InitTrees()
     self:DeterminePathableTrees() -- Obtain tree map
     self:DetermineForests()       -- Obtain tree forests
     if IsInToolsMode() then
-        self:GenerateTreeMap()    -- Write to file
+--        self:GenerateTreeMap()    -- Write to file // io is a nil value
     end
 end
 
@@ -622,6 +627,7 @@ function Gatherer:GenerateTreeMap()
 end
 
 function Gatherer:InitGoldMines()
+    print("Gatherer:InitGoldMines()")
     Gatherer.GoldMines = Entities:FindAllByModel('models/mine/mine.vmdl')
     
     for k,gold_mine in pairs(Gatherer.GoldMines) do
@@ -956,6 +962,10 @@ function Gatherer:Init(unit)
     end
 
     function unit.GatherAbility:GetGoldMineBuilding()
+        print(unit)
+        print(unit.GatherAbility)
+        print(unit.GatherAbility.GetKeyValue)
+        print(unit.GatherAbility:GetKeyValue("GoldMineBuilding"))
         return unit.GatherAbility:GetKeyValue("GoldMineBuilding") or "gold_mine"
     end
 
@@ -1102,6 +1112,8 @@ function Gatherer:DamageTree(unit, tree, value)
     local playerID = unit:GetPlayerOwnerID()
 
     unit.gatherer_state = "gathering_lumber"
+    print(tree)
+    print(value)
     local lumber_gain = math.min(tree.health, value)
     tree.health = tree.health - value
 
@@ -1243,13 +1255,23 @@ function Gatherer:CastGatherAbility(event)
                 return
             end
         end)
-    
     -- GOLD
     elseif string.match(target:GetUnitName(),"gold_mine") and caster:CanGatherGold() then
         local gold_mine --target can be a gold_mine or a certain type of gathering platform stored on the target.mine
         local target_name = target:GetUnitName()
-        local mine_target_name = ability:GetGoldMineBuilding()
-        
+        print(ability)
+        if ability then
+            print(ability:GetAbilityName())
+        end
+        print(ability:GetKeyValue("GoldMineBuilding"))
+        local mine_target_name = "gold_mine"
+
+        if ability:GetKeyValue("GoldMineBuilding") then
+            mine_target_name = ability:GetKeyValue("GoldMineBuilding")
+            print("Mine target name:", mine_target_name)
+        end
+
+        print("Target name:", target_name)
         if target_name ~= mine_target_name then
             print("Must target a "..mine_target_name..", not a "..target_name)
             return false
@@ -1285,8 +1307,8 @@ function Gatherer:CastGatherAbility(event)
             if not IsValidEntity(gold_mine) or not gold_mine:IsAlive() then caster:CancelGather() end -- Cancel if mine killed
 
             -- Move towards the mine until close range
-            local distance = (mine_pos - caster:GetAbsOrigin()):Length()
-            
+            local distance = (mine_pos - caster:GetAbsOrigin()):Length2D()
+
             if distance > self.MinDistanceToMine then
                 caster:MoveToPosition(mine_entrance_pos)
                 return self.ThinkInterval
@@ -1479,6 +1501,8 @@ function Gatherer:GetClosestGoldMineToPosition(position)
     local allGoldMines = self.GoldMines
     local distance = math.huge
     local closest_mine = nil
+
+    print(allGoldMines)
 
     for k,gold_mine in pairs (allGoldMines) do
         if IsValidEntity(gold_mine) and not gold_mine.building_on_top then

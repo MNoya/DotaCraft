@@ -4,6 +4,7 @@ if dotacraft == nil then
 end
 ---------------------------------------------------------------------------
 
+require('libraries/adv_log')
 require('libraries/timers')
 require('libraries/physics')
 require('libraries/animations')
@@ -16,7 +17,10 @@ require('libraries/selection')
 require('libraries/keyvalues')
 require('libraries/buildinghelper')
 require('libraries/gatherer')
+--[[
 require('statcollection/init')
+--]]
+
 require('dotacraft')
 require('utilities')
 require('mechanics/require')

@@ -191,7 +191,7 @@ function NeutralAI:AggressiveThink()
             local range_to_closest_target = unit:GetRangeToUnit(target)
 
             -- If the range to the current target exceeds the attack range of the attacker, and there is a possible target closer to it, attack that one instead
-            if range_to_current_target > unit:GetAttackRange() and range_to_current_target > range_to_closest_target then
+            if range_to_current_target > unit:Script_GetAttackRange() and range_to_current_target > range_to_closest_target then
                 unit:Attack(target)
                 return
             end

@@ -113,7 +113,7 @@ function HoldAcquire( event )
 
     if unit:AttackReady() and not unit:IsAttacking() then
         local target = FindAttackableEnemies(unit, unit.bAttackMove)
-        if target and unit:GetRangeToUnit(target) <= unit:GetAttackRange() then
+        if target and unit:GetRangeToUnit(target) <= unit:Script_GetAttackRange() then
             --print(unit:GetUnitName()," now attacking -> ",target:GetUnitName(),"Team: ",target:GetTeamNumber())
             ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_ATTACK_TARGET, TargetIndex = target:GetEntityIndex(), Queue = false}) 
             HoldPosition(unit)

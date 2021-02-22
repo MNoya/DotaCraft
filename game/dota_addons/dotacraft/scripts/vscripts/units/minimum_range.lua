@@ -13,7 +13,7 @@ function OnSiegeAttackStart(keys)
     
     if unit:GetRangeToUnit(target) < minRange then
         -- find new target in range
-        local targets = FindUnitsInRadius(unit:GetTeam(), unit:GetAbsOrigin(), nil, unit:GetAttackRange()+unit:GetHullRadius(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+        local targets = FindUnitsInRadius(unit:GetTeam(), unit:GetAbsOrigin(), nil, unit:Script_GetAttackRange()+unit:GetHullRadius(), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
         for _,enemy in pairs(targets) do
 
             -- new eligible target must be over the min range and meet standard attack rules

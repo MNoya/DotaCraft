@@ -218,7 +218,7 @@ function LocustSwarmPhysics( event )
                         ApplyDamage({victim = unit.current_target, attacker = unit, damage_type = abilityDamageType, damage = locust_damage, ability = ability})
 
                         -- Calculate how much physical damage was dealt
-                        local targetArmor = unit.current_target:GetPhysicalArmorValue()
+                        local targetArmor = unit.current_target:GetPhysicalArmorValue(false)
                         local damageReduction = ((0.06 * targetArmor) / (1 + 0.06 * targetArmor))
                         local damagePostReduction = locust_damage * (1 - damageReduction)
                         LocustDebugPrint(locust_damage, damageReduction, damagePostReduction)

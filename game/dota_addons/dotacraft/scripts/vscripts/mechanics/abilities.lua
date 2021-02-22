@@ -118,7 +118,7 @@ function CDOTABaseAbility:HasTargetFlag(flag)
 end
 
 function CDOTABaseAbility:HasBehavior(flag)
-    return bit.band(self:GetBehavior(), flag) == flag
+    return bit.band(tonumber(tostring(self:GetBehavior())), flag) == flag
 end
 
 -- Deals damage to units with an optional buildingFactor, if the total passes maxDamage, the damage each unit receives is split

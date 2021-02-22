@@ -20,7 +20,7 @@ function Pillage(event)
 	local multiplier = caster:GetAttackFactorAgainstTarget(target)
 	damage = damage * multiplier
 
-	local armor = target:GetPhysicalArmorValue()
+	local armor = target:GetPhysicalArmorValue(false)
 	damage = damage * (1 - 0.06 * armor / (1 + 0.06 * math.abs(armor)))
 
 	local pillage = (damage/target:GetMaxHealth()) * pillage_ratio * GetGoldCost(target)

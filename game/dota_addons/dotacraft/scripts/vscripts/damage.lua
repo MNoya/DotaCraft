@@ -54,7 +54,7 @@ function dotacraft:FilterDamage( filterTable )
         local attack_type  = attacker:GetAttackType()
         local armor_type = victim:GetArmorType()
         local multiplier = attacker:GetAttackFactorAgainstTarget(victim)
-        local armor = victim:GetPhysicalArmorValue()
+        local armor = victim:GetPhysicalArmorValue(false)
 
         damage = (attack_damage * (1 - reduction)) * multiplier
         
@@ -121,7 +121,7 @@ end
 
 function dotacraft:GetPreMitigationDamage(value, victim, attacker, damagetype)
     if damagetype == DAMAGE_TYPE_PHYSICAL then
-        local armor = victim:GetPhysicalArmorValue()
+        local armor = victim:GetPhysicalArmorValue(false)
         local reduction = ((armor)*0.06) / (1+0.06*(armor))
         local damage = value / (1 - reduction)
 
