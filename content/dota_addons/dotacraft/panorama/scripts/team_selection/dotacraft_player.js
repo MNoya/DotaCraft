@@ -170,13 +170,13 @@ function SetupLocalisation(){
 	var race_dropdown = Root.FindChildTraverse("RaceDropDown");
 	
 	for(var i = 0; i <= Count_Dropdown_Children(race_dropdown); i++)
-		race_dropdown.FindDropDownMenuChild(i).text = $.Localize("race_"+i);
+		race_dropdown.FindDropDownMenuChild(i).text = $.Localize("#race_"+i);
 	
-	race_dropdown.GetChild(0).text = $.Localize("race_0"); // set race dropdown to this localisation due to the dropdown being initialised when the text was empty
+	race_dropdown.GetChild(0).text = $.Localize("#race_0"); // set race dropdown to this localisation due to the dropdown being initialised when the text was empty
 	
 	var options_dropdown = Root.FindChildTraverse("OptionsDropDown");	
 	for(var i = 0; i <= Count_Dropdown_Children(options_dropdown); i++)
-		options_dropdown.FindDropDownMenuChild(i).text = $.Localize("options_dropdown_"+i);
+		options_dropdown.FindDropDownMenuChild(i).text = $.Localize("#options_dropdown_"+i);
 };
 
 function HandleReadyStatus(ready){

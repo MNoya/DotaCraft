@@ -12,7 +12,7 @@ function Create_Shop(args){
     // to lazy to convert to xml
     var Header = $.CreatePanel("Panel", Container, "ShopHeader");
     var HeaderText = $.CreatePanel("Label", Header, "ShopHeaderText");
-    HeaderText.text = $.Localize( Entities.GetUnitName( args.Index ) );
+    HeaderText.text = $.Localize( "#" + Entities.GetUnitName( args.Index ) );
     
     var Button = $.CreatePanel("Button", Header, "CloseButton");
     Button.SetPanelEvent('onactivate', (function(){

@@ -88,7 +88,7 @@ function SetSkins(skins)
 function SetHeaderText(text)
 {
   var label = $("#HeaderLabel");
-  label.text = $.Localize(text);
+  label.text = $.Localize("#" + text);
 }
 
 function SetLayout(layout)

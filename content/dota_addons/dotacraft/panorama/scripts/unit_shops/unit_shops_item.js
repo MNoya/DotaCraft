@@ -101,9 +101,9 @@ function Setup_Panel(){
         $("#FoodPanel").visible = false;
     
     if ($.Localize(Root.ItemName) != Root.ItemName)
-        $("#ItemName").text = $.Localize(Root.ItemName)
+        $("#ItemName").text = $.Localize("#" + Root.ItemName)
     else
-        $("#ItemName").text = $.Localize("DOTA_Tooltip_ability_"+Root.ItemName);
+        $("#ItemName").text = $.Localize("#DOTA_Tooltip_ability_"+Root.ItemName);
     
     if(Root.ItemInfo.RequiredTier==9000){
         $("#RequiredTier").text = "You need to upgrade your main building"

@@ -186,20 +186,18 @@ end
 -- This function is called once when the player fully connects and becomes "Ready" during Loading
 function dotacraft:OnConnectFull(keys)
     print ('[DOTACRAFT] OnConnectFull')
+    DeepPrintTable(keys)
     
-    local entIndex = keys.index+1
+    local entIndex = keys.index + 1
     -- The Player entity of the joining user
     local ply = EntIndexToHScript(entIndex)
 
-    -- The Player ID of the joining player
-    local playerID = ply:GetPlayerID()
-
     -- Update the user ID table with this user
     self.vUserIds[keys.userid] = ply
-    self.vPlayerUserIds[playerID] = keys.userid
+    self.vPlayerUserIds[keys.PlayerID] = keys.userid
 
     -- If the player is a broadcaster flag it in the Broadcasters table
-    if PlayerResource:IsBroadcaster(playerID) then
+    if PlayerResource:IsBroadcaster(keys.PlayerID) then
         self.vBroadcasters[keys.userid] = 1
         return
     end
